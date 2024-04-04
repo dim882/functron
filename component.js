@@ -8,8 +8,8 @@ const style = `
 
 const dom = `
   <div>
-      <slot name="title">Default Title</slot>
-      <p><slot name="content">Default content.</slot></p>
+    <slot name="title">Default Title</slot>
+    <p><slot name="content">Default content.</slot></p>
   </div>
 `;
 
