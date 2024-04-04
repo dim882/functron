@@ -13,6 +13,8 @@ const style = `
 
 const dom = `
   <div>
+    <input type="text" name="first_name"/>
+    <br/>
     <slot name="title">Default Title</slot>
     <p><slot name="children">Default content.</slot></p>
   </div>
@@ -23,7 +25,10 @@ class MyComponent extends HTMLElement {
 
   constructor() {
     super();
-    this.#shadowRoot = this.attachShadow({ mode: "closed" });
+    this.#shadowRoot = this.attachShadow({
+      mode: "closed",
+      delegatesFocus: true,
+    });
 
     // Create slots for content projection
     this.#shadowRoot.innerHTML = `
