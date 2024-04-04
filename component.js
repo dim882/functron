@@ -29,7 +29,7 @@ class MyComponent extends HTMLElement {
 
   connectedCallback() {
     console.log("Custom element added to page.");
-    this.render();
+    this.update();
   }
 
   static get observedAttributes() {
@@ -38,10 +38,10 @@ class MyComponent extends HTMLElement {
 
   attributeChangedCallback(attrName, oldVal, newVal) {
     console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-    this.render();
+    this.update();
   }
 
-  render() {
+  update() {
     // Update component in response to attribute changes
     if (this.hasAttribute("name")) {
       this.#shadowRoot.querySelector('slot[name="title"]').textContent =
