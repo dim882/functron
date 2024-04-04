@@ -6,6 +6,13 @@ const style = `
   font-family: sans-serif;
 }`;
 
+const dom = `
+  <div>
+      <slot name="title">Default Title</slot>
+      <p><slot name="content">Default content.</slot></p>
+  </div>
+`;
+
 class MyComponent extends HTMLElement {
   #shadowRoot;
 
@@ -15,12 +22,9 @@ class MyComponent extends HTMLElement {
 
     // Create slots for content projection
     this.#shadowRoot.innerHTML = `
-          <style>${style}</style>
-          <div>
-              <slot name="title">Default Title</slot>
-              <p><slot name="content">Default content.</slot></p>
-          </div>
-      `;
+      <style>${style}</style>
+      ${dom}
+    `;
   }
 
   connectedCallback() {
