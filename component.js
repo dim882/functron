@@ -1,3 +1,11 @@
+const style = `
+:host {
+  display: block;
+  border: 2px solid black;
+  padding: 10px;
+  font-family: sans-serif;
+}`;
+
 class MyComponent extends HTMLElement {
   #shadowRoot;
 
@@ -7,14 +15,7 @@ class MyComponent extends HTMLElement {
 
     // Create slots for content projection
     this.#shadowRoot.innerHTML = `
-          <style>
-              :host {
-                  display: block;
-                  border: 2px solid black;
-                  padding: 10px;
-                  font-family: sans-serif;
-              }
-          </style>
+          <style>${style}</style>
           <div>
               <slot name="title">Default Title</slot>
               <p><slot name="content">Default content.</slot></p>
