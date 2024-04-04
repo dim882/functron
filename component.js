@@ -4,7 +4,12 @@ const style = `
   border: 2px solid black;
   padding: 10px;
   font-family: sans-serif;
-}`;
+}
+
+:host(:hover) ::slotted(a) {
+  color: red;
+}
+`;
 
 const dom = `
   <div>
@@ -46,6 +51,11 @@ class MyComponent extends HTMLElement {
     if (this.hasAttribute("name")) {
       this.#shadowRoot.querySelector('slot[name="title"]').textContent =
         this.getAttribute("name");
+    }
+
+    if (this.hasAttribute("content")) {
+      this.#shadowRoot.querySelector('slot[name="content"]').textContent =
+        this.getAttribute("content");
     }
   }
 }
