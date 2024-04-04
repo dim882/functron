@@ -1,7 +1,7 @@
 class MyComponent extends HTMLElement {
   constructor() {
-    super(); // Always call super first in constructor
-    this.attachShadow({ mode: "open" }); // Attach a shadow root to the element.
+    super();
+    this.attachShadow({ mode: "open" });
 
     // Create slots for content projection
     this.shadowRoot.innerHTML = `
