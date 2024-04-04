@@ -1,13 +1,12 @@
-(() => {
-  let shadowRoot;
+class MyComponent extends HTMLElement {
+  #shadowRoot;
 
-  class MyComponent extends HTMLElement {
-    constructor() {
-      super();
-      shadowRoot = this.attachShadow({ mode: "closed" });
+  constructor() {
+    super();
+    this.#shadowRoot = this.attachShadow({ mode: "closed" });
 
-      // Create slots for content projection
-      shadowRoot.innerHTML = `
+    // Create slots for content projection
+    this.#shadowRoot.innerHTML = `
           <style>
               :host {
                   display: block;
@@ -21,31 +20,30 @@
               <p><slot name="content">Default content.</slot></p>
           </div>
       `;
-    }
-
-    connectedCallback() {
-      console.log("Custom element added to page.");
-      this.render();
-    }
-
-    static get observedAttributes() {
-      return ["name"];
-    }
-
-    attributeChangedCallback(attrName, oldVal, newVal) {
-      console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-      this.render();
-    }
-
-    render() {
-      // Update component in response to attribute changes
-      if (this.hasAttribute("name")) {
-        shadowRoot.querySelector('slot[name="title"]').textContent =
-          this.getAttribute("name");
-      }
-    }
   }
 
-  // Define the new element
-  customElements.define("my-component", MyComponent);
-})();
+  connectedCallback() {
+    console.log("Custom element added to page.");
+    this.render();
+  }
+
+  static get observedAttributes() {
+    return ["name"];
+  }
+
+  attributeChangedCallback(attrName, oldVal, newVal) {
+    console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
+    this.render();
+  }
+
+  render() {
+    // Update component in response to attribute changes
+    if (this.hasAttribute("name")) {
+      this.#shadowRoot.querySelector('slot[name="title"]').textContent =
+        this.getAttribute("name");
+    }
+  }
+}
+
+// Define the new element
+customElements.define("my-component", MyComponent);
