@@ -1,0 +1,7 @@
+{
+  "name": "web-components",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Daniel Imal <mrdanimal@gmail.com>",
+  "license": "MIT"
+}
