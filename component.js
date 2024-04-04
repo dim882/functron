@@ -6,7 +6,7 @@ const style = `
   font-family: sans-serif;
 }
 
-:host(:hover) ::slotted(a) {
+:host(:hover) ::slotted(div) {
   color: red;
 }
 `;
@@ -14,7 +14,7 @@ const style = `
 const dom = `
   <div>
     <slot name="title">Default Title</slot>
-    <p><slot name="content">Default content.</slot></p>
+    <p><slot name="children">Default content.</slot></p>
   </div>
 `;
 
@@ -51,11 +51,6 @@ class MyComponent extends HTMLElement {
     if (this.hasAttribute("name")) {
       this.#shadowRoot.querySelector('slot[name="title"]').textContent =
         this.getAttribute("name");
-    }
-
-    if (this.hasAttribute("content")) {
-      this.#shadowRoot.querySelector('slot[name="content"]').textContent =
-        this.getAttribute("content");
     }
   }
 }
