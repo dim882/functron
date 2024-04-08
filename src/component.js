@@ -32,7 +32,7 @@ class MyComponent extends HTMLElement {
     //   missues with relationship bindings between elements like <label> and
     //   <input> if they are on opposite sides of the shadow DOM boundary
     this.#shadowRoot = this.attachShadow({
-      mode: "closed",
+      mode: 'closed',
       delegatesFocus: true,
     });
 
@@ -44,12 +44,12 @@ class MyComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("Custom element added to page.");
+    console.log('Custom element added to page.');
     this.update();
   }
 
   static get observedAttributes() {
-    return ["name"];
+    return ['name'];
   }
 
   attributeChangedCallback(attrName, oldVal, newVal) {
@@ -59,12 +59,11 @@ class MyComponent extends HTMLElement {
 
   update() {
     // Update component in response to attribute changes
-    if (this.hasAttribute("name")) {
-      this.#shadowRoot.querySelector('slot[name="title"]').textContent =
-        this.getAttribute("name");
+    if (this.hasAttribute('name')) {
+      this.#shadowRoot.querySelector('slot[name="title"]').textContent = this.getAttribute('name');
     }
   }
 }
 
 // Define the new element
-customElements.define("my-component", MyComponent);
+customElements.define('my-component', MyComponent);

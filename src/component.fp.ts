@@ -1,20 +1,15 @@
-type IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => void;
-
-const handleName: IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => {
-  shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
-};
+export type IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => void;
 
 export function createComponent({
-  name,
+  componentName,
   template,
   css,
-  attributes,
+  attrHandlers,
 }: {
-  name: string;
+  componentName: string;
   template: string;
   css: string;
-  attributes: string[];
-  attrHandlers?: Record<string, unknown>;
+  attrHandlers: Record<string, IAttrHandler>;
 }) {
   class Component extends HTMLElement {
     #shadowRoot;
@@ -37,19 +32,15 @@ export function createComponent({
 
     attributeChangedCallback(attrName, oldVal, newVal) {
       console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-      this.update();
+      attrHandlers[attrName](this, this.#shadowRoot);
     }
 
-    update() {
-      if (this.hasAttribute('name')) {
-        handleName(this, this.#shadowRoot);
-      }
-    }
+    update() {}
   }
 
-  console.log('creating element ', name);
+  console.log('creating element ', componentName);
 
-  customElements.define(name, Component);
+  customElements.define(componentName, Component);
 
   return Component;
 }

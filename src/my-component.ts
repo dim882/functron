@@ -1,4 +1,4 @@
-import { createComponent } from './component.fp.js';
+import { IAttrHandler, createComponent } from './component.fp.js';
 
 const style = `
 :host {
@@ -22,9 +22,15 @@ const dom = `
   </div>
 `;
 
+const handleName: IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => {
+  shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
+};
+
 createComponent({
-  name: 'my-component',
+  componentName: 'my-component',
   template: dom,
   css: style,
-  attributes: ['name'],
+  attrHandlers: {
+    title: handleName,
+  },
 });
