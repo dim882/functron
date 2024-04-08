@@ -1,4 +1,4 @@
-import { createComponent } from "./component.fp.js";
+import { createComponent } from './component.fp.js';
 
 const style = `
 :host {
@@ -22,4 +22,9 @@ const dom = `
   </div>
 `;
 
-createComponent("my-component", dom, style, ["name"]);
+createComponent({
+  name: 'my-component',
+  template: dom,
+  css: style,
+  attributes: ['name'],
+});

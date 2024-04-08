@@ -1,4 +1,14 @@
-export function createComponent(name: string, template: string, css: string, attributes: string[]) {
+export function createComponent({
+  name,
+  template,
+  css,
+  attributes,
+}: {
+  name: string;
+  template: string;
+  css: string;
+  attributes: string[];
+}) {
   function handleName(self: Component, shadowRoot: ShadowRoot) {
     shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
   }
