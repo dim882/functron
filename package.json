@@ -1,7 +1,9 @@
 {
   "name": "web-components",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "author": "Daniel Imal <mrdanimal@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "functional web components",
+  "private": true
 }
