@@ -1,4 +1,9 @@
-function createComponent(template: string, css: string, attributes: string[]) {
+export function createComponent(
+  name: string,
+  template: string,
+  css: string,
+  attributes: string[]
+) {
   class Component extends HTMLElement {
     #shadowRoot;
 
@@ -35,6 +40,8 @@ function createComponent(template: string, css: string, attributes: string[]) {
       }
     }
   }
+
+  customElements.define(name, Component);
 
   return Component;
 }
