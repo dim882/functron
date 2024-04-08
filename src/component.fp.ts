@@ -41,6 +41,8 @@ export function createComponent(
     }
   }
 
+  console.log("creating element");
+
   customElements.define(name, Component);
 
   return Component;
