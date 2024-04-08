@@ -7,7 +7,7 @@
   "description": "functional web components",
   "private": true,
   "scripts": {
-    "watch": "tsc -w --outDir ./dist src/component.fp.ts"
+    "watch": "tsc -w"
   },
   "devDependencies": {
     "typescript": "^5.4.4"
