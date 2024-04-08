@@ -5,11 +5,16 @@ export function createComponent({
   template,
   css,
   attrHandlers,
+  shadowDomSettings = {
+    mode: 'closed',
+    delegatesFocus: true,
+  },
 }: {
   componentName: string;
   template: string;
   css: string;
   attrHandlers: Record<string, IAttrHandler>;
+  shadowDomSettings?: ShadowRootInit;
 }) {
   class Component extends HTMLElement {
     #shadowRoot;
@@ -17,10 +22,7 @@ export function createComponent({
     constructor() {
       super();
 
-      this.#shadowRoot = this.attachShadow({
-        mode: 'closed',
-        delegatesFocus: true,
-      });
+      this.#shadowRoot = this.attachShadow(shadowDomSettings);
 
       this.#shadowRoot.innerHTML = `<style>${css}</style>${template}`;
     }
