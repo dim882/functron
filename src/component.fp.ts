@@ -1,5 +1,9 @@
 type IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => void;
 
+const handleName: IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => {
+  shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
+};
+
 export function createComponent({
   name,
   template,
@@ -12,10 +16,6 @@ export function createComponent({
   attributes: string[];
   attrHandlers?: Record<string, unknown>;
 }) {
-  const handleName: IAttrHandler = (self: Component, shadowRoot: ShadowRoot) => {
-    shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
-  };
-
   class Component extends HTMLElement {
     #shadowRoot;
 
