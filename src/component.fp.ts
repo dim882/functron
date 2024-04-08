@@ -1,9 +1,8 @@
-export function createComponent(
-  name: string,
-  template: string,
-  css: string,
-  attributes: string[]
-) {
+export function createComponent(name: string, template: string, css: string, attributes: string[]) {
+  function handleName(self: Component, shadowRoot: ShadowRoot) {
+    shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
+  }
+
   class Component extends HTMLElement {
     #shadowRoot;
 
@@ -11,7 +10,7 @@ export function createComponent(
       super();
 
       this.#shadowRoot = this.attachShadow({
-        mode: "closed",
+        mode: 'closed',
         delegatesFocus: true,
       });
 
@@ -19,7 +18,7 @@ export function createComponent(
     }
 
     connectedCallback() {
-      console.log("Custom element added to page.");
+      console.log('Custom element added to page.');
       this.update();
     }
 
@@ -33,14 +32,13 @@ export function createComponent(
     }
 
     update() {
-      if (this.hasAttribute("name")) {
-        this.#shadowRoot.querySelector('slot[name="title"]').textContent =
-          this.getAttribute("name");
+      if (this.hasAttribute('name')) {
+        handleName(this, this.#shadowRoot);
       }
     }
   }
 
-  console.log("creating element");
+  console.log('creating element');
 
   customElements.define(name, Component);
 
