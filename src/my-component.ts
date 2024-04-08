@@ -26,11 +26,12 @@ const handleName: IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => 
   shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
 };
 
-createComponent({
-  componentName: 'my-component',
+const MyComponent = createComponent({
   template: dom,
   css: style,
   attrHandlers: {
     title: handleName,
   },
 });
+
+customElements.define('my-component', MyComponent);

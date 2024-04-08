@@ -1,7 +1,6 @@
 export type IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => void;
 
 export function createComponent({
-  componentName,
   template,
   css,
   attrHandlers,
@@ -10,7 +9,6 @@ export function createComponent({
     delegatesFocus: true,
   },
 }: {
-  componentName: string;
   template: string;
   css: string;
   attrHandlers: Record<string, IAttrHandler>;
@@ -41,10 +39,6 @@ export function createComponent({
     disconnectedCallback() {}
     adoptedCallback() {}
   }
-
-  console.log('creating element ', componentName);
-
-  customElements.define(componentName, Component);
 
   return Component;
 }
