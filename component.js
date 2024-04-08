@@ -25,6 +25,12 @@ class MyComponent extends HTMLElement {
 
   constructor() {
     super();
+    // Using mode: closed and attaching it to a private member enforces encapsulation
+    // delegatesFocus: This helps with accessibility but doesn't solve all
+    //   maccessibility issues.  This will cause focus to go to the first focusable
+    //   melement if a user tabs into the shadow DOM, but it doesn't solve the
+    //   missues with relationship bindings between elements like <label> and
+    //   <input> if they are on opposite sides of the shadow DOM boundary
     this.#shadowRoot = this.attachShadow({
       mode: "closed",
       delegatesFocus: true,
