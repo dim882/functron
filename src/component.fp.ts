@@ -1,16 +1,16 @@
 function createComponent(template: string, css: string, attributes: string[]) {
   class Component extends HTMLElement {
-    #shadowRoot;
+    // #shadowRoot;
 
     constructor() {
       super();
 
-      this.#shadowRoot = this.attachShadow({
-        mode: "closed",
+      this.attachShadow({
+        mode: "open",
         delegatesFocus: true,
       });
 
-      this.#shadowRoot.innerHTML = `<style>${css}</style>${template}`;
+      this.shadowRoot.innerHTML = `<style>${css}</style>${template}`;
     }
 
     connectedCallback() {
@@ -18,9 +18,9 @@ function createComponent(template: string, css: string, attributes: string[]) {
       this.update();
     }
 
-    static get observedAttributes() {
-      return attributes;
-    }
+    // static get observedAttributes() {
+    //   return attributes;
+    // }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
       console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
@@ -30,7 +30,7 @@ function createComponent(template: string, css: string, attributes: string[]) {
     update() {
       // Update component in response to attribute changes
       if (this.hasAttribute("name")) {
-        this.#shadowRoot.querySelector('slot[name="title"]').textContent =
+        this.shadowRoot.querySelector('slot[name="title"]').textContent =
           this.getAttribute("name");
       }
     }
