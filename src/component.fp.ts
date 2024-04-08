@@ -33,7 +33,6 @@ export function createComponent(
     }
 
     update() {
-      // Update component in response to attribute changes
       if (this.hasAttribute("name")) {
         this.#shadowRoot.querySelector('slot[name="title"]').textContent =
           this.getAttribute("name");
