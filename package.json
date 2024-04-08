@@ -5,5 +5,8 @@
   "author": "Daniel Imal <mrdanimal@gmail.com>",
   "license": "MIT",
   "description": "functional web components",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "typescript": "^5.4.4"
+  }
 }
