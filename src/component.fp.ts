@@ -1,4 +1,4 @@
-export type IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => void;
+export type IAttrHandler = ({ self, shadowRoot }: { self: HTMLElement; shadowRoot: ShadowRoot }) => void;
 
 export function createComponent({
   template,
@@ -33,7 +33,7 @@ export function createComponent({
 
     attributeChangedCallback(attrName, oldVal, newVal) {
       console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-      attrHandlers[attrName](this, this.#shadowRoot);
+      attrHandlers[attrName]({ self: this, shadowRoot: this.#shadowRoot });
     }
 
     disconnectedCallback() {}

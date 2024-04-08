@@ -22,7 +22,7 @@ const dom = `
   </div>
 `;
 
-const handleName: IAttrHandler = (self: HTMLElement, shadowRoot: ShadowRoot) => {
+const handleName: IAttrHandler = ({ self, shadowRoot }) => {
   shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
 };
 
