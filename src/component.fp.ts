@@ -27,13 +27,17 @@ export function createComponent({
 
     connectedCallback() {
       console.log('Custom element added to page.');
-      // TODO: Render with `title`
+
+      // TODO: Render with any attributes
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
       console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
       attrHandlers[attrName](this, this.#shadowRoot);
     }
+
+    disconnectedCallback() {}
+    adoptedCallback() {}
   }
 
   console.log('creating element ', componentName);
