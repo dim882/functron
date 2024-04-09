@@ -10,17 +10,19 @@ const css = `
 }
 `;
 
-const path = `
-  M0 10 C 20 20, 
-  40 20, 
-  50 10
-`;
+const template = () => {
+  const path = `
+    M0 10 C 20 20, 
+    40 20, 
+    50 10
+  `;
 
-const template = () => `
-  <svg width="50" height="20">
-    <path d="${path}" stroke="black" fill="transparent"/>
-  </svg>
-`;
+  return `
+    <svg width="50" height="20">
+      <path d="${path}" stroke="black" fill="transparent"/>
+    </svg>
+    `;
+};
 
 const GraphNode = createComponent({
   template,
