@@ -1,4 +1,4 @@
-import { IAttrHandler, createComponent } from './component.fp';
+import { IAttrHandler, createComponent } from '../component.fp.js';
 
 const css = `
 :host {
@@ -15,8 +15,10 @@ const template = `
   </div>
 `;
 
-createComponent({
+const GraphNode = createComponent({
   template,
   css,
   attrHandlers: {},
 });
+
+customElements.define('graph-node', GraphNode);
