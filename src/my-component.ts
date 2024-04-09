@@ -1,6 +1,6 @@
 import { IAttrHandler, createComponent } from './component.fp.js';
 
-const style = `
+const css = `
 :host {
   display: block;
   border: 2px solid black;
@@ -18,6 +18,7 @@ const template = `
     <slot name="title">Default Title</slot>
     <p><slot name="children">Default content.</slot></p>
     <div><input type="text" name="first_name"/></div>
+    <slot name="other"></slot>
   </div>
 `;
 
@@ -27,7 +28,7 @@ const handleTitle: IAttrHandler = ({ shadowRoot, value }) => {
 
 const MyComponent = createComponent({
   template,
-  css: style,
+  css,
   attrHandlers: {
     title: handleTitle,
   },
