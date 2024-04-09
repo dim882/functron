@@ -1,12 +1,4 @@
-export type IAttrHandler = ({
-  self,
-  shadowRoot,
-  value,
-}: {
-  self: HTMLElement;
-  shadowRoot: ShadowRoot;
-  value: string;
-}) => void;
+export type IAttrHandler = ({ shadowRoot, value }: { shadowRoot: ShadowRoot; value: string }) => void;
 
 export function createComponent({
   template,
@@ -44,7 +36,6 @@ export function createComponent({
       const slotElement = this.#shadowRoot.querySelector(`slot[name='${attrName}']`);
 
       attrHandlers[attrName]({
-        self: this,
         shadowRoot: this.#shadowRoot,
         value: this.getAttribute(attrName),
       });
