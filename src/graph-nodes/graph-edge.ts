@@ -2,12 +2,17 @@ import { IAttrHandler, createComponent } from '../component.fp.js';
 
 const css = `
 :host {
+
+}
+
+:host svg {
+  border: 1px solid;
 }
 `;
 
 const template = `
   <svg width="50" height="20">
-    <path d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
+    <path d="M0 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
   </svg>
 `;
 
