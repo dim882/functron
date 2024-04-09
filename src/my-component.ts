@@ -21,15 +21,15 @@ const template = `
   </div>
 `;
 
-const handleName: IAttrHandler = ({ self, shadowRoot }) => {
-  shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('title');
+const handleTitle: IAttrHandler = ({ shadowRoot, value }) => {
+  shadowRoot.querySelector('slot[name="title"]').textContent = value;
 };
 
 const MyComponent = createComponent({
   template,
   css: style,
   attrHandlers: {
-    title: handleName,
+    title: handleTitle,
   },
 });
 
