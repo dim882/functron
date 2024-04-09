@@ -15,7 +15,7 @@ export function createComponent<T>({
   shadowDomSettings?: ShadowRootInit;
 }) {
   class Component extends HTMLElement {
-    #shadowRoot;
+    #shadowRoot: ShadowRoot;
 
     constructor() {
       super();
@@ -25,6 +25,8 @@ export function createComponent<T>({
       const content = typeof template === 'function' ? template(this) : template;
 
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
+
+      console.log(this.getBoundingClientRect());
     }
 
     connectedCallback() {

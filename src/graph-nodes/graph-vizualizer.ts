@@ -2,8 +2,8 @@ import { IAttrHandler, createComponent } from '../component.fp.js';
 
 const css = `
 :host {
+  position: relative;
   display: block;
-  border: 2px solid black;
   padding: 10px;
   font-family: sans-serif;
 }

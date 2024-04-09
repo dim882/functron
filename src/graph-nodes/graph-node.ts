@@ -2,17 +2,16 @@ import { IAttrHandler, createComponent } from '../component.fp.js';
 
 const css = `
 :host {
-  display: block;
-  border: 2px solid black;
+  display: inline;
+  border: 1px solid black;
   padding: 10px;
   font-family: sans-serif;
+  border-radius: 5px;
 }
 `;
 
 const template = `
-  <div>
-    <slot></slot>
-  </div>
+  <slot></slot>
 `;
 
 const GraphNode = createComponent({
