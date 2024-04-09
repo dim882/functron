@@ -9,7 +9,7 @@ export function createComponent<T>({
     delegatesFocus: true,
   },
 }: {
-  template: string | ((unknown) => string);
+  template: string | ((element: HTMLElement) => string);
   css: string;
   attrHandlers?: Record<string, IAttrHandler>;
   shadowDomSettings?: ShadowRootInit;
@@ -22,7 +22,7 @@ export function createComponent<T>({
 
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
 
-      const content = typeof template === 'function' ? template(null) : template;
+      const content = typeof template === 'function' ? template(this) : template;
 
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
     }

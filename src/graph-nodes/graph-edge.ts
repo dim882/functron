@@ -10,7 +10,9 @@ const css = `
 }
 `;
 
-const template = () => {
+const template = (element: typeof GraphNode) => {
+  console.log(element);
+
   const path = `
     M0 10 C 20 20, 
     40 20, 
@@ -24,9 +26,7 @@ const template = () => {
     `;
 };
 
-interface ITemplateArgs {}
-
-const GraphNode = createComponent<ITemplateArgs>({
+const GraphNode = createComponent({
   template,
   css,
   attrHandlers: {},
