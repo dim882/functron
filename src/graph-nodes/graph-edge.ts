@@ -6,9 +6,7 @@ const css = `
 `;
 
 const template = `
-  <div>
-    <slot name="name">edge</slot>
-  </div>
+  <div>---</div>
 `;
 
 const GraphNode = createComponent({

@@ -11,7 +11,7 @@ const css = `
 
 const template = `
   <div>
-    <slot name="name">Node</slot>
+    <slot></slot>
   </div>
 `;
 
