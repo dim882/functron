@@ -24,7 +24,9 @@ const template = () => {
     `;
 };
 
-const GraphNode = createComponent({
+interface ITemplateArgs {}
+
+const GraphNode = createComponent<ITemplateArgs>({
   template,
   css,
   attrHandlers: {},

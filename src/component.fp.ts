@@ -1,6 +1,6 @@
 export type IAttrHandler = ({ shadowRoot, value }: { shadowRoot: ShadowRoot; value: string }) => void;
 
-export function createComponent({
+export function createComponent<T>({
   template,
   css,
   attrHandlers,
