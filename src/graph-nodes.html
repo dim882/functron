@@ -4,13 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Graph Node Components</title>
+    <script src="../dist/graph-nodes/graph-vizualizer.js" type="module"></script>
     <script src="../dist/graph-nodes/graph-node.js" type="module"></script>
+    <script src="../dist/graph-nodes/graph-edge.js" type="module"></script>
   </head>
 
   <body>
-    <graph-node title="bar">
-      <div slot="title">My Title</div>
-      <div slot="children">children</div>
-    </graph-node>
+    <graph-vizualizer>
+      <graph-node title="foo"> Foo </graph-node>
+      <graph-edge></graph-edge>
+      <graph-node title="bar"> Bar </graph-node>
+      <graph-edge></graph-edge>
+      <graph-node title="baz"> Bar </graph-node>
+    </graph-vizualizer>
   </body>
 </html>
