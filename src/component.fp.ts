@@ -9,7 +9,7 @@ export function createComponent({
     delegatesFocus: true,
   },
 }: {
-  template: string;
+  template: string | ((unknown) => string);
   css: string;
   attrHandlers?: Record<string, IAttrHandler>;
   shadowDomSettings?: ShadowRootInit;
