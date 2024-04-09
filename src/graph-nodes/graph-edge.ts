@@ -6,7 +6,9 @@ const css = `
 `;
 
 const template = `
-  <div>---</div>
+  <svg width="50" height="20">
+    <path d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
+  </svg>
 `;
 
 const GraphNode = createComponent({
