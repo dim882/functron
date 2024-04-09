@@ -22,7 +22,9 @@ export function createComponent({
 
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
 
-      this.#shadowRoot.innerHTML = `<style>${css}</style>${template}`;
+      const content = typeof template === 'function' ? template(null) : template;
+
+      this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
     }
 
     connectedCallback() {

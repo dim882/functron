@@ -16,7 +16,7 @@ const path = `
   50 10
 `;
 
-const template = `
+const template = () => `
   <svg width="50" height="20">
     <path d="${path}" stroke="black" fill="transparent"/>
   </svg>
