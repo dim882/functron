@@ -24,6 +24,8 @@ export function createComponent<T>({
 
       const content = typeof template === 'function' ? template(this) : template;
 
+      console.log({ content });
+
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
 
       console.log(this.getBoundingClientRect());
