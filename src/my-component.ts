@@ -15,10 +15,9 @@ const style = `
 
 const template = `
   <div>
-    <input type="text" name="first_name"/>
-    <br/>
     <slot name="title">Default Title</slot>
     <p><slot name="children">Default content.</slot></p>
+    <div><input type="text" name="first_name"/></div>
   </div>
 `;
 
