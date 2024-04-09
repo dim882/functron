@@ -6,16 +6,16 @@ const css = `
   display: block;
   padding: 10px;
   font-family: sans-serif;
-  gap: 40px;
 }
 
 div {
+  display: flex;
+  gap: 40px;
 }
 `;
 
 const template = `
   <div>
-    foo
     <slot></slot>
   </div>
 `;
