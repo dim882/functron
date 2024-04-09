@@ -11,7 +11,7 @@ export function createComponent({
 }: {
   template: string;
   css: string;
-  attrHandlers: Record<string, IAttrHandler>;
+  attrHandlers?: Record<string, IAttrHandler>;
   shadowDomSettings?: ShadowRootInit;
 }) {
   class Component extends HTMLElement {

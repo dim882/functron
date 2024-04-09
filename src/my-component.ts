@@ -23,15 +23,15 @@ const dom = `
 `;
 
 const handleName: IAttrHandler = ({ self, shadowRoot }) => {
-  shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('name');
+  shadowRoot.querySelector('slot[name="title"]').textContent = self.getAttribute('title');
 };
 
 const MyComponent = createComponent({
   template: dom,
   css: style,
-  attrHandlers: {
-    title: handleName,
-  },
+  // attrHandlers: {
+  //   title: handleName,
+  // },
 });
 
 customElements.define('my-component', MyComponent);
