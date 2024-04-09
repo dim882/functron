@@ -6,7 +6,6 @@ const css = `
 }
 
 :host svg {
-  border: 1px solid;
 }
 `;
 
@@ -14,9 +13,8 @@ const template = (element: typeof GraphNode) => {
   console.log(element);
 
   const path = `
-    M0 10 C 20 20, 
-    40 20, 
-    50 10
+    M0 10 
+    l 100 0
   `;
 
   return `
