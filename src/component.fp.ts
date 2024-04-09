@@ -29,13 +29,10 @@ export function createComponent<T>({
 
     connectedCallback() {
       console.log('Custom element added to page.');
-
-      // TODO: Render with any attributes
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
       console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-      const slotElement = this.#shadowRoot.querySelector(`slot[name='${attrName}']`);
 
       attrHandlers[attrName]({
         shadowRoot: this.#shadowRoot,
