@@ -1,4 +1,12 @@
-export type IAttrHandler = ({ self, shadowRoot }: { self: HTMLElement; shadowRoot: ShadowRoot }) => void;
+export type IAttrHandler = ({
+  self,
+  shadowRoot,
+  value,
+}: {
+  self: HTMLElement;
+  shadowRoot: ShadowRoot;
+  value: string;
+}) => void;
 
 export function createComponent({
   template,
@@ -33,7 +41,13 @@ export function createComponent({
 
     attributeChangedCallback(attrName, oldVal, newVal) {
       console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-      attrHandlers[attrName]({ self: this, shadowRoot: this.#shadowRoot });
+      const slotElement = this.#shadowRoot.querySelector(`slot[name='${attrName}']`);
+
+      attrHandlers[attrName]({
+        self: this,
+        shadowRoot: this.#shadowRoot,
+        value: this.getAttribute(attrName),
+      });
     }
 
     disconnectedCallback() {}

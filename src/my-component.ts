@@ -13,7 +13,7 @@ const style = `
 }
 `;
 
-const dom = `
+const template = `
   <div>
     <input type="text" name="first_name"/>
     <br/>
@@ -27,11 +27,11 @@ const handleName: IAttrHandler = ({ self, shadowRoot }) => {
 };
 
 const MyComponent = createComponent({
-  template: dom,
+  template,
   css: style,
-  // attrHandlers: {
-  //   title: handleName,
-  // },
+  attrHandlers: {
+    title: handleName,
+  },
 });
 
 customElements.define('my-component', MyComponent);

@@ -16,7 +16,6 @@ const template = `
 `;
 
 createComponent({
-  componentName: 'graph-node',
   template,
   css,
   attrHandlers: {},
