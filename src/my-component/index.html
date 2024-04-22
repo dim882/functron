@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,11 +7,12 @@
     <title>Web Component Example</title>
     <script src="../../dist/my-component/my-component.js" type="module"></script>
   </head>
+
   <body>
-    <my-component title="foo"></my-component>
-    <my-component title="bar">
-      <div slot="title">My Title</div>
-      <div slot="children">children</div>
+    <my-component title="Title Attribute"></my-component>
+    <my-component>
+      <div slot="title">Title Slot</div>
+      <div slot="children">Children Slot</div>
     </my-component>
   </body>
 </html>

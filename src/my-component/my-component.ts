@@ -16,7 +16,7 @@ const css = `
 const template = `
   <div>
     <slot name="title">Default Title</slot>
-    <p><slot name="children">Default content.</slot></p>
+    <p><slot name="children">Default Children</slot></p>
     <div><input type="text" name="first_name"/></div>
     <slot name="other"></slot>
   </div>
