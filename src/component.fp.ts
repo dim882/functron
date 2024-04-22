@@ -1,4 +1,4 @@
-export type IAttrHandler = ({ shadowRoot, value }: { shadowRoot: ShadowRoot; value: string }) => void;
+export type IAttrHandler = ({ value }: { value: string }) => string;
 
 export function createComponent<T>({
   template,
@@ -39,9 +39,11 @@ export function createComponent<T>({
       console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
 
       attrHandlers[attrName]({
-        shadowRoot: this.#shadowRoot,
         value: this.getAttribute(attrName),
       });
+
+      // TODO: Use attrHandlers to apply changes to the DOM?
+      // shadowRoot.querySelector('slot[name="${attrName}"]').textContent = value;
     }
 
     disconnectedCallback() {}

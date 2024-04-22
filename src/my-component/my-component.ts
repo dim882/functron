@@ -22,9 +22,7 @@ const template = (component: HTMLElement) => `
   </div>
 `;
 
-const handleTitle: IAttrHandler = ({ shadowRoot, value }) => {
-  shadowRoot.querySelector('slot[name="title"]').textContent = value;
-};
+const handleTitle: IAttrHandler = ({ value }) => value;
 
 const MyComponent = createComponent({
   template,
