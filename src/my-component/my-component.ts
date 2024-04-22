@@ -1,4 +1,4 @@
-import { IAttrHandler, createComponent } from '../component.fp.js';
+import { IAttrHandler, ITemplateParams, createComponent } from '../component.fp.js';
 
 const css = `
 :host {
@@ -13,7 +13,7 @@ const css = `
 }
 `;
 
-const template = (component: HTMLElement) => `
+const template = (values: ITemplateParams) => `
   <div>
     <slot name="title">Default Title</slot>
     <p><slot name="children">Default Children</slot></p>

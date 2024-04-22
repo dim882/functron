@@ -1,5 +1,7 @@
 export type IAttrHandler = ({ value }: { value: string }) => string;
 
+export type ITemplateParams = Record<string, string>;
+
 export function createComponent<T>({
   template,
   css,
@@ -9,7 +11,7 @@ export function createComponent<T>({
     delegatesFocus: true,
   },
 }: {
-  template: string | ((element: HTMLElement) => string);
+  template: string | ((params: ITemplateParams) => string);
   css: string;
   attrHandlers?: Record<string, IAttrHandler>;
   shadowDomSettings?: ShadowRootInit;
@@ -26,7 +28,8 @@ export function createComponent<T>({
 
       console.log({ attributes });
 
-      const content = typeof template === 'function' ? template(this) : template;
+      // TODO: get template params here
+      const content = typeof template === 'function' ? template() : template;
 
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
     }
@@ -50,13 +53,16 @@ export function createComponent<T>({
     adoptedCallback() {}
   }
 
-  return Component;
-}
+  function getTemplateParams(component: HTMLAnchorElement) {
+    //
+  }
 
-function getAttributes(component: HTMLElement) {
-  return Object.fromEntries(
-    component.getAttributeNames().map((attrName) => {
-      return [attrName, component.getAttribute(attrName)];
-    })
-  );
+  function getAttributes(component: HTMLElement) {
+    return Object.fromEntries(
+      component.getAttributeNames().map((attrName) => {
+        return [attrName, component.getAttribute(attrName)];
+      })
+    );
+  }
+  return Component;
 }
