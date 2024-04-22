@@ -22,17 +22,17 @@ export function createComponent<T>({
 
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
 
+      const attributes = getAttributes(this);
+
+      console.log({ attributes });
+
       const content = typeof template === 'function' ? template(this) : template;
 
-      console.log({ content });
-
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
-
-      console.log(this.getBoundingClientRect());
     }
 
     connectedCallback() {
-      console.log('Custom element added to page.');
+      // console.log('Custom element added to page.');
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
@@ -49,4 +49,12 @@ export function createComponent<T>({
   }
 
   return Component;
+}
+
+function getAttributes(component: HTMLElement) {
+  return Object.fromEntries(
+    component.getAttributeNames().map((attrName) => {
+      return [attrName, component.getAttribute(attrName)];
+    })
+  );
 }
