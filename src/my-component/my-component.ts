@@ -13,7 +13,7 @@ const css = `
 }
 `;
 
-const template = `
+const template = (component: HTMLElement) => `
   <div>
     <slot name="title">Default Title</slot>
     <p><slot name="children">Default Children</slot></p>
