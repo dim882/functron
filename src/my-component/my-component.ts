@@ -35,4 +35,4 @@ const MyComponent = createComponent({
   },
 });
 
-customElements.define('my-component', MyComponent);
+customElements.define('ui-text-input', MyComponent);
