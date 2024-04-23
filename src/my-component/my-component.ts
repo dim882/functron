@@ -19,9 +19,8 @@ const template = (values: ITemplateParams) => {
   return `
   <div>
     <slot name="title">Default Title</slot>
-    <p><slot name="children">Default Children</slot></p>
     <div><input type="text" name="first_name" value="${values.firstname}"></div>
-    <slot name="other"></slot>
+    <p><slot name="children"></slot></p>
   </div>
 `;
 };
