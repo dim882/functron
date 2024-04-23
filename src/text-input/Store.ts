@@ -14,3 +14,5 @@ const proxyStore = new Proxy(Store, {
     return true;
   },
 });
+
+export default proxyStore;
