@@ -16,9 +16,9 @@ const css = `
 const template = (values: ITemplateParams) => {
   return `
     <div>
-      <slot name="title">Default Title</slot>
+      <label><slot name="label"></slot></label>
       <div><input type="text" name="first_name" value="${values.firstname}"></div>
-      <p><slot name="children"></slot></p>
+      <p><slot name="message"></slot></p>
     </div>
   `;
 };
