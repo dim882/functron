@@ -44,8 +44,13 @@ export function createComponent<T>({
 
       const style = document.createElement('style');
       this.#shadowRoot.appendChild(style);
+      let cssText;
 
-      const cssText = await loadCSS(cssPath);
+      if (cssPath) {
+        cssText = await loadCSS(cssPath);
+      } else if (css) {
+        cssText = css;
+      }
       style.textContent = cssText;
     }
 
