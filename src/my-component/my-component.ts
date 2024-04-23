@@ -13,22 +13,28 @@ const css = `
 }
 `;
 
-const template = (values: ITemplateParams) => `
+const template = (values: ITemplateParams) => {
+  console.log({ values });
+
+  return `
   <div>
     <slot name="title">Default Title</slot>
     <p><slot name="children">Default Children</slot></p>
-    <div><input type="text" name="first_name"/></div>
+    <div><input type="text" name="first_name" value="${values.firstname}"></div>
     <slot name="other"></slot>
   </div>
 `;
+};
 
-const handleTitle: IAttrHandler = ({ value }) => value;
+const handleTitle: IAttrHandler = ({ value }) => (value ? value : '');
+const handleFirstName: IAttrHandler = ({ value }) => (value ? value : '');
 
 const MyComponent = createComponent({
   template,
   css,
   attrHandlers: {
     title: handleTitle,
+    firstname: handleFirstName,
   },
 });
 

@@ -19,36 +19,24 @@ export function createComponent<T>({
   class Component extends HTMLElement {
     #shadowRoot: ShadowRoot;
 
+    static get observedAttributes() {
+      return Object.keys(attrHandlers);
+    }
+
     constructor() {
       super();
 
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
 
-      const attributes = getAttributes(this);
+      const templateParams = getAttributes(this);
 
-      console.log({ attributes });
-
-      // TODO: get template params here
-      const content = typeof template === 'function' ? template() : template;
+      const content = typeof template === 'function' ? template(templateParams) : template;
 
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
     }
 
-    connectedCallback() {
-      // console.log('Custom element added to page.');
-    }
-
-    attributeChangedCallback(attrName, oldVal, newVal) {
-      console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-
-      attrHandlers[attrName]({
-        value: this.getAttribute(attrName),
-      });
-
-      // TODO: Use attrHandlers to apply changes to the DOM?
-      // shadowRoot.querySelector('slot[name="${attrName}"]').textContent = value;
-    }
-
+    connectedCallback() {}
+    attributeChangedCallback(attrName, oldVal, newVal) {}
     disconnectedCallback() {}
     adoptedCallback() {}
   }

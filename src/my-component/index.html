@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Web Component Example</title>
-<script src="../../dist/my-component/my-component.js" type="module"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Component Example</title>
+  <script src="../../dist/my-component/my-component.js" type="module"></script>
+</head>
 
-<my-component title="Title Attribute"></my-component>
-<my-component>
-  <div slot="title">Title Slot</div>
-  <div slot="children">Children Slot</div>
-</my-component>
+<body>
+  <my-component title="Title Attribute"></my-component>
+  <my-component>
+    <div slot="title">Title Slot</div>
+    <div slot="children">Children Slot</div>
+  </my-component>
+</body>
