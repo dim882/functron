@@ -34,7 +34,9 @@ export function createComponent<T>({
     }
 
     connectedCallback() {}
-    attributeChangedCallback(attrName, oldVal, newVal) {}
+    attributeChangedCallback(attrName, oldVal, newVal) {
+      console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
+    }
     disconnectedCallback() {}
     adoptedCallback() {}
   }

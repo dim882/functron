@@ -29,7 +29,6 @@ const MyComponent = createComponent({
   template,
   css,
   attrHandlers: {
-    title: defaultHandler,
     fieldname: defaultHandler,
     value: defaultHandler,
   },
