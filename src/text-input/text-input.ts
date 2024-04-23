@@ -23,15 +23,14 @@ const template = (values: ITemplateParams) => {
   `;
 };
 
-const handleTitle: IAttrHandler = ({ value }) => (value ? value : '');
-const handleFirstName: IAttrHandler = ({ value }) => (value ? value : '');
+const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
 
 const MyComponent = createComponent({
   template,
   css,
   attrHandlers: {
-    title: handleTitle,
-    firstname: handleFirstName,
+    title: defaultHandler,
+    firstname: defaultHandler,
   },
 });
 
