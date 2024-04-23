@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Web Component Example</title>
   <script src="../../dist/text-input/text-input.js" type="module"></script>
+  <script defer>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const input = document.querySelector('ui-text-input');
+      input.addEventListener('click', (event) => console.log(event));
+      // input.innerHTML = '';
+      console.log(input.childNodes);
+    });
+  </script>
 </head>
 
 <body>

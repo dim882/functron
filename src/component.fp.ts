@@ -24,20 +24,26 @@ export function createComponent<T>({
     }
 
     constructor() {
+      console.log('--- constructor');
+
       super();
 
+      this.#shadowRoot = this.attachShadow(shadowDomSettings);
+    }
+
+    connectedCallback() {
+      console.log('--- connectedCallback');
       const templateParams = getAttributes(this);
       const content = typeof template === 'function' ? template(templateParams) : template;
-
-      this.#shadowRoot = this.attachShadow(shadowDomSettings);
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
     }
 
-    connectedCallback() {}
     attributeChangedCallback(attrName, oldVal, newVal) {
-      console.log(`Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
+      console.log(`--- attributeChangedCallback Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
     }
+
     disconnectedCallback() {}
+
     adoptedCallback() {}
   }
 

@@ -18,7 +18,7 @@ const template = (values: ITemplateParams) => {
     <div>
       <label><slot name="label"></slot></label>
       <div><input type="text" name="${values.fieldname}" value="${values.value}"></div>
-      <p><slot name="message"></slot></p>
+      <p class='my-message'><slot name="message"></slot></p>
     </div>
   `;
 };
@@ -28,6 +28,7 @@ const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
 const MyComponent = createComponent({
   template,
   css,
+  shadowDomSettings: { mode: 'open' },
   attrHandlers: {
     fieldname: defaultHandler,
     value: defaultHandler,
