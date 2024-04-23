@@ -10,6 +10,7 @@ const proxyStore = new Proxy(Store, {
 
   set(target, property, value) {
     target[property] = value;
+    console.log('setting ', property);
 
     return true;
   },
