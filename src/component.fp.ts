@@ -31,8 +31,8 @@ export function createComponent<T>({
 
       super();
 
-      loadAndApplyCSS(this.#shadowRoot, cssPath);
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
+      loadAndApplyCSS(this.#shadowRoot, cssPath);
       console.log('shadowRoot', this.#shadowRoot);
     }
 
@@ -60,28 +60,29 @@ export function createComponent<T>({
       })
     );
   }
-  async function loadAndApplyCSS(rootElement: ShadowRoot, cssFilePath: string) {
-    console.log('loading ', cssFilePath);
-
-    const style = document.createElement('style');
-    console.log('applying styles to ', { rootElement });
-
-    rootElement.appendChild(style);
-
-    try {
-      const response = await fetch(cssFilePath);
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const cssText = await response.text();
-
-      style.textContent = cssText;
-    } catch (error) {
-      console.error('Failed to fetch CSS:', error);
-    }
-  }
 
   return Component;
+}
+
+async function loadAndApplyCSS(rootElement: ShadowRoot, cssFilePath: string) {
+  console.log('loading ', cssFilePath);
+
+  const style = document.createElement('style');
+  console.log('applying styles to ', { rootElement });
+
+  rootElement.appendChild(style);
+
+  try {
+    const response = await fetch(cssFilePath);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const cssText = await response.text();
+
+    style.textContent = cssText;
+  } catch (error) {
+    console.error('Failed to fetch CSS:', error);
+  }
 }
