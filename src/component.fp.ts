@@ -26,13 +26,10 @@ export function createComponent<T>({
     constructor() {
       super();
 
-      this.#shadowRoot = this.attachShadow(shadowDomSettings);
-
       const templateParams = getAttributes(this);
-      console.log({ templateParams });
-
       const content = typeof template === 'function' ? template(templateParams) : template;
 
+      this.#shadowRoot = this.attachShadow(shadowDomSettings);
       this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
     }
 
@@ -42,10 +39,6 @@ export function createComponent<T>({
     adoptedCallback() {}
   }
 
-  function getTemplateParams(component: HTMLAnchorElement) {
-    //
-  }
-
   function getAttributes(component: HTMLElement) {
     return Object.fromEntries(
       component.getAttributeNames().map((attrName) => {
@@ -53,5 +46,6 @@ export function createComponent<T>({
       })
     );
   }
+
   return Component;
 }
