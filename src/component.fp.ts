@@ -29,6 +29,7 @@ export function createComponent<T>({
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
 
       const templateParams = getAttributes(this);
+      console.log({ templateParams });
 
       const content = typeof template === 'function' ? template(templateParams) : template;
 
