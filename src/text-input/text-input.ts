@@ -17,7 +17,7 @@ const template = (values: ITemplateParams) => {
   return `
     <div>
       <label><slot name="label"></slot></label>
-      <div><input type="text" name="first_name" value="${values.firstname}"></div>
+      <div><input type="text" name="${values.fieldname}" value="${values.firstname}"></div>
       <p><slot name="message"></slot></p>
     </div>
   `;
@@ -31,6 +31,7 @@ const MyComponent = createComponent({
   attrHandlers: {
     title: defaultHandler,
     firstname: defaultHandler,
+    fieldname: defaultHandler,
   },
 });
 
