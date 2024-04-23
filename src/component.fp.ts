@@ -32,16 +32,21 @@ export function createComponent<T>({
       super();
 
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
-      console.log('shadowRoot', this.#shadowRoot);
     }
 
-    connectedCallback() {
+    async connectedCallback() {
       console.log('--- connectedCallback');
       const templateParams = getAttributes(this);
       const content = typeof template === 'function' ? template(templateParams) : template;
+
       // this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
       this.#shadowRoot.innerHTML = `${content}`;
-      loadAndApplyCSS(this.#shadowRoot, cssPath);
+
+      const style = document.createElement('style');
+      this.#shadowRoot.appendChild(style);
+
+      const cssText = await loadCSS(cssPath);
+      style.textContent = cssText;
     }
 
     disconnectedCallback() {}
@@ -64,13 +69,8 @@ export function createComponent<T>({
   return Component;
 }
 
-async function loadAndApplyCSS(rootElement: ShadowRoot, cssFilePath: string) {
+async function loadCSS(cssFilePath: string) {
   console.log('loading ', cssFilePath);
-
-  const style = document.createElement('style');
-  console.log('applying styles to ', { rootElement });
-
-  rootElement.appendChild(style);
 
   try {
     const response = await fetch(cssFilePath);
@@ -79,9 +79,7 @@ async function loadAndApplyCSS(rootElement: ShadowRoot, cssFilePath: string) {
       throw new Error('Network response was not ok');
     }
 
-    const cssText = await response.text();
-
-    style.textContent = cssText;
+    return await response.text();
   } catch (error) {
     console.error('Failed to fetch CSS:', error);
   }
