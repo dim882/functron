@@ -39,8 +39,7 @@ export function createComponent<T>({
       const templateParams = getAttributes(this);
       const content = typeof template === 'function' ? template(templateParams) : template;
 
-      // this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
-      this.#shadowRoot.innerHTML = `${content}`;
+      this.#shadowRoot.innerHTML = content;
 
       const style = document.createElement('style');
       this.#shadowRoot.appendChild(style);
