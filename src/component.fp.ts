@@ -13,7 +13,7 @@ export function createComponent<T>({
   },
 }: {
   template: string | ((params: ITemplateParams) => string);
-  css: string;
+  css?: string;
   cssPath?: string;
   attrHandlers?: Record<string, IAttrHandler>;
   shadowDomSettings?: ShadowRootInit;
@@ -32,7 +32,6 @@ export function createComponent<T>({
       super();
 
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
-      loadAndApplyCSS(this.#shadowRoot, cssPath);
       console.log('shadowRoot', this.#shadowRoot);
     }
 
@@ -41,7 +40,8 @@ export function createComponent<T>({
       const templateParams = getAttributes(this);
       const content = typeof template === 'function' ? template(templateParams) : template;
       // this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
-      this.#shadowRoot.innerHTML = `<style>${css}</style>${content}`;
+      this.#shadowRoot.innerHTML = `${content}`;
+      loadAndApplyCSS(this.#shadowRoot, cssPath);
     }
 
     disconnectedCallback() {}

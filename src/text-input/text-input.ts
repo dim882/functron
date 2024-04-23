@@ -27,7 +27,7 @@ const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
 
 const MyComponent = createComponent({
   template,
-  css,
+  // css,
   cssPath: './text-input.css',
   shadowDomSettings: { mode: 'open' },
   attrHandlers: {
