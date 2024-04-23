@@ -57,3 +57,23 @@ export function createComponent<T>({
 
   return Component;
 }
+
+export async function loadAndApplyCSS(cssFilePath) {
+  const style = document.createElement('style');
+
+  document.head.appendChild(style);
+
+  try {
+    const response = await fetch(cssFilePath);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const cssText = await response.text();
+
+    style.textContent = cssText;
+  } catch (error) {
+    console.error('Failed to fetch CSS:', error);
+  }
+}
