@@ -20,6 +20,10 @@ export function createComponent<A, S = A>({
     #shadowRoot: ShadowRoot;
     #state: S;
 
+    static get observedAttributes() {
+      return Object.keys(attrHandlers);
+    }
+
     constructor() {
       console.log('--- constructor');
 
