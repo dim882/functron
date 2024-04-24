@@ -79,10 +79,10 @@ async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
 
   dom.appendChild(style);
 
-  style.textContent = cssPath ? await loadCSS(cssPath) : css;
+  style.textContent = cssPath ? await loadCss(cssPath) : css;
 }
 
-async function loadCSS(cssFilePath: string) {
+async function loadCss(cssFilePath: string) {
   console.log('loading ', cssFilePath);
 
   try {
