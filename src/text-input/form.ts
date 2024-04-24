@@ -1,8 +1,8 @@
-import { IAttrHandler, ITemplateParams, createComponent } from '../component.fp.js';
+import { createComponent } from '../component.fp.js';
 
 const MyComponent = createComponent({
   cssPath: './form.css',
-  template: (values: ITemplateParams) => {
+  template: (values) => {
     return `
       <form>
         <slot></slot>

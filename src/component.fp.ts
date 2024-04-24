@@ -1,8 +1,6 @@
 export type IAttrHandler = ({ value }: { value: string }) => string;
 
-export type ITemplateParams = Record<string, string>;
-
-export function createComponent<A, S>({
+export function createComponent<A, S = A>({
   template,
   css,
   cssPath,
@@ -12,7 +10,7 @@ export function createComponent<A, S>({
     delegatesFocus: true,
   },
 }: {
-  template: string | ((params: ITemplateParams) => string);
+  template: string | ((params: S) => string);
   css?: string;
   cssPath?: string;
   attrHandlers?: Record<string, IAttrHandler>;
@@ -20,7 +18,7 @@ export function createComponent<A, S>({
 }) {
   class Component extends HTMLElement {
     #shadowRoot: ShadowRoot;
-    #state: object;
+    #state: S;
 
     constructor() {
       console.log('--- constructor');
