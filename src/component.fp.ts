@@ -2,7 +2,7 @@ export type IAttrHandler = ({ value }: { value: string }) => string;
 
 const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
 
-export function createComponent<A, S = A>({
+export function createComponent<A, S>({
   template,
   css,
   cssPath,
@@ -16,7 +16,7 @@ export function createComponent<A, S = A>({
   template: string | ((params: S) => string);
   css?: string;
   cssPath?: string;
-  attributes?: string[];
+  attributes?: A;
   mapAttributesToState?: (attributes: A) => S;
   shadowDomSettings?: ShadowRootInit;
 }) {
