@@ -3,6 +3,13 @@ import { createComponent } from '../component.fp.js';
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
+  mapAttributesToState(attributes, state) {
+    return {
+      ...state,
+      name: attributes.fieldname,
+      value: attributes.value + '!',
+    };
+  },
   template: (state) => {
     return `
       <div>

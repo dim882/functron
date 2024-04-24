@@ -50,24 +50,26 @@ export function createComponent<AttributeNames extends string[], State>({
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
       console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
 
-      mapAttributesToState
-        ? mapAttributesToState(getAttributes(this), this.#state)
-        : this.mapAttributesToState(attrName, newVal);
+      if (mapAttributesToState) {
+        const newState = mapAttributesToState(getAttributes(this), this.#state);
+        console.log({ newState });
 
+        this.setState(newState);
+      }
       console.log('state', this.#state);
     }
 
-    private mapAttributesToState(attrName: string, newVal: string) {
-      this.setState({
-        [attrName]: newVal,
-      });
-    }
+    // private mapAttributesToState(attrName: string, newVal: string) {
+    //   this.setState({
+    //     [attrName]: newVal,
+    //   });
+    // }
 
     disconnectedCallback() {}
 
     adoptedCallback() {}
 
-    setState(newState: object) {
+    setState(newState: State) {
       this.#state = {
         ...this.#state,
         ...newState,
