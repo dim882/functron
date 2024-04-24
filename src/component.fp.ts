@@ -1,7 +1,3 @@
-export type IAttrHandler<Attributes, State> = () => State;
-
-// const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
-
 export function createComponent<AttributeNames extends string[], State>({
   render,
   css,
@@ -20,6 +16,8 @@ export function createComponent<AttributeNames extends string[], State>({
   mapAttributesToState?: (attributes: Record<AttributeNames[number], string>, state: State) => State;
   shadowDomSettings?: ShadowRootInit;
 }) {
+  type Attributes = Record<AttributeNames[number], string>;
+
   class Component extends HTMLElement {
     #shadowRoot: ShadowRoot;
     #state: State;
@@ -68,12 +66,12 @@ export function createComponent<AttributeNames extends string[], State>({
     }
   }
 
-  function getAttributes(component: HTMLElement): Record<AttributeNames[number], string> {
+  function getAttributes(component: HTMLElement): Attributes {
     return Object.fromEntries(
       component.getAttributeNames().map((attrName) => {
         return [attrName, component.getAttribute(attrName)];
       })
-    ) as Record<AttributeNames[number], string>;
+    ) as Attributes;
   }
 
   return Component;
