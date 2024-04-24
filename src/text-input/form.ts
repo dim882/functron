@@ -2,7 +2,7 @@ import { createComponent } from '../component.fp.js';
 
 const MyComponent = createComponent({
   cssPath: './form.css',
-  template: (values) => {
+  template: (state) => {
     return `
       <form>
         <slot></slot>

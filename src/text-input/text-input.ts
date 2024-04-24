@@ -3,11 +3,11 @@ import { IAttrHandler, createComponent } from '../component.fp.js';
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
-  template: (values) => {
+  template: (state) => {
     return `
       <div>
         <label><slot name="label"></slot></label>
-        <div><input type="text" name="${values.name}" value="${values.value}"></div>
+        <div><input type="text" name="${state.name}" value="${state.value}"></div>
         <p class='my-message'><slot name="message"></slot></p>
       </div>
     `;
