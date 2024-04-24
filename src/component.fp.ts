@@ -1,8 +1,8 @@
-export type IAttrHandler = ({ value }: { value: string }) => string;
+export type IAttrHandler<Attributes, State> = () => State;
 
-const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
+// const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
 
-export function createComponent<A, S>({
+export function createComponent<AttributeNames, State>({
   template,
   css,
   cssPath,
@@ -13,16 +13,16 @@ export function createComponent<A, S>({
     delegatesFocus: true,
   },
 }: {
-  template: string | ((params: S) => string);
+  template: string | ((params: State) => string);
   css?: string;
   cssPath?: string;
-  attributes?: A;
-  mapAttributesToState?: (attributes: A) => S;
+  attributes?: AttributeNames;
+  mapAttributesToState?: (attributes: AttributeNames, state: State) => State;
   shadowDomSettings?: ShadowRootInit;
 }) {
   class Component extends HTMLElement {
     #shadowRoot: ShadowRoot;
-    #state: S;
+    #state: State;
 
     static get observedAttributes() {
       return attributes;
