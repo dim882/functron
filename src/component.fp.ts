@@ -21,7 +21,7 @@ export function createComponent<A, S = A>({
     #state: S;
 
     static get observedAttributes() {
-      return Object.keys(attrHandlers);
+      return attrHandlers && Object.keys(attrHandlers);
     }
 
     constructor() {
