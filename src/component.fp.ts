@@ -52,11 +52,16 @@ export function createComponent<AttributeNames, State>({
 
       // TODO: Expose attribute handling hook to call here
       // type AttributeHandler = (S, A) => S
+
+      this.mapAttributesToState(attrName, newVal);
+
+      console.log('state', this.#state);
+    }
+
+    private mapAttributesToState(attrName: any, newVal: any) {
       this.setState({
         [attrName]: newVal,
       });
-
-      console.log('state', this.#state);
     }
 
     disconnectedCallback() {}
