@@ -1,13 +1,8 @@
 import { IAttrHandler, createComponent } from '../component.fp.js';
 
-const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
-
 const MyComponent = createComponent<{ fieldname: string; value: string }>({
   cssPath: './text-input.css',
-  attrHandlers: {
-    fieldname: defaultHandler,
-    value: defaultHandler,
-  },
+  attributes: ['fieldname', 'value'],
   template: (values) => {
     return `
       <div>
