@@ -24,10 +24,6 @@ export function createComponent<T>({
 
     attributeChangedCallback: (attrName: any, oldVal: any, newVal: any) => void;
 
-    static get observedAttributes() {
-      return Object.keys(attrHandlers);
-    }
-
     constructor() {
       console.log('--- constructor');
 
@@ -43,20 +39,7 @@ export function createComponent<T>({
 
       this.#shadowRoot.innerHTML = content;
 
-      await this.applyCss();
-    }
-
-    private async applyCss() {
-      const style = document.createElement('style');
-      this.#shadowRoot.appendChild(style);
-      let cssText;
-
-      if (cssPath) {
-        cssText = await loadCSS(cssPath);
-      } else if (css) {
-        cssText = css;
-      }
-      style.textContent = cssText;
+      await applyCss(this.#shadowRoot, cssPath, css);
     }
 
     disconnectedCallback() {}
@@ -79,6 +62,18 @@ export function createComponent<T>({
   return Component;
 }
 
+async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
+  const style = document.createElement('style');
+  dom.appendChild(style);
+  let cssText;
+
+  if (cssPath) {
+    cssText = await loadCSS(cssPath);
+  } else if (css) {
+    cssText = css;
+  }
+  style.textContent = cssText;
+}
 async function loadCSS(cssFilePath: string) {
   console.log('loading ', cssFilePath);
 
