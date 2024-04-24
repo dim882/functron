@@ -51,11 +51,9 @@ export function createComponent<AttributeNames extends string[], State>({
 
       if (mapAttributesToState) {
         const newState = mapAttributesToState(getAttributes(this), this.#state);
-        console.log({ newState });
 
         this.setState(newState);
       }
-      console.log('state', this.#state);
     }
 
     disconnectedCallback() {}
