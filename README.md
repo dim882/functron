@@ -4,6 +4,8 @@
 $ yarn i
 ```
 
+Or use `npm` or whatever your package manager of choice is.
+
 ## Build the code
 
 ```
