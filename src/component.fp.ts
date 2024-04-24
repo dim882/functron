@@ -20,9 +20,7 @@ export function createComponent<T>({
 }) {
   class Component extends HTMLElement {
     #shadowRoot: ShadowRoot;
-    #state: unknown;
-
-    attributeChangedCallback: (attrName: any, oldVal: any, newVal: any) => void;
+    #state: object;
 
     constructor() {
       console.log('--- constructor');
@@ -42,14 +40,21 @@ export function createComponent<T>({
       await applyCss(this.#shadowRoot, cssPath, css);
     }
 
+    attributeChangedCallback(attrName, oldVal, newVal) {
+      console.log(`--- attributeChangedCallback Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
+    }
+
     disconnectedCallback() {}
 
     adoptedCallback() {}
-  }
 
-  Component.prototype.attributeChangedCallback = (attrName, oldVal, newVal) => {
-    console.log(`--- attributeChangedCallback Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
-  };
+    setState(newState: object) {
+      this.#state = {
+        ...this.#state,
+        newState,
+      };
+    }
+  }
 
   function getAttributes(component: HTMLElement) {
     return Object.fromEntries(
