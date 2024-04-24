@@ -51,7 +51,7 @@ export function createComponent<A, S = A>({
       console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
 
       // TODO: Expose attribute handling hook to call here
-      // type AttributeHandler = (A) => S
+      // type AttributeHandler = (S, A) => S
       this.setState({
         [attrName]: newVal,
       });
