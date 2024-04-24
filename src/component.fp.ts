@@ -38,9 +38,7 @@ export function createComponent<A, S = A>({
 
     async connectedCallback() {
       console.log('--- connectedCallback');
-
-      // TODO implement attribute handling
-      this.setState(getAttributes(this));
+      console.log('attributes', this.getAttributeNames());
 
       const content = typeof template === 'function' ? template(this.#state) : template;
 
@@ -57,6 +55,8 @@ export function createComponent<A, S = A>({
       this.setState({
         [attrName]: newVal,
       });
+
+      console.log('state', this.#state);
     }
 
     disconnectedCallback() {}
