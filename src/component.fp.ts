@@ -2,7 +2,7 @@ export type IAttrHandler<Attributes, State> = () => State;
 
 // const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
 
-export function createComponent<AttributeNames, State>({
+export function createComponent<AttributeNames extends string[], State>({
   template,
   css,
   cssPath,
@@ -17,7 +17,7 @@ export function createComponent<AttributeNames, State>({
   css?: string;
   cssPath?: string;
   attributes?: AttributeNames;
-  mapAttributesToState?: (attributes: AttributeNames, state: State) => State;
+  mapAttributesToState?: (attributes: Record<AttributeNames[number], string>, state: State) => State;
   shadowDomSettings?: ShadowRootInit;
 }) {
   class Component extends HTMLElement {
@@ -47,18 +47,17 @@ export function createComponent<AttributeNames, State>({
       await applyCss(this.#shadowRoot, cssPath, css);
     }
 
-    attributeChangedCallback(attrName, oldVal, newVal) {
+    attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
       console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
 
-      // TODO: Expose attribute handling hook to call here
-      // type AttributeHandler = (S, A) => S
-
-      this.mapAttributesToState(attrName, newVal);
+      mapAttributesToState
+        ? mapAttributesToState(getAttributes(this), this.#state)
+        : this.mapAttributesToState(attrName, newVal);
 
       console.log('state', this.#state);
     }
 
-    private mapAttributesToState(attrName: any, newVal: any) {
+    private mapAttributesToState(attrName: string, newVal: string) {
       this.setState({
         [attrName]: newVal,
       });
@@ -76,12 +75,12 @@ export function createComponent<AttributeNames, State>({
     }
   }
 
-  function getAttributes(component: HTMLElement) {
+  function getAttributes(component: HTMLElement): Record<AttributeNames[number], string> {
     return Object.fromEntries(
       component.getAttributeNames().map((attrName) => {
         return [attrName, component.getAttribute(attrName)];
       })
-    );
+    ) as Record<AttributeNames[number], string>;
   }
 
   return Component;
