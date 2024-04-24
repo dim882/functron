@@ -3,7 +3,7 @@ export type IAttrHandler<Attributes, State> = () => State;
 // const defaultHandler: IAttrHandler = ({ value }) => (value ? value : '');
 
 export function createComponent<AttributeNames extends string[], State>({
-  template,
+  render,
   css,
   cssPath,
   attributes,
@@ -13,7 +13,7 @@ export function createComponent<AttributeNames extends string[], State>({
     delegatesFocus: true,
   },
 }: {
-  template: string | ((params: State) => string);
+  render: string | ((params: State) => string);
   css?: string;
   cssPath?: string;
   attributes?: AttributeNames;
@@ -40,7 +40,7 @@ export function createComponent<AttributeNames extends string[], State>({
       console.log('--- connectedCallback');
       console.log('attributes', this.getAttributeNames());
 
-      const content = typeof template === 'function' ? template(this.#state) : template;
+      const content = typeof render === 'function' ? render(this.#state) : render;
 
       this.#shadowRoot.innerHTML = content;
 

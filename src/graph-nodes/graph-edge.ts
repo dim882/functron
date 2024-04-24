@@ -26,7 +26,7 @@ const template = (element: typeof GraphNode) => {
 };
 
 const GraphNode = createComponent({
-  template,
+  render: template,
   css,
   attrHandlers: {},
 });

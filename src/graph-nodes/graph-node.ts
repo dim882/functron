@@ -15,7 +15,7 @@ const template = `
 `;
 
 const GraphNode = createComponent({
-  template,
+  render: template,
   css,
   attrHandlers: {},
 });

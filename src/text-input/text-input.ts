@@ -10,7 +10,7 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
       value: attributes.value + '!',
     };
   },
-  template: (state) => {
+  render: (state) => {
     return `
       <div>
         <label><slot name="label"></slot></label>
