@@ -2,7 +2,7 @@ export type IAttrHandler = ({ value }: { value: string }) => string;
 
 export type ITemplateParams = Record<string, string>;
 
-export function createComponent<T>({
+export function createComponent<A, S>({
   template,
   css,
   cssPath,
@@ -32,8 +32,11 @@ export function createComponent<T>({
 
     async connectedCallback() {
       console.log('--- connectedCallback');
-      const templateParams = getAttributes(this);
-      const content = typeof template === 'function' ? template(templateParams) : template;
+
+      // TODO implement attribute handling
+      this.setState(getAttributes(this));
+
+      const content = typeof template === 'function' ? template(this.#state) : template;
 
       this.#shadowRoot.innerHTML = content;
 
@@ -55,7 +58,7 @@ export function createComponent<T>({
     setState(newState: object) {
       this.#state = {
         ...this.#state,
-        newState,
+        ...newState,
       };
     }
   }
