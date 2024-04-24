@@ -20,6 +20,8 @@ export function createComponent<T>({
 }) {
   class Component extends HTMLElement {
     #shadowRoot: ShadowRoot;
+    #state: unknown;
+
     attributeChangedCallback: (attrName: any, oldVal: any, newVal: any) => void;
 
     static get observedAttributes() {
@@ -41,6 +43,10 @@ export function createComponent<T>({
 
       this.#shadowRoot.innerHTML = content;
 
+      await this.applyCss();
+    }
+
+    private async applyCss() {
       const style = document.createElement('style');
       this.#shadowRoot.appendChild(style);
       let cssText;
