@@ -44,11 +44,11 @@ export function createComponent<A, S>({
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
-      console.log(`--- ?attributeChangedCallback Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
+      console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
+
       this.setState({
         [attrName]: newVal,
       });
-      console.log('state', this.#state);
     }
 
     disconnectedCallback() {}
