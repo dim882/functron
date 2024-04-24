@@ -76,15 +76,10 @@ export function createComponent<A, S = A>({
 
 async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
   const style = document.createElement('style');
-  dom.appendChild(style);
-  let cssText;
 
-  if (cssPath) {
-    cssText = await loadCSS(cssPath);
-  } else if (css) {
-    cssText = css;
-  }
-  style.textContent = cssText;
+  dom.appendChild(style);
+
+  style.textContent = cssPath ? await loadCSS(cssPath) : css;
 }
 
 async function loadCSS(cssFilePath: string) {
