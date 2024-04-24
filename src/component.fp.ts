@@ -41,7 +41,11 @@ export function createComponent<T>({
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
-      console.log(`--- attributeChangedCallback Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
+      console.log(`--- ?attributeChangedCallback Attribute ${attrName} changed from ${oldVal} to ${newVal}`);
+      this.setState({
+        [attrName]: newVal,
+      });
+      console.log('state', this.#state);
     }
 
     disconnectedCallback() {}
@@ -79,6 +83,7 @@ async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
   }
   style.textContent = cssText;
 }
+
 async function loadCSS(cssFilePath: string) {
   console.log('loading ', cssFilePath);
 
