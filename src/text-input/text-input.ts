@@ -1,4 +1,4 @@
-import { IAttrHandler, createComponent } from '../component.fp.js';
+import { createComponent } from '../component.fp.js';
 
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
