@@ -38,7 +38,6 @@ export function createComponent<AttributeNames extends string[], State>({
 
     async connectedCallback() {
       console.log('--- connectedCallback');
-      console.log('attributes', this.getAttributeNames());
 
       const content = typeof render === 'function' ? render(this.#state) : render;
 
@@ -58,12 +57,6 @@ export function createComponent<AttributeNames extends string[], State>({
       }
       console.log('state', this.#state);
     }
-
-    // private mapAttributesToState(attrName: string, newVal: string) {
-    //   this.setState({
-    //     [attrName]: newVal,
-    //   });
-    // }
 
     disconnectedCallback() {}
 
