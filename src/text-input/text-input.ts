@@ -1,6 +1,6 @@
-import { createComponent } from '../createComponent.decorated.js';
+import { createDecoratedComponent } from '../createComponent.decorated.js';
 
-const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
+const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
   mapAttributesToState(attributes, state) {

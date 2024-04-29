@@ -1,4 +1,6 @@
-export function createComponent<AttributeNames extends string[], State>({
+import { createComponent } from './createComponent.base.js';
+
+export function createDecoratedComponent<AttributeNames extends string[], State>({
   render,
   css,
   cssPath,
