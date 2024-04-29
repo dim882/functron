@@ -2,7 +2,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[]> {
   constructor: (element: HTMLElement) => void;
   connectedCallback: (element: HTMLElement) => void;
   disconnectedCallback?: (element: HTMLElement) => void;
-  attributeChangedCallback?: (element: HTMLElement) => void;
+  attributeChangedCallback?: (element: HTMLElement, attrName: string, oldVal: string, newVal: string) => void;
   adoptedCallback?: (element: HTMLElement) => void;
   attributes?: AttributeNames;
 }
@@ -36,7 +36,7 @@ export function createComponent<AttributeNames extends string[]>({
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
       console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
 
-      attributeChangedCallback(this);
+      attributeChangedCallback(this, attrName, oldVal, newVal);
     }
 
     disconnectedCallback() {

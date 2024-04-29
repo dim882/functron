@@ -20,42 +20,35 @@ export function createDecoratedComponent<AttributeNames extends string[], State>
 }) {
   type Attributes = Record<AttributeNames[number], string>;
 
-  class Component extends HTMLElement {
-    #shadowRoot: ShadowRoot;
-    #state: State;
+  let shadowRoot: ShadowRoot;
+  let state: State;
 
-    static get observedAttributes() {
-      return attributes;
-    }
+  return createComponent({
+    attributes,
+    constructor(element) {
+      shadowRoot = element.attachShadow(shadowDomSettings);
+    },
+    connectedCallback: async (element) => {
+      const content = typeof render === 'function' ? render(state) : render;
 
-    constructor() {
-      super();
+      shadowRoot.innerHTML = content;
 
-      this.#shadowRoot = this.attachShadow(shadowDomSettings);
-    }
-
-    async connectedCallback() {
-      const content = typeof render === 'function' ? render(this.#state) : render;
-
-      this.#shadowRoot.innerHTML = content;
-
-      await applyCss(this.#shadowRoot, cssPath, css);
-    }
-
-    attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
+      await applyCss(shadowRoot, cssPath, css);
+    },
+    attributeChangedCallback: (element, attrName: string, oldVal: string, newVal: string) => {
       if (mapAttributesToState) {
-        const newState = mapAttributesToState(getAttributes(this), this.#state);
+        const newState = mapAttributesToState(getAttributes(element), state);
 
-        this.setState(newState);
+        setState(newState);
       }
-    }
+    },
+  });
 
-    setState(newState: State) {
-      this.#state = {
-        ...this.#state,
-        ...newState,
-      };
-    }
+  function setState(newState: State) {
+    state = {
+      ...state,
+      ...newState,
+    };
   }
 
   function getAttributes(component: HTMLElement): Attributes {
@@ -65,8 +58,6 @@ export function createDecoratedComponent<AttributeNames extends string[], State>
       })
     ) as Attributes;
   }
-
-  return Component;
 }
 
 async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
