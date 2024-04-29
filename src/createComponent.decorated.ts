@@ -33,8 +33,6 @@ export function createComponent<AttributeNames extends string[], State>({
     }
 
     async connectedCallback() {
-      console.log('--- connectedCallback');
-
       const content = typeof render === 'function' ? render(this.#state) : render;
 
       this.#shadowRoot.innerHTML = content;
@@ -43,18 +41,12 @@ export function createComponent<AttributeNames extends string[], State>({
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
-      console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
-
       if (mapAttributesToState) {
         const newState = mapAttributesToState(getAttributes(this), this.#state);
 
         this.setState(newState);
       }
     }
-
-    disconnectedCallback() {}
-
-    adoptedCallback() {}
 
     setState(newState: State) {
       this.#state = {
