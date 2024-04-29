@@ -1,4 +1,4 @@
-import { createComponent } from '../component.fp.js';
+import { createComponent } from '../createComponent.decorated.js';
 
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
