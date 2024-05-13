@@ -5,7 +5,12 @@ const MyComponent = createComponent({
   render: (state) => {
     return `
       <form>
-        <slot></slot>
+        <button id="delete-button">Delete text-input shadow DOM</button>
+
+        <ui-text-input fieldname="firstname" value="Johnny">
+          <div slot="label">Custom Label</div>
+          <div slot="message">Do something!</div>
+        </ui-text-input>
       </form>
     `;
   },

@@ -1,6 +1,6 @@
 import { createComponent } from './createComponent.base.js';
 
-export function createDecoratedComponent<AttributeNames extends string[], State>({
+export function createDecoratedComponent<AttributeNames extends string[], Model>({
   render,
   css,
   cssPath,
@@ -11,17 +11,17 @@ export function createDecoratedComponent<AttributeNames extends string[], State>
     delegatesFocus: true,
   },
 }: {
-  render: (params: State) => string;
+  render: (params: Model) => string;
   css?: string;
   cssPath?: string;
   attributes?: AttributeNames;
-  mapAttributesToState?: (attributes: Record<AttributeNames[number], string>, state: State) => State;
+  mapAttributesToState?: (attributes: Record<AttributeNames[number], string>, state: Model) => Model;
   shadowDomSettings?: ShadowRootInit;
 }) {
   type Attributes = Record<AttributeNames[number], string>;
 
   let shadowRoot: ShadowRoot;
-  let state: State;
+  let model: Model;
 
   return createComponent({
     attributes,
@@ -29,7 +29,7 @@ export function createDecoratedComponent<AttributeNames extends string[], State>
       shadowRoot = element.attachShadow(shadowDomSettings);
     },
     connectedCallback: async (element) => {
-      const content = render(state);
+      const content = render(model);
 
       shadowRoot.innerHTML = content;
 
@@ -38,17 +38,17 @@ export function createDecoratedComponent<AttributeNames extends string[], State>
 
     attributeChangedCallback: (element, attrName: string, oldVal: string, newVal: string) => {
       if (mapAttributesToState) {
-        const newState = mapAttributesToState(getAttributes(element), state);
+        const newModel = mapAttributesToState(getAttributes(element), model);
 
-        setState(newState);
-        render(newState);
+        setState(newModel);
+        render(newModel);
       }
     },
   });
 
-  function setState(newState: State) {
-    state = {
-      ...state,
+  function setState(newState: Model) {
+    model = {
+      ...model,
       ...newState,
     };
   }
