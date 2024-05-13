@@ -11,7 +11,7 @@ export function createDecoratedComponent<AttributeNames extends string[], State>
     delegatesFocus: true,
   },
 }: {
-  render: string | ((params: State) => string);
+  render: (params: State) => string;
   css?: string;
   cssPath?: string;
   attributes?: AttributeNames;
@@ -29,17 +29,19 @@ export function createDecoratedComponent<AttributeNames extends string[], State>
       shadowRoot = element.attachShadow(shadowDomSettings);
     },
     connectedCallback: async (element) => {
-      const content = typeof render === 'function' ? render(state) : render;
+      const content = render(state);
 
       shadowRoot.innerHTML = content;
 
       await applyCss(shadowRoot, cssPath, css);
     },
+
     attributeChangedCallback: (element, attrName: string, oldVal: string, newVal: string) => {
       if (mapAttributesToState) {
         const newState = mapAttributesToState(getAttributes(element), state);
 
         setState(newState);
+        render(newState);
       }
     },
   });
