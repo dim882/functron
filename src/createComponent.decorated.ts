@@ -23,15 +23,18 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   let shadowRoot: ShadowRoot;
   let model: Model;
 
+  function renderToInnerHTML(model: Model) {
+    shadowRoot.innerHTML = render(model);
+  }
+
   return createComponent({
     attributes,
     constructor(element) {
       shadowRoot = element.attachShadow(shadowDomSettings);
     },
-    connectedCallback: async (element) => {
-      const content = render(model);
 
-      shadowRoot.innerHTML = content;
+    connectedCallback: async (element) => {
+      renderToInnerHTML(model);
 
       await applyCss(shadowRoot, cssPath, css);
     },
@@ -40,16 +43,16 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
       if (mapAttributesToState) {
         const newModel = mapAttributesToState(getAttributes(element), model);
 
-        setState(newModel);
-        render(newModel);
+        setModel(newModel);
+        renderToInnerHTML(newModel);
       }
     },
   });
 
-  function setState(newState: Model) {
+  function setModel(newModel: Model) {
     model = {
       ...model,
-      ...newState,
+      ...newModel,
     };
   }
 
