@@ -58,9 +58,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
   function getAttributes(component: HTMLElement): Attributes {
     return Object.fromEntries(
-      component.getAttributeNames().map((attrName) => {
-        return [attrName, component.getAttribute(attrName)];
-      })
+      component.getAttributeNames().map((attrName) => [attrName, component.getAttribute(attrName)])
     ) as Attributes;
   }
 }
