@@ -16,7 +16,9 @@ export default {
   plugins: [
     del({ targets: 'dist' }),
     nodeResolve(),
-    typescript(),
+    typescript({
+      tsconfig: './tsconfig.json',
+    }),
     babel({
       presets: [['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }]],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
