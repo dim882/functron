@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 
-const LchCircleCanvas = () => {
+const ColorPicker = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -17,11 +17,20 @@ const LchCircleCanvas = () => {
 
         ctx.clearRect(0, 0, width, height);
 
-        ctx.fillStyle = 'red';
+        for (let angle = 0; angle < 360; angle++) {
+          for (let r = 0; r < radius; r++) {
+            const h = angle;
+            const c = (r / radius) * 100;
+            const l = 50;
 
-        ctx.beginPath();
-        ctx.arc(width / 2, height / 2, radius, 0, 2 * Math.PI);
-        ctx.fill();
+            ctx.fillStyle = `lch(${l}% ${c} ${h}deg)`;
+
+            const x = width / 2 + Math.cos((angle * Math.PI) / 180) * r;
+            const y = height / 2 + Math.sin((angle * Math.PI) / 180) * r;
+
+            ctx.fillRect(x, y, 2, 2);
+          }
+        }
       }
     }
   }, []);
@@ -29,4 +38,4 @@ const LchCircleCanvas = () => {
   return <canvas ref={canvasRef} width={300} height={300} />;
 };
 
-export default LchCircleCanvas;
+export default ColorPicker;
