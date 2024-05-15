@@ -1,10 +1,24 @@
 import { h } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 const ColorPicker = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [color, setColor] = useState<string>('');
   const handleClick: h.JSX.MouseEventHandler<HTMLCanvasElement> = (event) => {
-    console.log(event.clientX, event.clientY);
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext('2d');
+      if (context) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const imageData = context.getImageData(x, y, 1, 1).data;
+        const rgbaColor = `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, ${imageData[3] / 255})`;
+        setColor(rgbaColor);
+        console.log(`Color at (${x}, ${y}): ${rgbaColor}`);
+      }
+    }
   };
 
   useEffect(() => {
