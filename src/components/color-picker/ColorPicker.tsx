@@ -1,5 +1,6 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import register from 'preact-custom-element';
 
 interface IColorPickerProps {
   onChange: (color: string) => void;
@@ -66,5 +67,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
     </div>
   );
 };
+
+register(ColorPicker, 'color-picker', [], { shadow: true });
 
 export default ColorPicker;

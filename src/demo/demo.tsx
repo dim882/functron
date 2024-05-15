@@ -8,7 +8,6 @@ const App = () => {
   const handleColorChange = (color: string) => {
     console.log({ color });
   };
-
   return <ColorPicker onChange={handleColorChange} />;
 };
 
