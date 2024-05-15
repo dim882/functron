@@ -25,8 +25,8 @@ const ColorPicker = () => {
 
             ctx.fillStyle = `lch(${l}% ${c} ${h}deg)`;
 
-            const x = width / 2 + Math.cos((angle * Math.PI) / 180) * r;
-            const y = height / 2 + Math.sin((angle * Math.PI) / 180) * r;
+            const x = (width - 2) / 2 + Math.cos((angle * Math.PI) / 180) * r + 1;
+            const y = (height - 2) / 2 + Math.sin((angle * Math.PI) / 180) * r + 1;
 
             ctx.fillRect(x - 1, y - 1, 2.2, 2.2);
           }
