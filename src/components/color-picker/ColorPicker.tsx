@@ -3,6 +3,9 @@ import { useEffect, useRef } from 'preact/hooks';
 
 const ColorPicker = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const handleClick: h.JSX.MouseEventHandler<HTMLCanvasElement> = (event) => {
+    console.log(event.clientX, event.clientY);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -37,7 +40,7 @@ const ColorPicker = () => {
     }
   }, []);
 
-  return <canvas ref={canvasRef} width={300} height={300} />;
+  return <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />;
 };
 
 export default ColorPicker;
