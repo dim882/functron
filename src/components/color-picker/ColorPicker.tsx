@@ -12,9 +12,8 @@ const ColorPicker = () => {
       const context = canvas.getContext('2d');
 
       if (context) {
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const x = event.offsetX;
+        const y = event.offsetY;
         const imageData = context.getImageData(x, y, 1, 1).data;
         const rgbaColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
 
