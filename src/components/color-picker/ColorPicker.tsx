@@ -25,9 +25,11 @@ const ColorPicker = () => {
 
             ctx.fillStyle = `lch(${l}% ${c} ${h}deg)`;
 
+            // Bring the dimensions in a bit to account for the rects that are bigger than 1x1
             const x = (width - 2) / 2 + Math.cos((angle * Math.PI) / 180) * r + 1;
             const y = (height - 2) / 2 + Math.sin((angle * Math.PI) / 180) * r + 1;
 
+            // Make the rects bigger than 1x1, to avoid moire patterns
             ctx.fillRect(x - 1, y - 1, 2.2, 2.2);
           }
         }
