@@ -30,8 +30,7 @@ const ColorPicker = () => {
       const ctx = canvas.getContext('2d');
 
       if (ctx) {
-        const width = canvas.width;
-        const height = canvas.height;
+        const { width, height } = canvas;
         const radius = Math.min(width, height) / 2;
 
         ctx.clearRect(0, 0, width, height);
