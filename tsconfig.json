@@ -2,7 +2,10 @@
   "compilerOptions": {
     "outDir": "./dist",
     "target": "es2020",
-    "noEmitOnError": false
+    "noEmitOnError": false,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
   },
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts", "src/demo/demo.tsx"]
 }
