@@ -28,7 +28,7 @@ const ColorPicker = () => {
             const x = width / 2 + Math.cos((angle * Math.PI) / 180) * r;
             const y = height / 2 + Math.sin((angle * Math.PI) / 180) * r;
 
-            ctx.fillRect(x, y, 2, 2);
+            ctx.fillRect(x - 1, y - 1, 2.2, 2.2);
           }
         }
       }
