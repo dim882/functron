@@ -1,7 +1,11 @@
-import { h } from 'preact';
+import { h, FunctionComponent } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-const ColorPicker = () => {
+interface IColorPickerProps {
+  onChange: (color: string) => void;
+}
+
+const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [color, setColor] = useState<string>('');
 
@@ -15,9 +19,10 @@ const ColorPicker = () => {
         const x = event.offsetX;
         const y = event.offsetY;
         const imageData = context.getImageData(x, y, 1, 1).data;
-        const rgbaColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
+        const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
 
-        setColor(rgbaColor);
+        onChange(rgbColor);
+        setColor(rgbColor);
       }
     }
   };

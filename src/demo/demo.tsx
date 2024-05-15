@@ -5,7 +5,11 @@ import '../components/text-input/text-input';
 import '../components/text-input/form';
 
 const App = () => {
-  return <ColorPicker />;
+  const handleColorChange = (color: string) => {
+    console.log({ color });
+  };
+
+  return <ColorPicker onChange={handleColorChange} />;
 };
 
 render(<App />, document.getElementById('app'));
