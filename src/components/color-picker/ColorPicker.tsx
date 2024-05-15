@@ -58,7 +58,7 @@ const ColorPicker = () => {
   return (
     <div>
       <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
-      {color}
+      <div style={{ backgroundColor: color, width: 200 }}>{color}</div>
     </div>
   );
 };
