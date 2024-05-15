@@ -1,4 +1,4 @@
-import { createDecoratedComponent } from '../../createComponent.decorated.js';
+import { createDecoratedComponent } from '../../lib/createComponent.decorated';
 
 const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',

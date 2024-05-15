@@ -1,6 +1,6 @@
-import { createComponent } from '../../component.fp.js';
+import { createDecoratedComponent } from '../../lib/createComponent.decorated';
 
-const MyComponent = createComponent({
+const MyComponent = createDecoratedComponent({
   cssPath: './form.css',
   render: (state) => {
     return `
