@@ -1,4 +1,4 @@
-import { createComponent } from '../component.fp.js';
+import { createComponent } from '../../component.fp.js';
 
 const css = `
 :host {
