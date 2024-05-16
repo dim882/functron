@@ -59,32 +59,22 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   }
 
   const handlePointerDown: h.JSX.PointerEventHandler<HTMLCanvasElement> = (event) => {
-    console.log('handlePointerDown');
-
     setIsDragging(true);
     moveCircle(event);
   };
 
-  // console.log({ isDragging });
-
   const handlePointerMove: h.JSX.PointerEventHandler<HTMLCanvasElement> = (event) => {
-    console.log('handlePointerMove', isDragging);
-
     if (isDragging) {
       moveCircle(event);
     }
   };
 
   const handlePointerUp: h.JSX.PointerEventHandler<HTMLCanvasElement> = () => {
-    console.log('handlePointerUp');
-
     setIsDragging(false);
   };
 
   const moveCircle = (event: h.JSX.TargetedPointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
-
-    console.log('moveCircle');
 
     if (canvas) {
       const context = canvas.getContext('2d');
@@ -95,6 +85,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
 
         setColor(rgbColor);
         onChange(rgbColor);
+
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
@@ -120,7 +111,6 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
           ref={canvasRef}
           width={300}
           height={300}
-          onClick={handleClick}
           className={styles.canvas}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
