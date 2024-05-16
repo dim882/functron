@@ -73,11 +73,12 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   // Inside the component
   useEffect(() => {
     if (lch) {
-      const [l, c, h] = lch;
+      setLightness(lch[0]);
       const canvas = canvasRef.current;
 
       if (canvas) {
-        const [x, y] = lchToXy(l, c, h, canvas.width, canvas.height);
+        const [x, y] = lchToXy(lch, canvas.width, canvas.height);
+
         setCoords([x, y]);
 
         const context = canvas.getContext('2d');
