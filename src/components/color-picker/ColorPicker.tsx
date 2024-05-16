@@ -58,7 +58,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
   return (
     <div className={styles.root}>
       <div className={styles.leftColumn}>
-        <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
+        <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} className={styles.canvas} />
         <div style={{ backgroundColor: color }} className={styles.colorSwatch}></div>
         <input type="text" value={color} />
       </div>
@@ -67,7 +67,15 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
         <label for="lightness" className={styles.labelLightness}>
           Lightness
         </label>
-        <input type="range" id="lightness" min="0" max="100" value={lightness} onInput={handleLightnessInput} />
+        <input
+          className={styles.lightness}
+          type="range"
+          id="lightness"
+          min="0"
+          max="100"
+          value={lightness}
+          onInput={handleLightnessInput}
+        />
       </div>
     </div>
   );
