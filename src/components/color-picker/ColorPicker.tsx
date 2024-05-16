@@ -11,8 +11,8 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
   const [color, setColor] = useState<string>('');
   const [lightness, setLightness] = useState<number>(50);
 
-  const handleLightnessChange: h.JSX.EventHandler = (e) => {
-    setLightness(e.target.value);
+  const handleLightnessInput: h.JSX.GenericEventHandler<HTMLInputElement> = (e) => {
+    setLightness(parseInt(e.currentTarget.value));
   };
 
   const handleClick: h.JSX.MouseEventHandler<HTMLCanvasElement> = (event) => {
@@ -71,15 +71,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
       <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
 
       <label for="lightness">Lightness</label>
-      <input
-        type="range"
-        id="lightness"
-        name="lightness"
-        min="0"
-        max="100"
-        value={lightness}
-        onChange={handleLightnessChange}
-      />
+      <input type="range" id="lightness" min="0" max="100" value={lightness} onInput={handleLightnessInput} />
 
       <div style={{ backgroundColor: color, width: 200 }}>{color}</div>
     </div>
