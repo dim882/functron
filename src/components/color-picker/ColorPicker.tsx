@@ -13,6 +13,10 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
   const [lightness, setLightness] = useState<number>(50);
   const [coords, setCoords] = useState<[number, number]>([0, 0]);
 
+  useEffect(() => {
+    drawColorWheel(canvasRef, lightness);
+  }, [lightness]);
+
   const handleLightnessInput: h.JSX.GenericEventHandler<HTMLInputElement> = (e) => {
     setLightness(parseInt(e.currentTarget.value));
   };
@@ -25,24 +29,30 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
 
       if (context) {
         const { offsetX: x, offsetY: y } = event;
-        const imageData = context.getImageData(x, y, 1, 1).data;
-        const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
-
-        onChange(rgbColor);
-        setColor(rgbColor);
         setCoords([x, y]);
+
+        handleColorChange(context, x, y);
       }
     }
   };
+  function handleColorChange(context: CanvasRenderingContext2D, x: number, y: number) {
+    const imageData = context.getImageData(x, y, 1, 1).data;
+    const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
+
+    console.log('handleColorChange');
+
+    setColor(rgbColor);
+    onChange(rgbColor);
+  }
 
   useEffect(() => {
-    drawColorWheel(canvasRef, lightness);
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext('2d');
+      handleColorChange(context, ...coords);
+    }
   }, [lightness]);
-
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return (
     <div>
       <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
