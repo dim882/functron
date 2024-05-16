@@ -1,4 +1,5 @@
 .root {
+  position: relative;
   padding: 10px;
   width: 320px;
   display: grid;
@@ -40,6 +41,7 @@
 }
 
 .selectionCircle {
+  position: absolute;
   width: 20px;
   height: 20px;
   border: 2px solid black;

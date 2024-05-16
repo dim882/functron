@@ -6,7 +6,7 @@ import '../components/text-input/form';
 
 const App = () => {
   const handleColorChange = (color: string) => {
-    console.log({ color });
+    // console.log({ color });
   };
   return <ColorPicker onChange={handleColorChange} />;
 };

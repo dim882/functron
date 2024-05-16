@@ -59,11 +59,17 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   }
 
   const handlePointerDown: h.JSX.PointerEventHandler<HTMLCanvasElement> = (event) => {
+    console.log('handlePointerDown');
+
     setIsDragging(true);
     moveCircle(event);
   };
 
+  // console.log({ isDragging });
+
   const handlePointerMove: h.JSX.PointerEventHandler<HTMLCanvasElement> = (event) => {
+    console.log('handlePointerMove');
+
     if (isDragging) {
       moveCircle(event);
     }
@@ -75,6 +81,8 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
 
   const moveCircle = (event: h.JSX.TargetedPointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
+
+    console.log('moveCircle');
 
     if (canvas) {
       const context = canvas.getContext('2d');
@@ -88,12 +96,15 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
         handleColorChange(context, x, y);
 
         if (circleRef.current) {
+          console.log('setting circleRef');
+
           circleRef.current.style.left = `${x - 10}px`;
           circleRef.current.style.top = `${y - 10}px`;
         }
       }
     }
   };
+  console.log(coords);
 
   return (
     <div className={styles.root}>
