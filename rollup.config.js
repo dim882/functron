@@ -4,6 +4,7 @@ import copy from 'rollup-plugin-copy';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import { babel } from '@rollup/plugin-babel';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
   input: './src/demo/demo.tsx',
@@ -21,6 +22,12 @@ export default {
       presets: [['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }]],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       babelHelpers: 'bundled',
+    }),
+    postcss({
+      modules: true,
+      extract: 'bundle.css',
+      minimize: true,
+      sourceMap: true,
     }),
     copy({
       targets: [

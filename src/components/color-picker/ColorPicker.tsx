@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import register from 'preact-custom-element';
 import { drawColorWheel } from './ColorPicker.utils';
 
+import styles from './ColorPicker.module.css';
+
 interface IColorPickerProps {
   onChange: (color: string) => void;
 }
@@ -54,7 +56,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
   }
 
   return (
-    <div>
+    <div className={styles.root}>
       <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
 
       <label for="lightness">Lightness</label>
