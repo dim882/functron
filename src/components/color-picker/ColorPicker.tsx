@@ -68,7 +68,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   // console.log({ isDragging });
 
   const handlePointerMove: h.JSX.PointerEventHandler<HTMLCanvasElement> = (event) => {
-    console.log('handlePointerMove');
+    console.log('handlePointerMove', isDragging);
 
     if (isDragging) {
       moveCircle(event);
@@ -76,6 +76,8 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   };
 
   const handlePointerUp: h.JSX.PointerEventHandler<HTMLCanvasElement> = () => {
+    console.log('handlePointerUp');
+
     setIsDragging(false);
   };
 
@@ -88,6 +90,11 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
       const context = canvas.getContext('2d');
 
       if (context) {
+        const imageData = context.getImageData(...coords, 1, 1).data;
+        const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
+
+        setColor(rgbColor);
+        onChange(rgbColor);
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
@@ -128,6 +135,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
 
         <div style={{ backgroundColor: color }} className={styles.colorSwatch}></div>
         <input type="text" value={color} />
+        <div>isDragging: {isDragging ? 'dragging' : 'not dragging'}</div>
       </div>
 
       <div className={styles.rightColumn}>
