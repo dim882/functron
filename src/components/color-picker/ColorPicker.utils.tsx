@@ -29,3 +29,11 @@ export function drawColorWheel(canvasRef, lightness: number) {
     }
   }
 }
+
+export function lchToXy(l: number, c: number, h: number, canvasWidth: number, canvasHeight: number): [number, number] {
+  const radius = Math.min(canvasWidth, canvasHeight) / 2;
+  const angle = (h * Math.PI) / 180; // Convert hue to radians
+  const x = radius + c * Math.cos(angle);
+  const y = radius - c * Math.sin(angle); // Canvas y-axis is inverted
+  return [x, y];
+}

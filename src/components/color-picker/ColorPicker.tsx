@@ -1,16 +1,16 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import register from 'preact-custom-element';
-import { drawColorWheel } from './ColorPicker.utils';
+import { drawColorWheel, lchToXy } from './ColorPicker.utils';
 
 import styles from './ColorPicker.module.css';
 
 interface IColorPickerProps {
   onChange: (color: string) => void;
-  rgb?: [number, number, number];
+  lch?: [number, number, number];
 }
 
-const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, rgb }) => {
+const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState<string>('');
@@ -69,6 +69,24 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, rgb }) =>
       handleColorChange(context, x, y);
     }
   };
+
+  // Inside the component
+  useEffect(() => {
+    if (lch) {
+      const [l, c, h] = lch;
+      const canvas = canvasRef.current;
+
+      if (canvas) {
+        const [x, y] = lchToXy(l, c, h, canvas.width, canvas.height);
+        setCoords([x, y]);
+
+        const context = canvas.getContext('2d');
+        if (context) {
+          handleColorChange(context, x, y);
+        }
+      }
+    }
+  }, [lch]);
 
   return (
     <div className={styles.root}>
