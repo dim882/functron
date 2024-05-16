@@ -71,23 +71,14 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
         setColor(rgbColor);
         onChange(rgbColor);
 
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const { offsetX: x, offsetY: y } = event;
+
         setCoords([x, y]);
 
         handleColorChange(context, x, y);
-
-        if (circleRef.current) {
-          console.log('setting circleRef');
-
-          circleRef.current.style.left = `${x - 10}px`;
-          circleRef.current.style.top = `${y - 10}px`;
-        }
       }
     }
   };
-  console.log(coords);
 
   return (
     <div className={styles.root}>
