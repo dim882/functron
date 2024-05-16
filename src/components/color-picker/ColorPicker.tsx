@@ -9,6 +9,11 @@ interface IColorPickerProps {
 const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [color, setColor] = useState<string>('');
+  const [lightness, setLightness] = useState<number>(50);
+
+  const handleLightnessChange: h.JSX.EventHandler = (e) => {
+    setLightness(e.target.value);
+  };
 
   const handleClick: h.JSX.MouseEventHandler<HTMLCanvasElement> = (event) => {
     const canvas = canvasRef.current;
@@ -44,7 +49,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
           for (let r = 0; r < radius; r++) {
             const h = angle;
             const c = (r / radius) * 100;
-            const l = 50;
+            const l = lightness;
 
             ctx.fillStyle = `lch(${l}% ${c} ${h}deg)`;
 
@@ -58,11 +63,24 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
         }
       }
     }
-  }, []);
+  }, [lightness]);
+  console.log({ lightness });
 
   return (
     <div>
       <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
+
+      <label for="lightness">Lightness</label>
+      <input
+        type="range"
+        id="lightness"
+        name="lightness"
+        min="0"
+        max="100"
+        value={lightness}
+        onChange={handleLightnessChange}
+      />
+
       <div style={{ backgroundColor: color, width: 200 }}>{color}</div>
     </div>
   );
