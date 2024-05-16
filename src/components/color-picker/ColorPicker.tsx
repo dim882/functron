@@ -7,10 +7,10 @@ import styles from './ColorPicker.module.css';
 
 interface IColorPickerProps {
   onChange: (color: string) => void;
-  lch?: [number, number, number];
+  rgb?: [number, number, number];
 }
 
-const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) => {
+const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, rgb }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState<string>('');
