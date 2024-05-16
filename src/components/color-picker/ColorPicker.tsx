@@ -63,12 +63,8 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
 
     if (canvas) {
       const context = canvas.getContext('2d');
-      const imageData = context.getImageData(...coords, 1, 1).data;
-      const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
       const { offsetX: x, offsetY: y } = event;
 
-      setColor(rgbColor);
-      onChange(rgbColor);
       setCoords([x, y]);
       handleColorChange(context, x, y);
     }
