@@ -35,21 +35,6 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
     setLightness(parseInt(e.currentTarget.value));
   };
 
-  const handleClick: h.JSX.MouseEventHandler<HTMLCanvasElement> = (event) => {
-    const canvas = canvasRef.current;
-
-    if (canvas) {
-      const context = canvas.getContext('2d');
-
-      if (context) {
-        const { offsetX: x, offsetY: y } = event;
-        setCoords([x, y]);
-
-        handleColorChange(context, x, y);
-      }
-    }
-  };
-
   function handleColorChange(context: CanvasRenderingContext2D, x: number, y: number) {
     const imageData = context.getImageData(x, y, 1, 1).data;
     const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
