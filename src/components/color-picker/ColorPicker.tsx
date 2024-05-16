@@ -135,7 +135,6 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
 
         <div style={{ backgroundColor: color }} className={styles.colorSwatch}></div>
         <input type="text" value={color} />
-        <div>isDragging: {isDragging ? 'dragging' : 'not dragging'}</div>
       </div>
 
       <div className={styles.rightColumn}>
