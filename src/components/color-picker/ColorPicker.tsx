@@ -17,6 +17,15 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
     drawColorWheel(canvasRef, lightness);
   }, [lightness]);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext('2d');
+      handleColorChange(context, ...coords);
+    }
+  }, [lightness]);
+
   const handleLightnessInput: h.JSX.GenericEventHandler<HTMLInputElement> = (e) => {
     setLightness(parseInt(e.currentTarget.value));
   };
@@ -35,24 +44,15 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange }) => {
       }
     }
   };
+
   function handleColorChange(context: CanvasRenderingContext2D, x: number, y: number) {
     const imageData = context.getImageData(x, y, 1, 1).data;
     const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
-
-    console.log('handleColorChange');
 
     setColor(rgbColor);
     onChange(rgbColor);
   }
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-
-    if (canvas) {
-      const context = canvas.getContext('2d');
-      handleColorChange(context, ...coords);
-    }
-  }, [lightness]);
   return (
     <div>
       <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} />
