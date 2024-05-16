@@ -12,9 +12,11 @@ interface IColorPickerProps {
 
 const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const circleRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState<string>('');
   const [lightness, setLightness] = useState<number>(50);
   const [coords, setCoords] = useState<[number, number]>([0, 0]);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   useEffect(() => {
     drawColorWheel(canvasRef, lightness);
@@ -56,10 +58,63 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
     onChange(rgbColor);
   }
 
+  const handlePointerDown: h.JSX.PointerEventHandler<HTMLCanvasElement> = (event) => {
+    setIsDragging(true);
+    moveCircle(event);
+  };
+
+  const handlePointerMove: h.JSX.PointerEventHandler<HTMLCanvasElement> = (event) => {
+    if (isDragging) {
+      moveCircle(event);
+    }
+  };
+
+  const handlePointerUp: h.JSX.PointerEventHandler<HTMLCanvasElement> = () => {
+    setIsDragging(false);
+  };
+
+  const moveCircle = (event: h.JSX.TargetedPointerEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext('2d');
+
+      if (context) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        setCoords([x, y]);
+
+        handleColorChange(context, x, y);
+
+        if (circleRef.current) {
+          circleRef.current.style.left = `${x - 10}px`;
+          circleRef.current.style.top = `${y - 10}px`;
+        }
+      }
+    }
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.leftColumn}>
-        <canvas ref={canvasRef} width={300} height={300} onClick={handleClick} className={styles.canvas} />
+        <canvas
+          ref={canvasRef}
+          width={300}
+          height={300}
+          onClick={handleClick}
+          className={styles.canvas}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerUp}
+        />
+        <div
+          ref={circleRef}
+          className={styles.selectionCircle}
+          style={{ left: `${coords[0] - 10}px`, top: `${coords[1] - 10}px` }}
+        />
+
         <div style={{ backgroundColor: color }} className={styles.colorSwatch}></div>
         <input type="text" value={color} />
       </div>
