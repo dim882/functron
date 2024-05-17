@@ -1,4 +1,5 @@
 import { createComponent } from './createComponent.base.js';
+import { renderSnabbdom, h } from './snabbdomHelper'; // Adjust the import path accordingly
 
 export function createDecoratedComponent<AttributeNames extends string[], Model>({
   render,
@@ -11,7 +12,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
     delegatesFocus: true,
   },
 }: {
-  render: (params: Model) => string;
+  render: (params: Model) => any; // Adjusted to return Snabbdom VNode
   css?: string;
   cssPath?: string;
   attributes?: AttributeNames;
@@ -24,7 +25,8 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   let model: Model;
 
   function renderToInnerHTML(model: Model) {
-    shadowRoot.innerHTML = render(model);
+    const vNode = render(model);
+    renderSnabbdom(shadowRoot, vNode);
   }
 
   return createComponent({
@@ -35,14 +37,12 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
     connectedCallback: async (element) => {
       renderToInnerHTML(model);
-
       await applyCss(shadowRoot, cssPath, css);
     },
 
     attributeChangedCallback: (element, attrName: string, oldVal: string, newVal: string) => {
       if (mapAttributesToState) {
         const newModel = mapAttributesToState(getAttributes(element), model);
-
         setModel(newModel);
         renderToInnerHTML(newModel);
       }
@@ -65,22 +65,17 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
 async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
   const style = document.createElement('style');
-
   dom.appendChild(style);
-
   style.textContent = cssPath ? await loadCss(cssPath) : css;
 }
 
 async function loadCss(cssFilePath: string) {
   console.log('loading ', cssFilePath);
-
   try {
     const response = await fetch(cssFilePath);
-
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-
     return await response.text();
   } catch (error) {
     console.error('Failed to fetch CSS:', error);
