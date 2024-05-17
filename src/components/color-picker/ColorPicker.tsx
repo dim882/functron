@@ -17,17 +17,29 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   const [lightness, setLightness] = useState<number>(50);
   const [coords, setCoords] = useState<[number, number]>([0, 0]);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  let context: CanvasRenderingContext2D;
 
   useEffect(() => drawColorWheel(canvasRef, lightness), [lightness]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-
-    if (canvas) {
-      const context = canvas.getContext('2d');
+    if (canvasRef.current) {
+      context = canvasRef.current.getContext('2d');
       handleColorChange(context, ...coords);
     }
-  }, [lightness]);
+  }, [lightness, canvasRef.current]);
+
+  // Handle initial color from prop
+  useEffect(() => {
+    if (lch) {
+      setLightness(lch[0]);
+
+      if (context) {
+        const [x, y] = lchToXy(lch, context.canvas.width, context.canvas.height);
+
+        handleColorChange(context, x, y);
+      }
+    }
+  }, [lch]);
 
   const handleLightnessInput: h.JSX.GenericEventHandler<HTMLInputElement> = (e) => {
     setLightness(parseInt(e.currentTarget.value));
@@ -62,20 +74,6 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
 
     handleColorChange(context, event.offsetX, event.offsetY);
   };
-
-  // Handle initial color from prop
-  useEffect(() => {
-    if (lch) {
-      setLightness(lch[0]);
-
-      if (canvasRef.current) {
-        const context = canvasRef.current.getContext('2d');
-        const [x, y] = lchToXy(lch, context.canvas.width, context.canvas.height);
-
-        handleColorChange(context, x, y);
-      }
-    }
-  }, [lch]);
 
   return (
     <div className={styles.root}>
