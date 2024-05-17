@@ -8,7 +8,7 @@
     "jsxFragmentFactory": "Fragment",
     "moduleResolution": "node"
   },
-  "include": ["./src/**/*.ts", "src/demo/demo.tsx"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/demo/demo.tsx"],
   "paths": {
     "preact": ["./node_modules/preact"]
   }
