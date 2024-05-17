@@ -4,7 +4,7 @@ import { h } from '../../lib/snabbdomHelper';
 
 const SnabbdomComponent = createDecoratedComponent({
   shadowDomSettings: { mode: 'open' },
-  render: (model) => <div className={{ myClass: true }}>Hello Snabbdom</div>,
+  render: (model) => <div class={{ myClass: true }}>Hello Snabbdom</div>,
   css: '.myClass { color: red; }',
 });
 
