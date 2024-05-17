@@ -72,7 +72,20 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   const moveCircle = (event: h.JSX.TargetedPointerEvent<HTMLCanvasElement>) => {
     const context = canvasRef.current.getContext('2d');
 
-    handleColorChange(context, event.offsetX, event.offsetY);
+    if (!context) return;
+
+    const { width, height } = context.canvas;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = width / 2;
+
+    const dx = event.offsetX - centerX;
+    const dy = event.offsetY - centerY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance <= radius) {
+      handleColorChange(context, event.offsetX, event.offsetY);
+    }
   };
 
   return (
