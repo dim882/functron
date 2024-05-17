@@ -3,7 +3,7 @@ import { h } from '../../lib/snabbdomHelper';
 
 const SnabbdomComponent = createDecoratedComponent({
   css: '.myClass { color: red; }',
-  render: (model) => <div class={{ myClass: true }}>Hello Snabbdom</div>,
+  render: (model) => <div class={{ myClass: true }}>This is JSX</div>,
 });
 
 customElements.define('hello-vdom', SnabbdomComponent);
