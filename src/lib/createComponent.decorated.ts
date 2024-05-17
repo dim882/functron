@@ -23,16 +23,21 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
   let shadowRoot: ShadowRoot;
   let model: Model;
+  let container: HTMLElement;
 
   function renderToInnerHTML(model: Model) {
     const vNode = render(model);
-    renderSnabbdom(shadowRoot, vNode);
+    console.log(vNode);
+
+    renderSnabbdom(container, vNode);
   }
 
   return createComponent({
     attributes,
     constructor(element) {
       shadowRoot = element.attachShadow(shadowDomSettings);
+      container = document.createElement('div');
+      shadowRoot.appendChild(container);
     },
 
     connectedCallback: async (element) => {
