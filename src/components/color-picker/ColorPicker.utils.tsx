@@ -44,3 +44,10 @@ export function lchToXy(lch: [number, number, number], canvasWidth: number, canv
   const y = radius - c * Math.sin(angle); // Canvas y-axis is inverted
   return [x, y];
 }
+
+export function getDistance(p1: [number, number], p2: [number, number]) {
+  const dx = p1[0] - p2[0];
+  const dy = p1[1] - p2[1];
+
+  return Math.sqrt(dx * dx + dy * dy);
+}

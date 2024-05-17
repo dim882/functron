@@ -1,7 +1,7 @@
 import { h, FunctionComponent } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import register from 'preact-custom-element';
-import { drawColorWheel, lchToXy } from './ColorPicker.utils';
+import { drawColorWheel, getDistance, lchToXy } from './ColorPicker.utils';
 
 import styles from './ColorPicker.module.css';
 
@@ -79,9 +79,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
     const centerY = height / 2;
     const radius = width / 2;
 
-    const dx = event.offsetX - centerX;
-    const dy = event.offsetY - centerY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    const distance = getDistance([event.offsetX, event.offsetY], [centerX, centerY]);
 
     if (distance <= radius) {
       handleColorChange(context, event.offsetX, event.offsetY);
