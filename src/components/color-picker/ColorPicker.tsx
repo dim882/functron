@@ -102,11 +102,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
           onPointerUp={handlePointerUp}
           onPointerLeave={handlePointerUp}
         />
-        <div
-          ref={circleRef}
-          className={styles.selectionCircle}
-          style={{ left: `${coords[0] - 10}px`, top: `${coords[1] - 10}px` }}
-        />
+        <div ref={circleRef} className={styles.selectionCircle} style={{ left: coords[0], top: coords[1] }} />
 
         <div style={{ backgroundColor: color }} className={styles.colorSwatch}></div>
         <input type="text" value={color} />
