@@ -16,19 +16,25 @@ const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: str
       value: attributes.value + '!',
     };
   },
-  render: (state) => (
-    <div>
-      <label>
-        <slot name="label"></slot>
-      </label>
+  render: (state) => {
+    console.log('---text-input render');
+
+    console.log({ state });
+
+    return (
       <div>
-        <input type="text" name="${state.name}" value="${state.value}" />
+        <label>
+          <slot name="label"></slot>
+        </label>
+        <div>
+          <input type="text" name="{state.name}" value="{state.value}"></input>
+        </div>
+        <p class="my-message">
+          <slot name="message"></slot>
+        </p>
       </div>
-      <p class="my-message">
-        <slot name="message"></slot>
-      </p>
-    </div>
-  ),
+    );
+  },
 });
 
 customElements.define('ui-text-input', MyComponent);

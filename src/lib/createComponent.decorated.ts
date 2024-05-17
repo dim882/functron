@@ -30,6 +30,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
   function renderToInnerHTML(model: Model) {
     const vNode = render(model);
+    console.log(vNode);
 
     renderSnabbdom(container, vNode);
   }
@@ -52,6 +53,8 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
       console.log('attributeChangedCallback');
 
       if (mapAttributesToState) {
+        console.log('mapAttributesToState');
+
         const newModel = mapAttributesToState(getAttributes(element), model);
         setModel(newModel);
         renderToInnerHTML(newModel);
