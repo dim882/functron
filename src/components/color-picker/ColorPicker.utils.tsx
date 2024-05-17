@@ -1,4 +1,6 @@
-export function drawColorWheel(canvasRef, lightness: number) {
+import { MutableRef } from 'preact/hooks';
+
+export function drawColorWheel(canvasRef: MutableRef<HTMLCanvasElement>, lightness: number) {
   const canvas = canvasRef.current;
 
   if (canvas) {
