@@ -7,7 +7,7 @@ const MyComponent = createDecoratedComponent({
     <form>
       <button id="delete-button">Delete text-input shadow DOM</button>
 
-      <ui-text-input fieldname="firstname" value="Johnny">
+      <ui-text-input fieldname="firstname" value="Joseph Schmoe">
         <div slot="label">Custom Label</div>
         <div slot="message">Do something!</div>
       </ui-text-input>

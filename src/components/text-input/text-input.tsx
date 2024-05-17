@@ -1,4 +1,5 @@
 import { createDecoratedComponent } from '../../lib/createComponent.decorated';
+import { h } from '../../lib/snabbdomHelper';
 
 const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
@@ -10,15 +11,19 @@ const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: str
       value: attributes.value + '!',
     };
   },
-  render: (state) => {
-    return `
+  render: (state) => (
+    <div>
+      <label>
+        <slot name="label"></slot>
+      </label>
       <div>
-        <label><slot name="label"></slot></label>
-        <div><input type="text" name="${state.name}" value="${state.value}"></div>
-        <p class='my-message'><slot name="message"></slot></p>
+        <input type="text" name="${state.name}" value="${state.value}" />
       </div>
-    `;
-  },
+      <p class="my-message">
+        <slot name="message"></slot>
+      </p>
+    </div>
+  ),
 });
 
 customElements.define('ui-text-input', MyComponent);
