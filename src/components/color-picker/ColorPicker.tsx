@@ -37,6 +37,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
     const imageData = context.getImageData(x, y, 1, 1).data;
     const rgbColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
 
+    setCoords([x, y]);
     setColor(rgbColor);
     onChange(rgbColor);
   }
@@ -57,13 +58,10 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   };
 
   const moveCircle = (event: h.JSX.TargetedPointerEvent<HTMLCanvasElement>) => {
-    if (canvasRef.current) {
-      const context = canvasRef.current.getContext('2d');
-      const { offsetX: x, offsetY: y } = event;
+    const context = canvasRef.current.getContext('2d');
+    const { offsetX: x, offsetY: y } = event;
 
-      setCoords([x, y]);
-      handleColorChange(context, x, y);
-    }
+    handleColorChange(context, x, y);
   };
 
   // Handle initial color from prop
@@ -75,11 +73,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
         const context = canvasRef.current.getContext('2d');
         const [x, y] = lchToXy(lch, context.canvas.width, context.canvas.height);
 
-        setCoords([x, y]);
-
-        if (context) {
-          handleColorChange(context, x, y);
-        }
+        handleColorChange(context, x, y);
       }
     }
   }, [lch]);
