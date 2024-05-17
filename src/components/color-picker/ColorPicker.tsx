@@ -59,9 +59,8 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
 
   const moveCircle = (event: h.JSX.TargetedPointerEvent<HTMLCanvasElement>) => {
     const context = canvasRef.current.getContext('2d');
-    const { offsetX: x, offsetY: y } = event;
 
-    handleColorChange(context, x, y);
+    handleColorChange(context, event.offsetX, event.offsetY);
   };
 
   // Handle initial color from prop
