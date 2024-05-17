@@ -1,8 +1,8 @@
 import { h, render } from 'preact';
 import ColorPicker from '../components/color-picker/ColorPicker';
 
-import '../components/text-input/text-input';
-import '../components/text-input/form';
+// import '../components/text-input/text-input';
+// import '../components/text-input/form';
 import '../components/hello-vdom/hello-vdom';
 
 const App = () => {
