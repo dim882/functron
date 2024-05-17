@@ -21,20 +21,20 @@ export function createComponent<AttributeNames extends string[]>({
     }
 
     constructor() {
-      console.log('--- constructor');
+      // console.log('--- constructor');
 
       super();
       constructor(this);
     }
 
     async connectedCallback() {
-      console.log('--- connectedCallback');
+      // console.log('--- connectedCallback');
 
       connectedCallback(this);
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
-      console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
+      // console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
 
       attributeChangedCallback(this, attrName, oldVal, newVal);
     }
