@@ -27,7 +27,6 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
   function renderToInnerHTML(model: Model) {
     const vNode = render(model);
-    console.log(vNode);
 
     renderSnabbdom(container, vNode);
   }
