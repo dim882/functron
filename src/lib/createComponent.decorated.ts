@@ -11,6 +11,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
     mode: 'closed',
     delegatesFocus: true,
   },
+  constructor,
 }: {
   render: (params: Model) => any; // Adjusted to return Snabbdom VNode
   css?: string;
@@ -18,6 +19,8 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   attributes?: AttributeNames;
   mapAttributesToState?: (attributes: Record<AttributeNames[number], string>, state: Model) => Model;
   shadowDomSettings?: ShadowRootInit;
+  connectedCallback?: () => void;
+  constructor?: () => void;
 }) {
   type Attributes = Record<AttributeNames[number], string>;
 
@@ -37,6 +40,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
       shadowRoot = element.attachShadow(shadowDomSettings);
       container = document.createElement('div');
       shadowRoot.appendChild(container);
+      constructor();
     },
 
     connectedCallback: async (element) => {
