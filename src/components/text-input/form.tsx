@@ -3,7 +3,6 @@ import { createDecoratedComponent } from '../../lib/createComponent.decorated';
 import { h } from '../../lib/snabbdomHelper';
 
 const MyComponent = createDecoratedComponent({
-  constructor: () => {},
   cssPath: './form.css',
   render: (state) => (
     <form>

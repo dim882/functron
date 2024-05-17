@@ -20,7 +20,6 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   mapAttributesToState?: (attributes: Record<AttributeNames[number], string>, state: Model) => Model;
   shadowDomSettings?: ShadowRootInit;
   connectedCallback?: () => void;
-  constructor?: () => void;
 }) {
   type Attributes = Record<AttributeNames[number], string>;
 
