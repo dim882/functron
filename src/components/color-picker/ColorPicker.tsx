@@ -57,10 +57,8 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   };
 
   const moveCircle = (event: h.JSX.TargetedPointerEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
-
-    if (canvas) {
-      const context = canvas.getContext('2d');
+    if (canvasRef.current) {
+      const context = canvasRef.current.getContext('2d');
       const { offsetX: x, offsetY: y } = event;
 
       setCoords([x, y]);
