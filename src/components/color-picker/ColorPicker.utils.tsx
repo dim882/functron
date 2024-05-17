@@ -1,6 +1,6 @@
 import { MutableRef } from 'preact/hooks';
 
-export function drawColorWheel(canvasRef: MutableRef<HTMLCanvasElement>, lightness: number) {
+export function drawColorWheel(canvasRef: MutableRef<HTMLCanvasElement>, lightness: number, coords: [number, number]) {
   const canvas = canvasRef.current;
 
   if (canvas) {
@@ -28,6 +28,8 @@ export function drawColorWheel(canvasRef: MutableRef<HTMLCanvasElement>, lightne
           ctx.fillRect(x - 1, y - 1, 2.2, 2.2);
         }
       }
+      ctx.fillStyle = 'black';
+      ctx.fillRect(...coords, 1, 1);
     }
   }
 }

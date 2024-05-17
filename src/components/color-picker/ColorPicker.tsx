@@ -18,9 +18,7 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
   const [coords, setCoords] = useState<[number, number]>([0, 0]);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  useEffect(() => {
-    drawColorWheel(canvasRef, lightness);
-  }, [lightness]);
+  useEffect(() => drawColorWheel(canvasRef, lightness, coords), [lightness, coords]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -70,7 +68,6 @@ const ColorPicker: FunctionComponent<IColorPickerProps> = ({ onChange, lch }) =>
     }
   };
 
-  // Inside the component
   useEffect(() => {
     if (lch) {
       setLightness(lch[0]);
