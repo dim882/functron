@@ -32,16 +32,13 @@ export function drawColorWheel(canvasRef: MutableRef<HTMLCanvasElement>, lightne
   }
 }
 
-export function lchToXy(lch: [number, number, number], canvasWidth: number, canvasHeight: number): [number, number] {
-  console.log({ canvasWidth, canvasHeight });
-
+export function convertLchToXy(lch: [number, number, number], radius: number): [number, number] {
   const [_, c, h] = lch;
-  console.log({ c, h });
 
-  const radius = Math.min(canvasWidth, canvasHeight) / 2;
   const angle = (h * Math.PI) / 180; // Convert hue to radians
   const x = radius + c * Math.cos(angle);
-  const y = radius - c * Math.sin(angle); // Canvas y-axis is inverted
+  const y = radius - c * Math.sin(angle);
+
   return [x, y];
 }
 
