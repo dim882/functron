@@ -4,7 +4,7 @@ export function drawColorWheel(canvasRef: MutableRef<HTMLCanvasElement>, lightne
   const canvas = canvasRef.current;
 
   if (canvas) {
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
     if (ctx) {
       const { width, height } = canvas;
