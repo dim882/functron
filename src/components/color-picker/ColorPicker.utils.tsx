@@ -15,10 +15,10 @@ export function drawColorWheel(canvasRef: MutableRef<HTMLCanvasElement>, lightne
       for (let angle = 0; angle < 360; angle++) {
         for (let r = 0; r < radius; r++) {
           const h = angle;
-          const c = (r / radius) * 100;
+          const s = (r / radius) * 100;
           const l = lightness;
 
-          ctx.fillStyle = `lch(${l}% ${c} ${h}deg)`;
+          ctx.fillStyle = `hsl(${h}, ${s}%, ${l}%)`;
 
           // Bring the dimensions in a bit to account for the rects that are bigger than 1x1
           const x = (width - 2) / 2 + Math.cos((angle * Math.PI) / 180) * r + 1;
