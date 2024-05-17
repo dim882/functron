@@ -1,17 +1,25 @@
-import { init, classModule, propsModule, styleModule, eventListenersModule, attributesModule, h } from 'snabbdom';
+import {
+  init,
+  classModule,
+  propsModule,
+  styleModule,
+  eventListenersModule,
+  attributesModule,
+  h,
+  VNode,
+} from 'snabbdom';
 
-// Initialize Snabbdom with the necessary modules
+// prettier-ignore
 const patch = init([
   classModule,
   propsModule,
   styleModule,
   eventListenersModule,
-  attributesModule, // Add the attributes module
+  attributesModule, 
 ]);
 
-// Snabbdom helper function to patch the DOM
-export function renderSnabbdom(container: Element, vNode: any) {
+export function renderSnabbdom(container: Element, vNode: VNode) {
   patch(container, vNode);
 }
 
-export { h }; // Export the `h` function to create virtual DOM nodes
+export { h };
