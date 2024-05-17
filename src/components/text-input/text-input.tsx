@@ -8,6 +8,8 @@ const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: str
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
   mapAttributesToState(attributes, state) {
+    console.log('text-input mapAttributesToState');
+
     return {
       ...state,
       name: attributes.fieldname,

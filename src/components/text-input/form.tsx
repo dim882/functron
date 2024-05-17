@@ -6,7 +6,7 @@ const MyComponent = createDecoratedComponent({
   cssPath: './form.css',
   render: (state) => (
     <form>
-      <ui-text-input fieldname="firstname" value="Joseph Schmoe">
+      <ui-text-input attrs={{ fieldname: 'firstname', value: 'Joseph Schmoe' }}>
         <div slot="label">Custom Label</div>
         <div slot="message">Do something!</div>
       </ui-text-input>

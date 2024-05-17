@@ -49,6 +49,8 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
     },
 
     attributeChangedCallback: (element, attrName: string, oldVal: string, newVal: string) => {
+      console.log('attributeChangedCallback');
+
       if (mapAttributesToState) {
         const newModel = mapAttributesToState(getAttributes(element), model);
         setModel(newModel);
