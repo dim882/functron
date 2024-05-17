@@ -48,3 +48,22 @@ export function getDistance(p1: [number, number], p2: [number, number]) {
 
   return Math.sqrt(dx * dx + dy * dy);
 }
+
+export const clamp = (a: number, min = 0, max = 1) => Math.min(max, Math.max(min, a));
+
+export function mapToRange(value: number, fromLow: number, fromHigh: number, toLow: number, toHigh: number) {
+  return toLow + ((toHigh - toLow) * (value - fromLow)) / (fromHigh - fromLow);
+}
+
+// E.g. if the range is 0 to 99 and the number is 20, the result should be 20 less than the high
+export function invert(value: number, low: number, high: number) {
+  return low + high - value;
+}
+
+export function inverseLerp(a: number, b: number, v: number) {
+  return (v - a) / (b - a);
+}
+
+export function lerp(min: number, max: number, t: number) {
+  return min * (1 - t) + max * t;
+}
