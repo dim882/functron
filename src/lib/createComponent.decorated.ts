@@ -50,11 +50,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
     },
 
     attributeChangedCallback: (element, attrName: string, oldVal: string, newVal: string) => {
-      console.log('attributeChangedCallback');
-
       if (mapAttributesToState) {
-        console.log('mapAttributesToState');
-
         const newModel = mapAttributesToState(getAttributes(element), model);
         setModel(newModel);
         renderToInnerHTML(newModel);
@@ -83,7 +79,6 @@ async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
 }
 
 async function loadCss(cssFilePath: string) {
-  console.log('loading ', cssFilePath);
   try {
     const response = await fetch(cssFilePath);
     if (!response.ok) {
