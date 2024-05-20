@@ -15,12 +15,12 @@ const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: str
   render: (state) => {
     return (
       <div>
-        <label>
-          <slot name="label"></slot>
-        </label>
         <div>
           <input type="text" name={state.name} value={state.value}></input>
         </div>
+        <label>
+          <slot name="label"></slot>
+        </label>
         <p class="my-message">
           <slot name="message"></slot>
         </p>

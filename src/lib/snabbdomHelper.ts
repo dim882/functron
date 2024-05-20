@@ -6,6 +6,7 @@ import {
   eventListenersModule,
   attributesModule,
   h,
+  jsx,
   VNode,
 } from 'snabbdom';
 
