@@ -1,3 +1,5 @@
+/** @jsx h */
+
 import {
   init,
   classModule,
@@ -7,6 +9,7 @@ import {
   attributesModule,
   h,
   jsx,
+  Fragment,
   VNode,
 } from 'snabbdom';
 

@@ -19,10 +19,10 @@ export default {
       tsconfig: './tsconfig.json',
     }),
     babel({
-      presets: [['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }], '@babel/preset-typescript'],
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      // presets: [['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }], '@babel/preset-typescript'],
+      extensions: ['.js', '.jsx', '.ts'],
       babelHelpers: 'bundled',
-      include: ['src/**/*.ts', 'src/**/*.tsx'],
+      include: ['src/**/*.ts'],
       exclude: 'node_modules/**',
     }),
     postcss({
