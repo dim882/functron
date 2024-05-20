@@ -33,8 +33,6 @@
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
     "@rollup/plugin-babel": "^6.0.4",
-    "preact": "^10.22.0",
-    "preact-custom-element": "^4.3.0",
     "snabbdom": "^3.6.2"
   }
 }
