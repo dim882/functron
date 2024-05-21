@@ -2,12 +2,15 @@ import { jsx, Fragment, VNode } from 'snabbdom';
 import { createDecoratedComponent } from '../../lib/createComponent.decorated';
 import { h } from '../../lib/snabbdomHelper';
 
-const SnabbdomComponent = createDecoratedComponent({
+interface IHelloModel {
+  foo: string;
+}
+const SnabbdomComponent = createDecoratedComponent<['foo'], IHelloModel>({
   css: '.myClass { color: red; }',
   attributes: ['foo'],
-  mapAttributesToState(attributes, state) {
+  mapAttributesToModel(attributes, model) {
     return {
-      ...state,
+      ...model,
       foo: attributes.foo,
     };
   },

@@ -7,7 +7,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   css,
   cssPath,
   attributes,
-  mapAttributesToState,
+  mapAttributesToModel: mapAttributesToState,
   shadowDomSettings = {
     mode: 'closed',
     delegatesFocus: true,
@@ -18,7 +18,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   css?: string;
   cssPath?: string;
   attributes?: AttributeNames;
-  mapAttributesToState?: (attributes: Record<AttributeNames[number], string>, state: Model) => Model;
+  mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
   shadowDomSettings?: ShadowRootInit;
   connectedCallback?: () => void;
 }) {
@@ -52,6 +52,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
     attributeChangedCallback: (instance, attrName: string, oldVal: string, newVal: string) => {
       if (mapAttributesToState) {
         const newModel = mapAttributesToState(getAttributes(instance), model);
+
         instance.setModel(newModel);
         renderToInnerHTML(newModel);
         console.log('foo', { newModel });

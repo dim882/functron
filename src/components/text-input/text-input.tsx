@@ -5,7 +5,7 @@ import { h } from '../../lib/snabbdomHelper';
 const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
   // attributes: ['fieldname', 'value'],
-  mapAttributesToState(attributes, state) {
+  mapAttributesToModel(attributes, state) {
     return {
       ...state,
       name: attributes.fieldname,

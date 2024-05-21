@@ -16,7 +16,7 @@ export interface ComposeElement<Model> extends HTMLElement {
   setModel: (newModel: Model) => void;
 }
 
-export function createComponent<AttributeNames extends string[], Model = void>({
+export function createComponent<AttributeNames extends string[], Model>({
   attributes,
   constructor,
   connectedCallback,
