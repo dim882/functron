@@ -5,6 +5,12 @@ import { h } from '../../lib/snabbdomHelper';
 const SnabbdomComponent = createDecoratedComponent({
   css: '.myClass { color: red; }',
   attributes: ['foo'],
+  mapAttributesToState(attributes, state) {
+    return {
+      ...state,
+      foo: attributes.foo,
+    };
+  },
   render: (model) => {
     console.log({ model });
 

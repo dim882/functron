@@ -53,6 +53,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
         const newModel = mapAttributesToState(getAttributes(element), model);
         setModel(newModel);
         renderToInnerHTML(newModel);
+        console.log('foo', { newModel });
       }
     },
   });

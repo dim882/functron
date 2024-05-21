@@ -34,7 +34,7 @@ export function createComponent<AttributeNames extends string[]>({
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
-      // console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
+      console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
 
       attributeChangedCallback(this, attrName, oldVal, newVal);
     }
