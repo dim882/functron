@@ -14,6 +14,9 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
 
 export interface ComposeElement<Model> extends HTMLElement {
   setModel: (newModel: Model) => void;
+  model: Model;
+  shadowRoot: ShadowRoot;
+  container: HTMLElement;
 }
 
 export function createComponent<AttributeNames extends string[], Model>({
