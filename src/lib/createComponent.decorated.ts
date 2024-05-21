@@ -36,21 +36,21 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
   return createComponent({
     attributes,
-    constructor(element) {
-      shadowRoot = element.attachShadow(shadowDomSettings);
+    constructor(instance) {
+      shadowRoot = instance.attachShadow(shadowDomSettings);
       container = document.createElement('div');
       shadowRoot.appendChild(container);
       constructor();
     },
 
-    connectedCallback: async (element) => {
+    connectedCallback: async (instance) => {
       renderToInnerHTML(model);
       await applyCss(shadowRoot, cssPath, css);
     },
 
-    attributeChangedCallback: (element, attrName: string, oldVal: string, newVal: string) => {
+    attributeChangedCallback: (instance, attrName: string, oldVal: string, newVal: string) => {
       if (mapAttributesToState) {
-        const newModel = mapAttributesToState(getAttributes(element), model);
+        const newModel = mapAttributesToState(getAttributes(instance), model);
         setModel(newModel);
         renderToInnerHTML(newModel);
         console.log('foo', { newModel });
