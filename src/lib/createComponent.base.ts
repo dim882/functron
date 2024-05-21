@@ -1,14 +1,19 @@
-export interface ICreateComponentArgs<AttributeNames extends string[]> {
-  constructor: (element: HTMLElement) => void;
-  connectedCallback: (element: HTMLElement) => void;
-  disconnectedCallback?: (element: HTMLElement) => void;
-  attributeChangedCallback?: (element: HTMLElement, attrName: string, oldVal: string, newVal: string) => void;
+export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
+  constructor: (instance: ComposeElement<Model>) => void;
+  connectedCallback: (instance: ComposeElement<Model>) => void;
+  disconnectedCallback?: (instance: ComposeElement<Model>) => void;
+  attributeChangedCallback?: (
+    instance: ComposeElement<Model>,
+    attrName: string,
+    oldVal: string,
+    newVal: string
+  ) => void;
   adoptedCallback?: (element: HTMLElement) => void;
   attributes?: AttributeNames;
 }
 
-export interface ComposeElement extends HTMLElement {
-  setModel();
+export interface ComposeElement<Model> extends HTMLElement {
+  setModel: (newModel: Model) => void;
 }
 
 export function createComponent<AttributeNames extends string[], Model = void>({
@@ -18,8 +23,8 @@ export function createComponent<AttributeNames extends string[], Model = void>({
   disconnectedCallback,
   attributeChangedCallback,
   adoptedCallback,
-}: ICreateComponentArgs<AttributeNames>) {
-  class Component extends HTMLElement implements ComposeElement {
+}: ICreateComponentArgs<AttributeNames, Model>) {
+  class Component extends HTMLElement implements ComposeElement<Model> {
     public model: Model;
     public shadowRoot: ShadowRoot;
     public container: HTMLElement;
