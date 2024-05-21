@@ -7,7 +7,11 @@ export interface ICreateComponentArgs<AttributeNames extends string[]> {
   attributes?: AttributeNames;
 }
 
-export function createComponent<AttributeNames extends string[]>({
+export interface ComposeElement extends HTMLElement {
+  setModel();
+}
+
+export function createComponent<AttributeNames extends string[], Model = void>({
   attributes,
   constructor,
   connectedCallback,
@@ -15,7 +19,11 @@ export function createComponent<AttributeNames extends string[]>({
   attributeChangedCallback,
   adoptedCallback,
 }: ICreateComponentArgs<AttributeNames>) {
-  class Component extends HTMLElement {
+  class Component extends HTMLElement implements ComposeElement {
+    public model: Model;
+    public shadowRoot: ShadowRoot;
+    public container: HTMLElement;
+
     static get observedAttributes() {
       return attributes;
     }
@@ -45,6 +53,13 @@ export function createComponent<AttributeNames extends string[]>({
 
     adoptedCallback() {
       adoptedCallback(this);
+    }
+
+    setModel(newModel: Model) {
+      this.model = {
+        ...this.model,
+        ...newModel,
+      };
     }
   }
 
