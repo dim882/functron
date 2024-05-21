@@ -12,7 +12,6 @@ const vNode: VNode = (
     <ui-text-input attrs={{ fieldname: 'firstname', value: 'Joseph Schmoe' }}></ui-text-input>
   </form>
 );
-console.log('Transformed VNode:', vNode);
 
 const SnabbdomComponent = createDecoratedComponent({
   css: '.myClass { color: red; }',

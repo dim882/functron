@@ -5,6 +5,7 @@ import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import { babel } from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
+import html from 'rollup-plugin-html';
 
 export default {
   input: './src/demo/demo.tsx',
@@ -24,6 +25,9 @@ export default {
       babelHelpers: 'bundled',
       include: ['src/**/*.ts'],
       exclude: 'node_modules/**',
+    }),
+    html({
+      include: 'src/**/*.html',
     }),
     postcss({
       modules: true,

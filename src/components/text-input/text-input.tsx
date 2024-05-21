@@ -4,7 +4,7 @@ import { h } from '../../lib/snabbdomHelper';
 
 const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
-  attributes: ['fieldname', 'value'],
+  // attributes: ['fieldname', 'value'],
   mapAttributesToState(attributes, state) {
     return {
       ...state,
@@ -15,9 +15,7 @@ const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: str
   render: (state) => {
     return (
       <div>
-        <div>
-          <input type="text" name={state.name} value={state.value}></input>
-        </div>
+        <div>foo</div>
         <label>
           <slot name="label"></slot>
         </label>
