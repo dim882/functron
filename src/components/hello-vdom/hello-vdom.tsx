@@ -1,5 +1,5 @@
 import { createDecoratedComponent } from '../../lib/createComponent.decorated';
-import { h } from '../../lib/snabbdomHelper';
+import { h, jsx } from '../../lib/snabbdomHelper';
 
 const SnabbdomComponent = createDecoratedComponent({
   css: '.myClass { color: red; }',

@@ -26,4 +26,4 @@ export function renderSnabbdom(container: Element, vNode: VNode) {
   patch(container, vNode);
 }
 
-export { h };
+export { h, jsx };
