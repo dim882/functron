@@ -60,10 +60,10 @@ export function createComponent<AttributeNames extends string[], Model>({
       adoptedCallback(this);
     }
 
-    setModel(newModel: Model) {
+    setModel(patch: Model) {
       this.model = {
         ...this.model,
-        ...newModel,
+        ...patch,
       };
     }
   }
