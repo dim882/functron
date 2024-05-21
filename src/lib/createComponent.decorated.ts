@@ -25,11 +25,9 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   type Attributes = Record<AttributeNames[number], string>;
 
   let shadowRoot: ShadowRoot;
-  let container: HTMLElement;
 
   function renderToInnerHTML(container: HTMLElement, model: Model) {
     const vNode = render(model);
-    console.log(vNode);
 
     renderSnabbdom(container, vNode);
   }
@@ -55,7 +53,6 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
         instance.setModel(newModel);
         renderToInnerHTML(instance.container, model);
-        console.log('foo', { newModel });
       }
     },
   });

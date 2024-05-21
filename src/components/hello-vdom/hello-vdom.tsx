@@ -15,8 +15,6 @@ const SnabbdomComponent = createDecoratedComponent<['foo'], IHelloModel>({
     };
   },
   render: (model) => {
-    console.log({ model });
-
     return (
       <div class={{ myClass: true }}>
         This is JSX
