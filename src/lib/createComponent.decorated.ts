@@ -38,8 +38,8 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
     attributes,
     constructor(instance) {
       shadowRoot = instance.attachShadow(shadowDomSettings);
-      container = document.createElement('div');
-      shadowRoot.appendChild(container);
+      instance.container = document.createElement('div');
+      shadowRoot.appendChild(instance.container);
       constructor();
     },
 
