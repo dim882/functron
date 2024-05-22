@@ -5,9 +5,6 @@ import { h } from '../../lib/snabbdomHelper';
 const MyComponent = createComponent({
   tagName: 'ui-form',
   cssPath: './form.css',
-  shadowDomSettings: {
-    mode: 'open',
-  },
   render: (state) => (
     <form>
       <ui-text-input attrs={{ fieldname: 'firstname' }}></ui-text-input>

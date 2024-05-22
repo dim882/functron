@@ -6,9 +6,6 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
   tagName: 'text-input',
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
-  shadowDomSettings: {
-    mode: 'open',
-  },
   mapAttributesToModel(attributes, model) {
     return {
       ...model,

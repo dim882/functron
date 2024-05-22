@@ -31,7 +31,7 @@ export interface ComposeElement<Model> extends HTMLElement {
 
 export function createComponent<AttributeNames extends string[], Model>({
   attributes,
-  shadowDomSettings,
+  shadowDomSettings = { mode: 'closed' },
   mapAttributesToModel,
   render,
   css,
