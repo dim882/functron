@@ -23,7 +23,6 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
 
 export interface ComposeElement<Model> extends HTMLElement {
   setModel: (newModel: Model) => void;
-  setUpShadowDom: (settings?: ShadowRootInit) => void;
   model: Model;
   shadowRoot: ShadowRoot;
   container: HTMLElement;
@@ -50,26 +49,15 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     constructor() {
       super();
-      this.setUpShadowDom(shadowDomSettings);
+      this.attachShadow(shadowDomSettings);
       this.container = document.createElement('div');
-      this.getShadow().appendChild(this.container);
-    }
-
-    setUpShadowDom(settings?: ShadowRootInit) {
-      console.log({ settings });
-
-      const shadowRoot = this.attachShadow(settings);
-      console.log('shadowRoot', shadowRoot);
-    }
-
-    getShadow() {
-      return this.shadowRoot;
+      this.shadowRoot.appendChild(this.container);
     }
 
     async connectedCallback() {
       // console.log('--- connectedCallback');
       renderToInnerHTML(this.container, this.model);
-      await applyCss(this.getShadow(), cssPath, css);
+      await applyCss(this.shadowRoot, cssPath, css);
     }
 
     attributeChangedCallback(instance, attrName: string, oldVal: string, newVal: string) {
