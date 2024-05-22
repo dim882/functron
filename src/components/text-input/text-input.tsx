@@ -22,6 +22,7 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
     return (
       <div>
         <div>
+          <label>{model.name}</label>
           <input type="text" attrs={{ name: model?.name, value: model?.value }}></input>
         </div>
       </div>

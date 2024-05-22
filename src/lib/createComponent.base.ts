@@ -57,7 +57,7 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
 
     async connectedCallback() {
-      console.log(this.tagName, '--- connectedCallback');
+      // console.log(this.tagName, '--- connectedCallback');
       renderToInnerHTML(this.container, this.model);
       await applyCss(this.shadowRoot, cssPath, css);
     }
@@ -69,7 +69,7 @@ export function createComponent<AttributeNames extends string[], Model>({
         const newModel = mapAttributesToModel(getAttributes(this), this.model);
 
         this.setModel(newModel);
-        console.log(this.tagName, 'model', this.model);
+        // console.log(this.tagName, 'model', this.model);
         renderToInnerHTML(this.container, this.model);
       }
     }
