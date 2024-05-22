@@ -4,7 +4,7 @@ import { h } from '../../lib/snabbdomHelper';
 
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   tagName: 'text-input',
-  // cssPath: './text-input.css',
+  cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
   shadowDomSettings: {
     mode: 'open',

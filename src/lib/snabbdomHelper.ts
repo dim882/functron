@@ -1,20 +1,7 @@
-/** @jsx h */
-
-import {
-  init,
-  classModule,
-  propsModule,
-  styleModule,
-  eventListenersModule,
-  attributesModule,
-  h,
-  jsx,
-  Fragment,
-  VNode,
-} from 'snabbdom';
+import { init, classModule, propsModule, styleModule, eventListenersModule, attributesModule, h, jsx } from 'snabbdom';
 
 // prettier-ignore
-const patch = init([
+const patchDom = init([
   classModule,
   propsModule,
   styleModule,
@@ -22,8 +9,4 @@ const patch = init([
   attributesModule, 
 ]);
 
-export function patchRootElement(container: Element, vNode: VNode) {
-  patch(container, vNode);
-}
-
-export { h, jsx };
+export { h, jsx, patchDom };

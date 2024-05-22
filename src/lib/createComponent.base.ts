@@ -1,6 +1,6 @@
 import { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
-import { patchRootElement } from './snabbdomHelper';
+import { patchDom } from './snabbdomHelper';
 
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   // constructor?: (instance: ComposeElement<Model>) => void;
@@ -94,7 +94,7 @@ export function createComponent<AttributeNames extends string[], Model>({
     const vdom = render(model);
     console.log(tagName, 'vdom', vdom);
 
-    patchRootElement(container, vdom);
+    patchDom(container, vdom);
   }
 
   function getAttributes(component: HTMLElement): Attributes {
