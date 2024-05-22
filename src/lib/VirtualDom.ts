@@ -9,4 +9,4 @@ const patchDom = init([
   attributesModule, 
 ]);
 
-export { h, jsx, patchDom };
+export { jsx, patchDom };

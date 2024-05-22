@@ -1,10 +1,10 @@
 import { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
 import { patchDom } from './VirtualDom';
-export { jsx } from 'snabbdom';
+
+export { jsx } from './VirtualDom';
 
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
-  // constructor?: (instance: ComposeElement<Model>) => void;
   connectedCallback?: (instance: ComposeElement<Model>) => void;
   disconnectedCallback?: (instance: ComposeElement<Model>) => void;
   attributeChangedCallback?: (
@@ -55,24 +55,20 @@ export function createComponent<AttributeNames extends string[], Model>({
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
       this.container = document.createElement('div');
       this.#shadowRoot.appendChild(this.container);
-      console.log(this.tagName, 'shadowDom', this.#shadowRoot);
     }
 
     async connectedCallback() {
       // console.log(this.tagName, '--- connectedCallback');
-      this.renderToInnerHTML(this.container, this.model);
+      this.render(this.model);
       await applyCss(this.#shadowRoot, cssPath, css);
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
-      console.log(this.tagName, 'attributeChangedCallback');
-
       if (mapAttributesToModel) {
         const newModel = mapAttributesToModel(getAttributes(this), this.model);
 
         this.setModel(newModel);
-        // console.log(this.tagName, 'model', this.model);
-        this.renderToInnerHTML(this.container, this.model);
+        this.render(this.model);
       }
     }
 
@@ -91,9 +87,8 @@ export function createComponent<AttributeNames extends string[], Model>({
       };
     }
 
-    renderToInnerHTML(container: HTMLElement, model: Model) {
+    render(model: Model) {
       const vdom = render(model);
-      console.log(tagName, 'vdom', vdom);
 
       patchDom(this.container, vdom);
     }
@@ -104,5 +99,6 @@ export function createComponent<AttributeNames extends string[], Model>({
       component.getAttributeNames().map((attrName) => [attrName, component.getAttribute(attrName)])
     ) as Attributes;
   }
+
   return Component;
 }
