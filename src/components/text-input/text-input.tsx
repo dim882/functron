@@ -4,6 +4,7 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
   tagName: 'text-input',
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
+  initialModel: { name: '', value: '' },
   mapAttributesToModel(attributes, model) {
     return {
       ...model,
@@ -16,7 +17,7 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
       <span class={{ outer: true }}>
         <div>
           <label>{model.name}</label>
-          <input type="text" attrs={{ name: model?.name, value: model?.value }}></input>
+          <input type="text" attrs={{ name: model.name, value: model.value }}></input>
         </div>
       </span>
     );

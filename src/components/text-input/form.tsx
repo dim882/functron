@@ -3,7 +3,8 @@ import { createComponent, jsx } from '../../lib/ComponentFactory';
 const MyComponent = createComponent({
   tagName: 'ui-form',
   cssPath: './form.css',
-  render: (model) => (
+  initialModel: {},
+  render: () => (
     <form>
       <ui-text-input attrs={{ fieldname: 'firstname' }}></ui-text-input>
       <hello-vdom foo="bar"></hello-vdom>

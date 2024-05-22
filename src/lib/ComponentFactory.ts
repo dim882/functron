@@ -21,6 +21,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   css?: string;
   cssPath?: string;
   tagName: string;
+  initialModel: Model;
 }
 
 export interface ComposeElement<Model> extends HTMLElement {
@@ -38,6 +39,7 @@ export function createComponent<AttributeNames extends string[], Model>({
   css,
   cssPath,
   tagName,
+  initialModel,
 }: ICreateComponentArgs<AttributeNames, Model>) {
   type Attributes = Record<AttributeNames[number], string>;
 
