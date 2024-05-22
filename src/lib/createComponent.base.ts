@@ -1,3 +1,4 @@
+import { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
 import { patchRootElement } from './snabbdomHelper';
 
@@ -15,7 +16,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   attributes?: AttributeNames;
   shadowDomSettings?: ShadowRootInit;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
-  render: (params: Model) => any; // Adjusted to return Snabbdom VNode
+  render: (params: Model) => VNode;
   css?: string;
   cssPath?: string;
 }
@@ -30,7 +31,6 @@ export interface ComposeElement<Model> extends HTMLElement {
 
 export function createComponent<AttributeNames extends string[], Model>({
   attributes,
-  ///
   shadowDomSettings,
   mapAttributesToModel,
   render,
