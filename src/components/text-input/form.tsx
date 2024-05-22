@@ -1,11 +1,9 @@
-import { jsx, Fragment, VNode } from 'snabbdom';
-import { createComponent } from '../../lib/createComponent.base';
-import { h } from '../../lib/snabbdomHelper';
+import { createComponent, jsx } from '../../lib/createComponent.base';
 
 const MyComponent = createComponent({
   tagName: 'ui-form',
   cssPath: './form.css',
-  render: (state) => (
+  render: (model) => (
     <form>
       <ui-text-input attrs={{ fieldname: 'firstname' }}></ui-text-input>
       <hello-vdom foo="bar"></hello-vdom>

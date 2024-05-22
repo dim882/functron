@@ -1,6 +1,4 @@
-import { jsx } from 'snabbdom';
-import { createComponent } from '../../lib/createComponent.base';
-import { h } from '../../lib/snabbdomHelper';
+import { createComponent, jsx } from '../../lib/createComponent.base';
 
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   tagName: 'text-input',
