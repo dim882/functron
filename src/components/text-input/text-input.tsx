@@ -21,8 +21,6 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
 
     return (
       <div>
-        foo foo
-        <div>bar</div>
         <div>
           <input type="text" attrs={{ name: model?.name, value: model?.value }}></input>
         </div>
