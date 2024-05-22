@@ -1,6 +1,6 @@
 import { applyCss } from './CssUtils.js';
 import { createComponent } from './createComponent.base.js';
-import { renderSnabbdom, h } from './snabbdomHelper'; // Adjust the import path accordingly
+import { patchContainer, h } from './snabbdomHelper'; // Adjust the import path accordingly
 
 export function createDecoratedComponent<AttributeNames extends string[], Model>({
   render,
@@ -27,9 +27,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   let shadowRoot: ShadowRoot;
 
   function renderToInnerHTML(container: HTMLElement, model: Model) {
-    const vNode = render(model);
-
-    renderSnabbdom(container, vNode);
+    patchContainer(container, render(model));
   }
 
   return createComponent({
