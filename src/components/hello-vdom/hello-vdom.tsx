@@ -7,7 +7,7 @@ interface IHelloModel {
   foo: string;
 }
 const SnabbdomComponent = createComponent<['foo'], IHelloModel>({
-  // css: '.myClass { color: red; }',
+  css: '.myClass { color: red; }',
   attributes: ['foo'],
   shadowDomSettings: {
     mode: 'open',

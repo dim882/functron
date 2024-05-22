@@ -1,3 +1,4 @@
+import { applyCss } from './CssUtils';
 import { patchRootElement } from './snabbdomHelper';
 
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
@@ -15,6 +16,8 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   shadowDomSettings?: ShadowRootInit;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
   render: (params: Model) => any; // Adjusted to return Snabbdom VNode
+  css?: string;
+  cssPath?: string;
 }
 
 export interface ComposeElement<Model> extends HTMLElement {
@@ -31,6 +34,8 @@ export function createComponent<AttributeNames extends string[], Model>({
   shadowDomSettings,
   mapAttributesToModel,
   render,
+  css,
+  cssPath,
 }: ICreateComponentArgs<AttributeNames, Model>) {
   type Attributes = Record<AttributeNames[number], string>;
 
@@ -64,6 +69,7 @@ export function createComponent<AttributeNames extends string[], Model>({
     async connectedCallback() {
       // console.log('--- connectedCallback');
       renderToInnerHTML(this.container, this.model);
+      await applyCss(this.getShadow(), cssPath, css);
     }
 
     attributeChangedCallback(instance, attrName: string, oldVal: string, newVal: string) {
