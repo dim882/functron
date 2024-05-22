@@ -1,9 +1,12 @@
 import { jsx, Fragment, VNode } from 'snabbdom';
-import { createDecoratedComponent } from '../../lib/createComponent.decorated';
+import { createComponent } from '../../lib/createComponent.base';
 import { h } from '../../lib/snabbdomHelper';
 
-const MyComponent = createDecoratedComponent({
+const MyComponent = createComponent({
   cssPath: './form.css',
+  shadowDomSettings: {
+    mode: 'open',
+  },
   render: (state) => (
     <form>
       <ui-text-input attrs={{ fieldname: 'firstname', value: 'Joseph Schmoe' }}>

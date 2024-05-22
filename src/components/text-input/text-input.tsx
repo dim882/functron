@@ -1,10 +1,13 @@
 /** @jsx h */
-import { createDecoratedComponent } from '../../lib/createComponent.decorated';
+import { createComponent } from '../../lib/createComponent.base';
 import { h } from '../../lib/snabbdomHelper';
 
-const MyComponent = createDecoratedComponent<['fieldname', 'value'], { name: string; value: string }>({
+const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   cssPath: './text-input.css',
-  // attributes: ['fieldname', 'value'],
+  attributes: ['fieldname', 'value'],
+  shadowDomSettings: {
+    mode: 'open',
+  },
   mapAttributesToModel(attributes, state) {
     return {
       ...state,

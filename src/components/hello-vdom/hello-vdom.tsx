@@ -1,5 +1,4 @@
-import { jsx, Fragment, VNode } from 'snabbdom';
-import { createDecoratedComponent } from '../../lib/createComponent.decorated';
+import { jsx } from 'snabbdom';
 import { createComponent } from '../../lib/createComponent.base';
 import { h } from '../../lib/snabbdomHelper';
 
