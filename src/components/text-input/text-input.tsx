@@ -22,7 +22,6 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
     return (
       <div>
         <div>
-          foo
           <input type="text" name={state?.name} value={state?.value}></input>
         </div>
         <label>
