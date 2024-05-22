@@ -14,6 +14,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
 
 export interface ComposeElement<Model> extends HTMLElement {
   setModel: (newModel: Model) => void;
+  setUpShadowDom: (settings?: ShadowRootInit) => void;
   model: Model;
   shadowRoot: ShadowRoot;
   container: HTMLElement;
@@ -41,6 +42,15 @@ export function createComponent<AttributeNames extends string[], Model>({
 
       super();
       constructor(this);
+    }
+
+    setUpShadowDom(settings?: ShadowRootInit) {
+      const shadowRoot = this.attachShadow(settings);
+      console.log('shadowRoot', shadowRoot);
+    }
+
+    getShadow() {
+      return this.shadowRoot;
     }
 
     async connectedCallback() {

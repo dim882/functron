@@ -24,8 +24,6 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 }) {
   type Attributes = Record<AttributeNames[number], string>;
 
-  let shadowRoot: ShadowRoot;
-
   function renderToInnerHTML(container: HTMLElement, model: Model) {
     patchRootElement(container, render(model));
   }
@@ -34,15 +32,15 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
     attributes,
 
     constructor(instance) {
-      shadowRoot = instance.attachShadow(shadowDomSettings);
+      instance.setUpShadowDom(shadowDomSettings);
       instance.container = document.createElement('div');
-      shadowRoot.appendChild(instance.container);
+      instance.getShadow().appendChild(instance.container);
       constructor();
     },
 
     connectedCallback: async (instance) => {
       renderToInnerHTML(instance.container, instance.model as Model);
-      await applyCss(shadowRoot, cssPath, css);
+      await applyCss(instance.getShadow(), cssPath, css);
     },
 
     attributeChangedCallback: (instance, attrName: string, oldVal: string, newVal: string) => {

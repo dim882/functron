@@ -8,6 +8,9 @@ interface IHelloModel {
 const SnabbdomComponent = createDecoratedComponent<['foo'], IHelloModel>({
   css: '.myClass { color: red; }',
   attributes: ['foo'],
+  shadowDomSettings: {
+    mode: 'open',
+  },
   mapAttributesToModel(attributes, model) {
     return {
       ...model,
