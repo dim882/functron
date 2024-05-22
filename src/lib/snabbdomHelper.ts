@@ -22,7 +22,7 @@ const patch = init([
   attributesModule, 
 ]);
 
-export function patchContainer(container: Element, vNode: VNode) {
+export function patchRootElement(container: Element, vNode: VNode) {
   patch(container, vNode);
 }
 
