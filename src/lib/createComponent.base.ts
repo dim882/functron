@@ -63,12 +63,13 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     async connectedCallback() {
       // console.log('--- connectedCallback');
-      // connectedCallback(this);
+      renderToInnerHTML(this.container, this.model);
     }
 
     attributeChangedCallback(instance, attrName: string, oldVal: string, newVal: string) {
       if (mapAttributesToModel) {
         const newModel = mapAttributesToModel(getAttributes(this), this.model);
+        console.log({ newModel });
 
         this.setModel(newModel);
         renderToInnerHTML(this.container, this.model);
