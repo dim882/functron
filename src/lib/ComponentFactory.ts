@@ -40,6 +40,8 @@ export function createComponent<AttributeNames extends string[], Model>({
   cssPath,
   tagName,
   initialModel,
+  adoptedCallback,
+  disconnectedCallback,
 }: ICreateComponentArgs<AttributeNames, Model>) {
   type Attributes = Record<AttributeNames[number], string>;
 
@@ -75,11 +77,11 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
 
     disconnectedCallback() {
-      // disconnectedCallback(this);
+      disconnectedCallback(this);
     }
 
     adoptedCallback() {
-      // adoptedCallback(this);
+      adoptedCallback(this);
     }
 
     setModel(patch: Model) {
