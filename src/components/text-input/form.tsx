@@ -3,16 +3,15 @@ import { createComponent } from '../../lib/createComponent.base';
 import { h } from '../../lib/snabbdomHelper';
 
 const MyComponent = createComponent({
+  tagName: 'ui-form',
   cssPath: './form.css',
   shadowDomSettings: {
     mode: 'open',
   },
   render: (state) => (
     <form>
-      <ui-text-input attrs={{ fieldname: 'firstname', value: 'Joseph Schmoe' }}>
-        <div slot="label">Custom Label</div>
-        <div slot="message">Do something!</div>
-      </ui-text-input>
+      <ui-text-input attrs={{ fieldname: 'firstname' }}></ui-text-input>
+      <hello-vdom foo="bar"></hello-vdom>
     </form>
   ),
 });

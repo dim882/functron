@@ -19,6 +19,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   render: (params: Model) => VNode;
   css?: string;
   cssPath?: string;
+  tagName: string;
 }
 
 export interface ComposeElement<Model> extends HTMLElement {
@@ -60,12 +61,12 @@ export function createComponent<AttributeNames extends string[], Model>({
       await applyCss(this.shadowRoot, cssPath, css);
     }
 
-    attributeChangedCallback(instance, attrName: string, oldVal: string, newVal: string) {
+    attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
       if (mapAttributesToModel) {
         const newModel = mapAttributesToModel(getAttributes(this), this.model);
-        console.log({ newModel });
 
         this.setModel(newModel);
+        console.log('model', this.model);
         renderToInnerHTML(this.container, this.model);
       }
     }
@@ -87,7 +88,10 @@ export function createComponent<AttributeNames extends string[], Model>({
   }
 
   function renderToInnerHTML(container: HTMLElement, model: Model) {
-    patchRootElement(container, render(model));
+    const vdom = render(model);
+    console.log('vdom', vdom);
+
+    patchRootElement(container, vdom);
   }
 
   function getAttributes(component: HTMLElement): Attributes {

@@ -3,8 +3,9 @@ import { createComponent } from '../../lib/createComponent.base';
 import { h } from '../../lib/snabbdomHelper';
 
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
+  tagName: 'text-input',
   cssPath: './text-input.css',
-  attributes: ['fieldname', 'value'],
+  // attributes: ['fieldname', 'value'],
   shadowDomSettings: {
     mode: 'open',
   },
@@ -16,9 +17,14 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
     };
   },
   render: (state) => {
+    console.log('state', state);
+
     return (
       <div>
-        <div>foo</div>
+        <div>
+          foo
+          <input type="text" name={state?.name} value={state?.value}></input>
+        </div>
         <label>
           <slot name="label"></slot>
         </label>
