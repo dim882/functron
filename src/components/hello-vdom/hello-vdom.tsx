@@ -1,4 +1,4 @@
-import { createComponent, jsx } from '../../lib/createComponent.base';
+import { createComponent, jsx } from '../../lib/ComponentFactory';
 
 interface IHelloModel {
   foo: string;

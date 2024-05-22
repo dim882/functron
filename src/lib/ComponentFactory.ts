@@ -1,6 +1,6 @@
 import { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
-import { patchDom } from './snabbdomHelper';
+import { patchDom } from './VirtualDom';
 export { jsx } from 'snabbdom';
 
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {

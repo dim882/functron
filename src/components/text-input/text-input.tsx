@@ -1,4 +1,4 @@
-import { createComponent, jsx } from '../../lib/createComponent.base';
+import { createComponent, jsx } from '../../lib/ComponentFactory';
 
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
   tagName: 'text-input',
