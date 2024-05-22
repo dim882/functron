@@ -19,7 +19,7 @@ const SnabbdomComponent = createComponent<['foo'], IHelloModel>({
     return (
       <div class={{ myClass: true }}>
         This is JSX
-        <div>{model?.foo}</div>
+        <div>{model.foo}</div>
       </div>
     );
   },

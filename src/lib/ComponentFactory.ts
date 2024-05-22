@@ -56,6 +56,8 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     constructor() {
       super();
+
+      this.setModel(initialModel);
       this.#shadowRoot = this.attachShadow(shadowDomSettings);
       this.container = document.createElement('div');
       this.#shadowRoot.appendChild(this.container);
