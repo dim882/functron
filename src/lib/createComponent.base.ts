@@ -36,6 +36,7 @@ export function createComponent<AttributeNames extends string[], Model>({
   render,
   css,
   cssPath,
+  tagName,
 }: ICreateComponentArgs<AttributeNames, Model>) {
   type Attributes = Record<AttributeNames[number], string>;
 
@@ -56,17 +57,19 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
 
     async connectedCallback() {
-      // console.log('--- connectedCallback');
+      console.log(this.tagName, '--- connectedCallback');
       renderToInnerHTML(this.container, this.model);
       await applyCss(this.shadowRoot, cssPath, css);
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
+      console.log(this.tagName, 'attributeChangedCallback');
+
       if (mapAttributesToModel) {
         const newModel = mapAttributesToModel(getAttributes(this), this.model);
 
         this.setModel(newModel);
-        console.log('model', this.model);
+        console.log(this.tagName, 'model', this.model);
         renderToInnerHTML(this.container, this.model);
       }
     }
@@ -89,7 +92,7 @@ export function createComponent<AttributeNames extends string[], Model>({
 
   function renderToInnerHTML(container: HTMLElement, model: Model) {
     const vdom = render(model);
-    console.log('vdom', vdom);
+    console.log(tagName, 'vdom', vdom);
 
     patchRootElement(container, vdom);
   }
