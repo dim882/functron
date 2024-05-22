@@ -10,7 +10,7 @@ const SnabbdomComponent = createComponent<['foo'], IHelloModel>({
   css: '.myClass { color: red; }',
   attributes: ['foo'],
   shadowDomSettings: {
-    mode: 'open',
+    mode: 'closed',
   },
   mapAttributesToModel(attributes, model) {
     return {

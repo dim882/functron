@@ -42,8 +42,8 @@ export function createComponent<AttributeNames extends string[], Model>({
 
   class Component extends HTMLElement implements ComposeElement<Model> {
     public model: Model;
-    public shadowRoot: ShadowRoot;
     public container: HTMLElement;
+    #shadowRoot: ShadowRoot;
 
     static get observedAttributes() {
       return attributes;
@@ -51,15 +51,16 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     constructor() {
       super();
-      this.attachShadow(shadowDomSettings);
+      this.#shadowRoot = this.attachShadow(shadowDomSettings);
       this.container = document.createElement('div');
-      this.shadowRoot.appendChild(this.container);
+      this.#shadowRoot.appendChild(this.container);
+      console.log(this.tagName, 'shadowDom', this.#shadowRoot);
     }
 
     async connectedCallback() {
       // console.log(this.tagName, '--- connectedCallback');
-      renderToInnerHTML(this.container, this.model);
-      await applyCss(this.shadowRoot, cssPath, css);
+      this.renderToInnerHTML(this.container, this.model);
+      await applyCss(this.#shadowRoot, cssPath, css);
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
@@ -70,7 +71,7 @@ export function createComponent<AttributeNames extends string[], Model>({
 
         this.setModel(newModel);
         // console.log(this.tagName, 'model', this.model);
-        renderToInnerHTML(this.container, this.model);
+        this.renderToInnerHTML(this.container, this.model);
       }
     }
 
@@ -88,13 +89,13 @@ export function createComponent<AttributeNames extends string[], Model>({
         ...patch,
       };
     }
-  }
 
-  function renderToInnerHTML(container: HTMLElement, model: Model) {
-    const vdom = render(model);
-    console.log(tagName, 'vdom', vdom);
+    renderToInnerHTML(container: HTMLElement, model: Model) {
+      const vdom = render(model);
+      console.log(tagName, 'vdom', vdom);
 
-    patchDom(container, vdom);
+      patchDom(this.container, vdom);
+    }
   }
 
   function getAttributes(component: HTMLElement): Attributes {

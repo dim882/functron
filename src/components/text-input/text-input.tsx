@@ -18,12 +18,12 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
   },
   render: (model) => {
     return (
-      <div class={{ outer: true }}>
+      <span class={{ outer: true }}>
         <div>
           <label>{model.name}</label>
           <input type="text" attrs={{ name: model?.name, value: model?.value }}></input>
         </div>
-      </div>
+      </span>
     );
   },
 });
