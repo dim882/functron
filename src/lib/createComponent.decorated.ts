@@ -32,6 +32,7 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
 
   return createComponent({
     attributes,
+
     constructor(instance) {
       shadowRoot = instance.attachShadow(shadowDomSettings);
       instance.container = document.createElement('div');
