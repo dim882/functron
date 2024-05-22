@@ -3,18 +3,11 @@ import { createComponent } from './createComponent.base.js';
 import { patchRootElement, h } from './snabbdomHelper'; // Adjust the import path accordingly
 
 export function createDecoratedComponent<AttributeNames extends string[], Model>({
-  render,
   css,
   cssPath,
   attributes,
-  mapAttributesToModel: mapAttributesToState,
-  shadowDomSettings = {
-    mode: 'closed',
-    delegatesFocus: true,
-  },
   constructor,
 }: {
-  render: (params: Model) => any; // Adjusted to return Snabbdom VNode
   css?: string;
   cssPath?: string;
   attributes?: AttributeNames;
@@ -22,19 +15,10 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
   shadowDomSettings?: ShadowRootInit;
   connectedCallback?: () => void;
 }) {
-  type Attributes = Record<AttributeNames[number], string>;
-
-  function renderToInnerHTML(container: HTMLElement, model: Model) {
-    patchRootElement(container, render(model));
-  }
-
   return createComponent({
     attributes,
 
     constructor(instance) {
-      instance.setUpShadowDom(shadowDomSettings);
-      instance.container = document.createElement('div');
-      instance.getShadow().appendChild(instance.container);
       constructor();
     },
 
@@ -42,21 +26,5 @@ export function createDecoratedComponent<AttributeNames extends string[], Model>
       renderToInnerHTML(instance.container, instance.model as Model);
       await applyCss(instance.getShadow(), cssPath, css);
     },
-
-    attributeChangedCallback: (instance, attrName: string, oldVal: string, newVal: string) => {
-      if (mapAttributesToState) {
-        const model: Model = instance.model as Model;
-        const newModel = mapAttributesToState(getAttributes(instance), model);
-
-        instance.setModel(newModel);
-        renderToInnerHTML(instance.container, model);
-      }
-    },
   });
-
-  function getAttributes(component: HTMLElement): Attributes {
-    return Object.fromEntries(
-      component.getAttributeNames().map((attrName) => [attrName, component.getAttribute(attrName)])
-    ) as Attributes;
-  }
 }

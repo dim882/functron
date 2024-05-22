@@ -1,6 +1,8 @@
+import { patchRootElement } from './snabbdomHelper';
+
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
-  constructor: (instance: ComposeElement<Model>) => void;
-  connectedCallback: (instance: ComposeElement<Model>) => void;
+  // constructor?: (instance: ComposeElement<Model>) => void;
+  connectedCallback?: (instance: ComposeElement<Model>) => void;
   disconnectedCallback?: (instance: ComposeElement<Model>) => void;
   attributeChangedCallback?: (
     instance: ComposeElement<Model>,
@@ -10,6 +12,9 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   ) => void;
   adoptedCallback?: (element: HTMLElement) => void;
   attributes?: AttributeNames;
+  shadowDomSettings?: ShadowRootInit;
+  mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
+  render: (params: Model) => any; // Adjusted to return Snabbdom VNode
 }
 
 export interface ComposeElement<Model> extends HTMLElement {
@@ -22,12 +27,13 @@ export interface ComposeElement<Model> extends HTMLElement {
 
 export function createComponent<AttributeNames extends string[], Model>({
   attributes,
-  constructor,
-  connectedCallback,
-  disconnectedCallback,
-  attributeChangedCallback,
-  adoptedCallback,
+  ///
+  shadowDomSettings,
+  mapAttributesToModel,
+  render,
 }: ICreateComponentArgs<AttributeNames, Model>) {
+  type Attributes = Record<AttributeNames[number], string>;
+
   class Component extends HTMLElement implements ComposeElement<Model> {
     public model: Model;
     public shadowRoot: ShadowRoot;
@@ -38,13 +44,15 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
 
     constructor() {
-      // console.log('--- constructor');
-
       super();
-      constructor(this);
+      this.setUpShadowDom(shadowDomSettings);
+      this.container = document.createElement('div');
+      this.getShadow().appendChild(this.container);
     }
 
     setUpShadowDom(settings?: ShadowRootInit) {
+      console.log({ settings });
+
       const shadowRoot = this.attachShadow(settings);
       console.log('shadowRoot', shadowRoot);
     }
@@ -55,22 +63,25 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     async connectedCallback() {
       // console.log('--- connectedCallback');
-
-      connectedCallback(this);
+      // connectedCallback(this);
     }
 
-    attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
-      console.log(`--- ?attributeChangedCallback: ${attrName}: from ${oldVal} to ${newVal}`);
+    attributeChangedCallback(instance, attrName: string, oldVal: string, newVal: string) {
+      if (mapAttributesToModel) {
+        const model: Model = this.model as Model;
+        const newModel = mapAttributesToModel(getAttributes(this), model);
 
-      attributeChangedCallback(this, attrName, oldVal, newVal);
+        this.setModel(newModel);
+        renderToInnerHTML(instance.container, model);
+      }
     }
 
     disconnectedCallback() {
-      disconnectedCallback(this);
+      // disconnectedCallback(this);
     }
 
     adoptedCallback() {
-      adoptedCallback(this);
+      // adoptedCallback(this);
     }
 
     setModel(patch: Model) {
@@ -81,5 +92,14 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
   }
 
+  function renderToInnerHTML(container: HTMLElement, model: Model) {
+    patchRootElement(container, render(model));
+  }
+
+  function getAttributes(component: HTMLElement): Attributes {
+    return Object.fromEntries(
+      component.getAttributeNames().map((attrName) => [attrName, component.getAttribute(attrName)])
+    ) as Attributes;
+  }
   return Component;
 }
