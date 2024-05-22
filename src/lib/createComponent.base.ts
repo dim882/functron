@@ -68,11 +68,10 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     attributeChangedCallback(instance, attrName: string, oldVal: string, newVal: string) {
       if (mapAttributesToModel) {
-        const model: Model = this.model as Model;
-        const newModel = mapAttributesToModel(getAttributes(this), model);
+        const newModel = mapAttributesToModel(getAttributes(this), this.model);
 
         this.setModel(newModel);
-        renderToInnerHTML(instance.container, model);
+        renderToInnerHTML(this.container, this.model);
       }
     }
 
