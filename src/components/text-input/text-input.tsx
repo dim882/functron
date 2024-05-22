@@ -17,10 +17,8 @@ const MyComponent = createComponent<['fieldname', 'value'], { name: string; valu
     };
   },
   render: (model) => {
-    console.log('text-input model', model);
-
     return (
-      <div>
+      <div class={{ outer: true }}>
         <div>
           <label>{model.name}</label>
           <input type="text" attrs={{ name: model?.name, value: model?.value }}></input>
