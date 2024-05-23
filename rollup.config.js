@@ -10,7 +10,7 @@ export default {
   input: './src/demo/demo.tsx',
   output: {
     file: 'dist/bundle.js',
-    format: 'module',
+    format: 'esm',
     sourcemap: true,
   },
   plugins: [
@@ -19,9 +19,10 @@ export default {
       tsconfig: './tsconfig.json',
     }),
     babel({
-      presets: [['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }]],
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      extensions: ['.js', '.jsx', '.ts'],
       babelHelpers: 'bundled',
+      include: ['src/**/*.ts'],
+      exclude: 'node_modules/**',
     }),
     postcss({
       modules: true,

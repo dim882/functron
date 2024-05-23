@@ -4,11 +4,11 @@
     "target": "es2020",
     "noEmitOnError": false,
     "jsx": "react",
-    "jsxFactory": "h",
+    "jsxFactory": "jsx",
     "jsxFragmentFactory": "Fragment",
     "moduleResolution": "node"
   },
-  "include": ["./src/**/*.ts", "src/demo/demo.tsx"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/demo/demo.tsx"],
   "paths": {
     "preact": ["./node_modules/preact"]
   }
