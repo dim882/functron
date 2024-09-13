@@ -6,7 +6,6 @@ const MyComponent = createComponent({
   initialModel: {},
   render: () => (
     <form>
-      <ui-text-input attrs={{ fieldname: 'firstname' }}></ui-text-input>
       <slot></slot>
     </form>
   ),
