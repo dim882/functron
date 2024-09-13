@@ -20,7 +20,6 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   render: (params: Model) => VNode;
   css?: string;
   cssPath?: string;
-  tagName: string;
   initialModel: Model;
 }
 
@@ -38,7 +37,6 @@ export function createComponent<AttributeNames extends string[], Model>({
   render,
   css,
   cssPath,
-  tagName,
   initialModel,
   adoptedCallback,
   disconnectedCallback,
