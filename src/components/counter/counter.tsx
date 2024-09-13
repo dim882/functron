@@ -6,11 +6,12 @@ interface ICounterModel {
 
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel: { count: 0 },
-  render: () => (
+  render: ({count}) => (
     <div>
-      
+       <button>Add 1</button>
+       <div>{count}</div> 
     </div>
   ),
 });
 
-customElements.define('ui-form', MyComponent);
+customElements.define('ui-counter', MyComponent);
