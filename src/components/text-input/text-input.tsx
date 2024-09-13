@@ -1,7 +1,6 @@
 import { createComponent, jsx } from '../../lib/ComponentFactory';
 
 const MyComponent = createComponent<['fieldname', 'value'], { name: string; value: string }>({
-  tagName: 'text-input',
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
   initialModel: { name: '', value: '' },

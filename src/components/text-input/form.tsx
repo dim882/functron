@@ -1,7 +1,6 @@
 import { createComponent, jsx } from '../../lib/ComponentFactory';
 
 const MyComponent = createComponent({
-  tagName: 'ui-form',
   cssPath: './form.css',
   initialModel: {},
   render: () => (

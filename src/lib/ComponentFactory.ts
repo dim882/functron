@@ -5,10 +5,10 @@ import { patchDom } from './VirtualDom';
 export { jsx } from './VirtualDom';
 
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
-  connectedCallback?: (instance: ComposeElement<Model>) => void;
-  disconnectedCallback?: (instance: ComposeElement<Model>) => void;
+  connectedCallback?: (instance: FunctronElement<Model>) => void;
+  disconnectedCallback?: (instance: FunctronElement<Model>) => void;
   attributeChangedCallback?: (
-    instance: ComposeElement<Model>,
+    instance: FunctronElement<Model>,
     attrName: string,
     oldVal: string,
     newVal: string
@@ -23,7 +23,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   initialModel: Model;
 }
 
-export interface ComposeElement<Model> extends HTMLElement {
+export interface FunctronElement<Model> extends HTMLElement {
   setModel: (newModel: Model) => void;
   model: Model;
   shadowRoot: ShadowRoot;
@@ -43,7 +43,7 @@ export function createComponent<AttributeNames extends string[], Model>({
 }: ICreateComponentArgs<AttributeNames, Model>) {
   type Attributes = Record<AttributeNames[number], string>;
 
-  class Component extends HTMLElement implements ComposeElement<Model> {
+  class Component extends HTMLElement implements FunctronElement<Model> {
     public model: Model;
     public container: HTMLElement;
     #shadowRoot: ShadowRoot;
