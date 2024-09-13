@@ -7,7 +7,7 @@ const MyComponent = createComponent({
   render: () => (
     <form>
       <ui-text-input attrs={{ fieldname: 'firstname' }}></ui-text-input>
-      <hello-vdom foo="bar"></hello-vdom>
+      <slot></slot>
     </form>
   ),
 });
