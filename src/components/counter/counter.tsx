@@ -5,8 +5,6 @@ interface ICounterModel {
 };
 
 const incrementCounter: EventHandler<ICounterModel, MouseEvent> = (event, model) => {
-  console.log('click', event, model);
-  
   return ({
     ...model,
     count: model.count + 1

@@ -56,6 +56,7 @@ export function createComponent<AttributeNames extends string[], Model>({
     public model: Model;
     public container: HTMLElement;
     #shadowRoot: ShadowRoot;
+    private vdom: VNode;
 
     static get observedAttributes() {
       return attributes;
@@ -116,11 +117,19 @@ export function createComponent<AttributeNames extends string[], Model>({
         return wrappedHandlers
       }
     }
-
+    
     render(model: Model) {
       const vdom = render(model, this.bindHanders());
 
-      patchDom(this.container, vdom);
+      console.log(vdom);
+      
+      if (!this.vdom) {
+        patchDom(this.container, vdom);
+      } else {
+        patchDom(this.vdom, vdom);
+      }
+
+      this.vdom = vdom;
     }
   }
 
