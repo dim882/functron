@@ -4,6 +4,13 @@ import { patchDom } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
 
+type EventHandler<Model, Event> = (event: Event, model: Model) => Model;
+
+type EventHandlerMap<Model> = {
+  [key: string]: EventHandler<Model, any>;
+};
+
+
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   connectedCallback?: (instance: FunctronElement<Model>) => void;
   disconnectedCallback?: (instance: FunctronElement<Model>) => void;
@@ -21,6 +28,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   css?: string;
   cssPath?: string;
   initialModel: Model;
+  handlers?: EventHandlerMap<Model>; 
 }
 
 export interface FunctronElement<Model> extends HTMLElement {
