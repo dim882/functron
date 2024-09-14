@@ -102,14 +102,16 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
     
     bindHanders() {
-      const wrappedHandlers = Object.fromEntries(
-        Object.entries(handlers).map(([key, handler]) => [
-          key,
-          (event: any) => this.setModel(handler(event, this.model)),
-        ])
-      );
-      
-      return wrappedHandlers
+      if (handlers) {
+        const wrappedHandlers = Object.fromEntries(
+          Object.entries(handlers).map(([key, handler]) => [
+            key,
+            (event: any) => this.setModel(handler(event, this.model)),
+          ])
+        );      
+        
+        return wrappedHandlers
+      }
     }
 
     render(model: Model) {
