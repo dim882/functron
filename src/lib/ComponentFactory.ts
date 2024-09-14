@@ -99,7 +99,6 @@ export function createComponent<AttributeNames extends string[], Model>({
         ...this.model,
         ...patch,
       };
-      console.log('new model', this.model);
     }
     
     bindHanders() {
@@ -121,8 +120,6 @@ export function createComponent<AttributeNames extends string[], Model>({
     render(model: Model) {
       const vdom = render(model, this.bindHanders());
 
-      console.log(vdom);
-      
       if (!this.vdom) {
         patchDom(this.container, vdom);
       } else {
