@@ -24,7 +24,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   attributes?: AttributeNames;
   shadowDomSettings?: ShadowRootInit;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
-  render: (params: Model) => VNode;
+  render: (params: Model, handlers?: EventHandlerMap<Model>) => VNode;
   css?: string;
   cssPath?: string;
   initialModel: Model;
@@ -48,6 +48,7 @@ export function createComponent<AttributeNames extends string[], Model>({
   initialModel,
   adoptedCallback,
   disconnectedCallback,
+  handlers
 }: ICreateComponentArgs<AttributeNames, Model>) {
   type Attributes = Record<AttributeNames[number], string>;
 
@@ -100,7 +101,7 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
 
     render(model: Model) {
-      const vdom = render(model);
+      const vdom = render(model, handlers);
 
       patchDom(this.container, vdom);
     }
