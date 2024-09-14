@@ -4,9 +4,9 @@ import { patchDom } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
 
-type EventHandler<Model, Event> = (event: Event, model: Model) => Model;
+export type EventHandler<Model, Event> = (event: Event, model: Model) => Model;
 
-type EventHandlerMap<Model> = {
+export type EventHandlerMap<Model> = {
   [key: string]: EventHandler<Model, any>;
 };
 
