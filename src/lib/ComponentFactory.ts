@@ -106,7 +106,10 @@ export function createComponent<AttributeNames extends string[], Model>({
         const wrappedHandlers = Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,
-            (event: any) => this.setModel(handler(event, this.model)),
+            (event: any) => {
+              this.setModel(handler(event, this.model)),
+              this.render(this.model)
+            }
           ])
         );      
         
