@@ -98,10 +98,22 @@ export function createComponent<AttributeNames extends string[], Model>({
         ...this.model,
         ...patch,
       };
+      console.log('new model', this.model);
+    }
+    
+    bindHanders() {
+      const wrappedHandlers = Object.fromEntries(
+        Object.entries(handlers).map(([key, handler]) => [
+          key,
+          (event: any) => this.setModel(handler(event, this.model)),
+        ])
+      );
+      
+      return wrappedHandlers
     }
 
     render(model: Model) {
-      const vdom = render(model, handlers);
+      const vdom = render(model, this.bindHanders());
 
       patchDom(this.container, vdom);
     }
