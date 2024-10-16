@@ -6,7 +6,12 @@
     "jsx": "react",
     "jsxFactory": "jsx",
     "jsxFragmentFactory": "Fragment",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/demo/demo.tsx"],
   "paths": {
