@@ -1,12 +1,7 @@
-import { createComponent, EventHandler, jsx } from '../../lib/ComponentFactory';
-import { VNode } from 'snabbdom';
+import { createComponent, EventHandler, jsx, RenderFunc } from '../../lib/ComponentFactory';
 
 interface ICounterModel {
   count: number;
-}
-
-interface RenderFunc<TModel, THandlers extends Partial<EventHandlerMap<TModel>> = EventHandlerMap<TModel>> {
-  (model: TModel, handlers: THandlers): VNode;
 }
 
 const initialModel: ICounterModel = { count: 0 };
@@ -16,14 +11,10 @@ const incrementCounter: EventHandler<ICounterModel, MouseEvent> = (event, model)
   count: model.count + 1,
 });
 
-type EventHandlerMap<TModel> = {
-  [key: string]: EventHandler<TModel, any>;
-};
-
 const render: RenderFunc<ICounterModel, { incrementCounter: EventHandler<ICounterModel, MouseEvent> }> = (
   { count },
   { incrementCounter }
-): VNode => (
+) => (
   <div>
     <button on={{ click: incrementCounter }}>Add 1</button>
     <div>{count}</div>
@@ -33,7 +24,7 @@ const render: RenderFunc<ICounterModel, { incrementCounter: EventHandler<ICounte
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel,
   handlers: { incrementCounter },
-  render,
+  render: (model, handlers) => render(model, handlers as { incrementCounter: EventHandler<ICounterModel, MouseEvent> }),
 });
 
 customElements.define('ui-counter', MyComponent);

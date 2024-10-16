@@ -10,6 +10,9 @@ export type EventHandlerMap<Model> = {
   [key: string]: EventHandler<Model, any>;
 };
 
+export interface RenderFunc<TModel, THandlers extends Partial<EventHandlerMap<TModel>> = EventHandlerMap<TModel>> {
+  (model: TModel, handlers: THandlers): VNode;
+}
 
 export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   connectedCallback?: (instance: FunctronElement<Model>) => void;
@@ -28,7 +31,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   css?: string;
   cssPath?: string;
   initialModel: Model;
-  handlers?: EventHandlerMap<Model>; 
+  handlers?: EventHandlerMap<Model>;
 }
 
 export interface FunctronElement<Model> extends HTMLElement {
@@ -48,7 +51,7 @@ export function createComponent<AttributeNames extends string[], Model>({
   initialModel,
   adoptedCallback,
   disconnectedCallback,
-  handlers
+  handlers,
 }: ICreateComponentArgs<AttributeNames, Model>) {
   type Attributes = Record<AttributeNames[number], string>;
 
@@ -100,23 +103,22 @@ export function createComponent<AttributeNames extends string[], Model>({
         ...patch,
       };
     }
-    
+
     bindHanders() {
       if (handlers) {
         const wrappedHandlers = Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,
             (event: any) => {
-              this.setModel(handler(event, this.model)),
-              this.render(this.model)
-            }
+              this.setModel(handler(event, this.model)), this.render(this.model);
+            },
           ])
-        );      
-        
-        return wrappedHandlers
+        );
+
+        return wrappedHandlers;
       }
     }
-    
+
     render(model: Model) {
       const vdom = render(model, this.bindHanders());
 
