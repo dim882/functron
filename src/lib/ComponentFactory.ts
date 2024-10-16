@@ -4,13 +4,16 @@ import { patchDom } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
 
-export type EventHandler<Model, Event> = (event: Event, model: Model) => Model;
+export type EventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
+  event: Event,
+  model: Model
+) => Model;
 
 export type EventHandlerMap<Model> = {
   [key: string]: EventHandler<Model, any>;
 };
 
-export interface RenderFunc<TModel, THandlers extends Partial<EventHandlerMap<TModel>> = EventHandlerMap<TModel>> {
+export interface RenderFunc<TModel, THandlers extends EventHandlerMap<TModel> = EventHandlerMap<TModel>> {
   (model: TModel, handlers: THandlers): VNode;
 }
 
