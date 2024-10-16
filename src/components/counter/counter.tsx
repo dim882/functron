@@ -4,12 +4,12 @@ interface ICounterModel {
   count: number;
 }
 
+const initialModel: ICounterModel = { count: 0 };
+
 const incrementCounter: EventHandler<ICounterModel, MouseEvent> = (event, model) => ({
   ...model,
   count: model.count + 1,
 });
-
-const initialModel: ICounterModel = { count: 0 };
 
 const render = ({ count }: ICounterModel, { onClick }: { onClick: EventHandler<ICounterModel, MouseEvent> }) => (
   <div>
@@ -18,13 +18,9 @@ const render = ({ count }: ICounterModel, { onClick }: { onClick: EventHandler<I
   </div>
 );
 
-const handlers = {
-  onClick: incrementCounter,
-};
-
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel,
-  handlers,
+  handlers: { onClick: incrementCounter },
   render,
 });
 
