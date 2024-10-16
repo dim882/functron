@@ -23,6 +23,7 @@ const render = (
 
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel,
+  // TODO: Make this type safe
   handlers: { incrementCounter },
   render,
 });
