@@ -40,7 +40,6 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
 export interface FunctronElement<Model> extends HTMLElement {
   setModel: (newModel: Model) => void;
   model: Model;
-  shadowRoot: ShadowRoot;
   container: HTMLElement;
 }
 
