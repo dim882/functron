@@ -11,16 +11,19 @@ const incrementCounter: EventHandler<ICounterModel, MouseEvent> = (event, model)
   count: model.count + 1,
 });
 
-const render = ({ count }: ICounterModel, { onClick }: { onClick: EventHandler<ICounterModel, MouseEvent> }) => (
+const render = (
+  { count }: ICounterModel,
+  { incrementCounter }: { incrementCounter: EventHandler<ICounterModel, MouseEvent> }
+) => (
   <div>
-    <button on={{ click: onClick }}>Add 1</button>
+    <button on={{ click: incrementCounter }}>Add 1</button>
     <div>{count}</div>
   </div>
 );
 
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel,
-  handlers: { onClick: incrementCounter },
+  handlers: { incrementCounter },
   render,
 });
 
