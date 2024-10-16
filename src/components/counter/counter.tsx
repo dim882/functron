@@ -23,7 +23,7 @@ type EventHandlerMap<TModel> = {
 const render: RenderFunc<ICounterModel, { incrementCounter: EventHandler<ICounterModel, MouseEvent> }> = (
   { count },
   { incrementCounter }
-) => (
+): VNode => (
   <div>
     <button on={{ click: incrementCounter }}>Add 1</button>
     <div>{count}</div>
