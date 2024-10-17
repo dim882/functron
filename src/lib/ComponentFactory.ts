@@ -92,11 +92,11 @@ export function createComponent<AttributeNames extends string[], Model>({
     }
 
     disconnectedCallback() {
-      disconnectedCallback(this);
+      disconnectedCallback && disconnectedCallback(this);
     }
 
     adoptedCallback() {
-      adoptedCallback(this);
+      adoptedCallback && adoptedCallback(this);
     }
 
     setModel(patch: Model) {
