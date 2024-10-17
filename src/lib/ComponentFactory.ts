@@ -1,6 +1,8 @@
 import { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
-import { patchDom, jsx } from './VirtualDom';
+import { patchDom } from './VirtualDom';
+
+export { jsx } from './VirtualDom';
 
 export type EventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
   model: Model,
