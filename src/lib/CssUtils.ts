@@ -1,4 +1,4 @@
-export async function applyCss(dom: ShadowRoot, cssPath: string, css: string) {
+export async function applyCss(dom: ShadowRoot, cssPath: string | undefined, css: string) {
   const style = document.createElement('style');
   dom.appendChild(style);
   style.textContent = cssPath ? await loadCss(cssPath) : css;

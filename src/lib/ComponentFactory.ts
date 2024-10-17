@@ -61,7 +61,7 @@ export function createComponent<AttributeNames extends string[], Model>({
     public model: Model;
     public container: HTMLElement;
     #shadowRoot: ShadowRoot;
-    private vdom: VNode;
+    private vdom: VNode | null = null;
 
     static get observedAttributes() {
       return attributes;
