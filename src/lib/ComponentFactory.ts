@@ -1,16 +1,14 @@
 import { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
-import { patchDom } from './VirtualDom';
-
-export { jsx } from './VirtualDom';
+import { patchDom, jsx } from './VirtualDom';
 
 export type EventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
-  event: Event,
-  model: Model
+  model: Model,
+  event: Event
 ) => Model;
 
 export type EventHandlerMap<Model> = {
-  [key: string]: EventHandler<Model, any>;
+  [key: string]: EventHandler<Model>;
 };
 
 export interface RenderFunc<TModel, THandlers extends EventHandlerMap<TModel> = EventHandlerMap<TModel>> {
