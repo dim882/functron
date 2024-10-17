@@ -5,8 +5,8 @@ import { patchDom } from './VirtualDom';
 export { jsx } from './VirtualDom';
 
 export type EventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
-  model: Model,
-  event: Event
+  event: Event,
+  model: Model
 ) => Model;
 
 export type EventHandlerMap<Model> = {
