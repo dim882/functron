@@ -121,7 +121,7 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     bindHanders() {
       if (handlers) {
-        const wrappedHandlers = Object.fromEntries(
+        return Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,
             (event: any) => {
@@ -129,8 +129,6 @@ export function createComponent<AttributeNames extends string[], Model>({
             },
           ])
         );
-
-        return wrappedHandlers;
       }
     }
 
