@@ -13,6 +13,15 @@ export type EventHandlerMap<Model> = {
   [key: string]: EventHandler<Model>;
 };
 
+export type InternalEventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
+  event: Event,
+  model: Model
+) => void;
+
+export type EventHandlerInternalMap<Model> = {
+  [key: string]: InternalEventHandler<Model>;
+};
+
 export interface RenderFunc<TModel, THandlers extends EventHandlerMap<TModel> = EventHandlerMap<TModel>> {
   (model: TModel, handlers: THandlers): VNode;
 }
@@ -30,7 +39,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   attributes?: AttributeNames;
   shadowDomSettings?: ShadowRootInit;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
-  render: (params: Model, handlers?: EventHandlerMap<Model>) => VNode;
+  render: (params: Model, handlers?: EventHandlerInternalMap<Model>) => VNode;
   css?: string;
   cssPath?: string;
   initialModel: Model;
