@@ -13,6 +13,7 @@ export type EventHandlerMap<Model> = {
   [key: string]: EventHandler<Model>;
 };
 
+// This is for when we bind the handlers to call setModel() and return void
 export type InternalEventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
   event: Event,
   model: Model
@@ -22,7 +23,10 @@ export type EventHandlerInternalMap<Model> = {
   [key: string]: InternalEventHandler<Model>;
 };
 
-export interface RenderFunc<TModel, THandlers extends EventHandlerMap<TModel> = EventHandlerMap<TModel>> {
+export interface RenderFunc<
+  TModel,
+  THandlers extends EventHandlerInternalMap<TModel> = EventHandlerInternalMap<TModel>
+> {
   (model: TModel, handlers: THandlers): VNode;
 }
 

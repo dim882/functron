@@ -24,7 +24,7 @@ const render: RenderFunc<ICounterModel, { incrementCounter: EventHandler<ICounte
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel,
   handlers: { incrementCounter },
-  render: (model, handlers) => render(model, handlers as { incrementCounter: EventHandler<ICounterModel, MouseEvent> }),
+  render: (model, handlers) => render(model, handlers),
 });
 
 customElements.define('ui-counter', MyComponent);
