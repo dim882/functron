@@ -4,18 +4,20 @@ import { patchDom } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
 
-export type EventHandler<Model, Event extends UIEvent = UIEvent> = (event: Event, model: Model) => Model;
+type AnyUIEvent = any extends UIEvent ? any : never;
+
+export type EventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => Model;
 
 export type EventHandlerMap<Model> = {
   [key: string]: EventHandler<Model>;
 };
 
 // This is for when we bind the handlers to call setModel() and return void
-export type InternalEventHandler<Model, Event extends UIEvent = UIEvent> = (event: Event, model: Model) => void;
+export type InternalEventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => void;
 
 export type EventHandlerInternalMap<Model> = {
   // The value can be an InternalEventHandler with any event type that extends UIEvent
-  [key: string]: InternalEventHandler<Model, any extends UIEvent ? any : never>;
+  [key: string]: InternalEventHandler<Model, AnyUIEvent>;
 };
 
 export interface RenderFunc<
