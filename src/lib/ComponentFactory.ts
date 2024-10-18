@@ -41,15 +41,19 @@ export type StandardComponentArgs<AttributeNames, Model> = {
   attributes?: AttributeNames;
 };
 
-export interface ICreateComponentArgs<AttributeNames extends string[], Model, Render>
-  extends StandardComponentArgs<AttributeNames, Model> {
+export interface ICreateComponentArgs<
+  AttributeNames extends string[],
+  Model,
+  Handlers extends EventHandlerMap<Model>,
+  Render extends RenderFunc<Model, Handlers>
+> extends StandardComponentArgs<AttributeNames, Model> {
   attributes?: AttributeNames;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
   render: Render;
   css?: string;
   cssPath?: string;
   initialModel: Model;
-  handlers?: EventHandlerMap<Model>;
+  handlers?: Handlers;
 }
 
 export interface FunctronElement<Model> extends HTMLElement {
@@ -58,7 +62,12 @@ export interface FunctronElement<Model> extends HTMLElement {
   container: HTMLElement;
 }
 
-export function createComponent<AttributeNames extends string[], Model, Render>({
+export function createComponent<
+  AttributeNames extends string[],
+  Model,
+  Handlers extends EventHandlerMap<Model>,
+  Render extends RenderFunc<Model, Handlers>
+>({
   attributes,
   shadowDomSettings = { mode: 'closed' },
   mapAttributesToModel,
@@ -69,7 +78,7 @@ export function createComponent<AttributeNames extends string[], Model, Render>(
   adoptedCallback,
   disconnectedCallback,
   handlers,
-}: ICreateComponentArgs<AttributeNames, Model, Render>) {
+}: ICreateComponentArgs<AttributeNames, Model, Handlers, Render>) {
   type Attributes = Record<AttributeNames[number], string>;
 
   class Component extends HTMLElement implements FunctronElement<Model> {
@@ -121,17 +130,21 @@ export function createComponent<AttributeNames extends string[], Model, Render>(
       };
     }
 
-    bindHanders() {
+    bindHanders(): Handlers {
       if (handlers) {
         return Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,
-            (event: any) => {
-              this.setModel(handler(event, this.model)), this.render(this.model);
-            },
+            ((event: any) => {
+              this.setModel(handler(event, this.model));
+              this.render(this.model);
+              return this.model;
+            }) as EventHandler<Model>,
           ])
-        );
+        ) as Handlers;
       }
+
+      return {} as Handlers;
     }
 
     render(model: Model) {

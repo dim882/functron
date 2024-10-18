@@ -22,7 +22,7 @@ const render: RenderFunc<ICounterModel, typeof handlers> = ({ count }, { increme
   </div>
 );
 
-const MyComponent = createComponent<[], ICounterModel, typeof render>({
+const MyComponent = createComponent<[], ICounterModel, typeof handlers, typeof render>({
   initialModel,
   handlers,
   render,
