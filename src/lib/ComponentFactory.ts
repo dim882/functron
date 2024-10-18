@@ -4,20 +4,14 @@ import { patchDom } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
 
-export type EventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
-  event: Event,
-  model: Model
-) => Model;
+export type EventHandler<Model, Event extends UIEvent> = (event: Event, model: Model) => Model;
 
 export type EventHandlerMap<Model> = {
   [key: string]: EventHandler<Model>;
 };
 
 // This is for when we bind the handlers to call setModel() and return void
-export type InternalEventHandler<Model, Event extends globalThis.Event = globalThis.Event> = (
-  event: Event,
-  model: Model
-) => void;
+export type InternalEventHandler<Model, Event extends UIEvent> = (event: Event, model: Model) => void;
 
 export type EventHandlerInternalMap<Model> = {
   [key: string]: InternalEventHandler<Model>;
@@ -121,6 +115,8 @@ export function createComponent<AttributeNames extends string[], Model>({
 
     bindHanders() {
       if (handlers) {
+        console.log({ handlers }, '!');
+
         return Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,

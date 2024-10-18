@@ -1,4 +1,4 @@
-import { createComponent, EventHandler, jsx, RenderFunc } from '../../lib/ComponentFactory';
+import { createComponent, EventHandler, InternalEventHandler, jsx, RenderFunc } from '../../lib/ComponentFactory';
 
 interface ICounterModel {
   count: number;
@@ -11,7 +11,7 @@ const incrementCounter: EventHandler<ICounterModel, MouseEvent> = (event, model)
   count: model.count + 1,
 });
 
-const render: RenderFunc<ICounterModel, { incrementCounter: EventHandler<ICounterModel, MouseEvent> }> = (
+const render: RenderFunc<ICounterModel, { incrementCounter: InternalEventHandler<ICounterModel, MouseEvent> }> = (
   { count },
   { incrementCounter }
 ) => (
