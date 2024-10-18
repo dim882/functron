@@ -11,10 +11,11 @@ const incrementCounter: EventHandler<ICounterModel, MouseEvent> = (event, model)
   count: model.count + 1,
 });
 
-const render: RenderFunc<ICounterModel, { incrementCounter: InternalEventHandler<ICounterModel, MouseEvent> }> = (
-  { count },
-  { incrementCounter }
-) => (
+const handlers = {
+  incrementCounter,
+};
+
+const render: RenderFunc<ICounterModel, typeof handlers> = ({ count }, { incrementCounter }) => (
   <div>
     <button on={{ click: incrementCounter }}>Add 1</button>
     <div>{count}</div>
@@ -23,7 +24,7 @@ const render: RenderFunc<ICounterModel, { incrementCounter: InternalEventHandler
 
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel,
-  handlers: { incrementCounter },
+  handlers,
   render: (model, handlers) => render(model, handlers),
 });
 
