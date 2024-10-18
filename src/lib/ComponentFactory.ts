@@ -27,7 +27,7 @@ export interface RenderFunc<
   (model: TModel, handlers: THandlers): VNode;
 }
 
-export interface ICreateComponentArgs<AttributeNames extends string[], Model, Render> {
+export type StandardComponentArgs<AttributeNames, Model> = {
   connectedCallback?: (instance: FunctronElement<Model>) => void;
   disconnectedCallback?: (instance: FunctronElement<Model>) => void;
   attributeChangedCallback?: (
@@ -37,8 +37,13 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model, Re
     newVal: string
   ) => void;
   adoptedCallback?: (element: HTMLElement) => void;
-  attributes?: AttributeNames;
   shadowDomSettings?: ShadowRootInit;
+  attributes?: AttributeNames;
+};
+
+export interface ICreateComponentArgs<AttributeNames extends string[], Model, Render>
+  extends StandardComponentArgs<AttributeNames, Model> {
+  attributes?: AttributeNames;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
   render: Render;
   css?: string;
