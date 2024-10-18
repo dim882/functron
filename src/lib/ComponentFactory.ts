@@ -27,7 +27,7 @@ export interface RenderFunc<
   (model: TModel, handlers: THandlers): VNode;
 }
 
-export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
+export interface ICreateComponentArgs<AttributeNames extends string[], Model, Render> {
   connectedCallback?: (instance: FunctronElement<Model>) => void;
   disconnectedCallback?: (instance: FunctronElement<Model>) => void;
   attributeChangedCallback?: (
@@ -40,7 +40,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   attributes?: AttributeNames;
   shadowDomSettings?: ShadowRootInit;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
-  render: (params: Model, handlers: EventHandlerInternalMap<Model>) => VNode;
+  render: Render;
   css?: string;
   cssPath?: string;
   initialModel: Model;
@@ -53,7 +53,7 @@ export interface FunctronElement<Model> extends HTMLElement {
   container: HTMLElement;
 }
 
-export function createComponent<AttributeNames extends string[], Model>({
+export function createComponent<AttributeNames extends string[], Model, Render>({
   attributes,
   shadowDomSettings = { mode: 'closed' },
   mapAttributesToModel,
@@ -64,7 +64,7 @@ export function createComponent<AttributeNames extends string[], Model>({
   adoptedCallback,
   disconnectedCallback,
   handlers,
-}: ICreateComponentArgs<AttributeNames, Model>) {
+}: ICreateComponentArgs<AttributeNames, Model, Render>) {
   type Attributes = Record<AttributeNames[number], string>;
 
   class Component extends HTMLElement implements FunctronElement<Model> {
