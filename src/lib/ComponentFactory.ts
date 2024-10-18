@@ -123,8 +123,6 @@ export function createComponent<AttributeNames extends string[], Model, Render>(
 
     bindHanders() {
       if (handlers) {
-        console.log({ handlers }, '!');
-
         return Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,
