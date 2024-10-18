@@ -25,7 +25,7 @@ const render: RenderFunc<ICounterModel, typeof handlers> = ({ count }, { increme
 const MyComponent = createComponent<[], ICounterModel>({
   initialModel,
   handlers,
-  render: (model, handlers) => render(model, handlers),
+  render,
 });
 
 customElements.define('ui-counter', MyComponent);

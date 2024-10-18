@@ -40,7 +40,7 @@ export interface ICreateComponentArgs<AttributeNames extends string[], Model> {
   attributes?: AttributeNames;
   shadowDomSettings?: ShadowRootInit;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
-  render: (params: Model, handlers?: EventHandlerInternalMap<Model>) => VNode;
+  render: (params: Model, handlers: EventHandlerInternalMap<Model>) => VNode;
   css?: string;
   cssPath?: string;
   initialModel: Model;
