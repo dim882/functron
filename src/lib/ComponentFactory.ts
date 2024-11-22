@@ -20,12 +20,10 @@ export type EventHandlerInternalMap<Model> = {
   [key: string]: InternalEventHandler<Model, AnyUIEvent>;
 };
 
-export interface RenderFunc<
-  TModel,
-  THandlers extends EventHandlerInternalMap<TModel> = EventHandlerInternalMap<TModel>
-> {
-  (model: TModel, handlers: THandlers): VNode;
-}
+export type RenderFunc<TModel, THandlers extends EventHandlerInternalMap<TModel> = EventHandlerInternalMap<TModel>> = (
+  model: TModel,
+  handlers: THandlers
+) => VNode;
 
 export type StandardComponentArgs<AttributeNames, Model> = {
   connectedCallback?: (instance: FunctronElement<Model>) => void;
