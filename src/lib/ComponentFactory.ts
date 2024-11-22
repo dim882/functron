@@ -1,4 +1,4 @@
-import { VNode } from 'snabbdom';
+import type { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
 import { patchDom } from './VirtualDom';
 
@@ -116,11 +116,11 @@ export function createComponent<
     }
 
     disconnectedCallback() {
-      disconnectedCallback && disconnectedCallback(this);
+      disconnectedCallback?.(this);
     }
 
     adoptedCallback() {
-      adoptedCallback && adoptedCallback(this);
+      adoptedCallback?.(this);
     }
 
     setModel(patch: Model) {
