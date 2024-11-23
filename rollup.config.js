@@ -9,7 +9,7 @@ import postcss from 'rollup-plugin-postcss';
 export default {
   input: './src/demo/demo.tsx',
   output: {
-    file: 'dist/bundle.js',
+    file: 'dist/main.js',
     format: 'esm',
     sourcemap: true,
   },
@@ -36,13 +36,13 @@ export default {
         { src: 'src/**/*.css', dest: 'dist' },
       ],
     }),
-    serve({
-      open: false,
-      contentBase: 'dist',
-      port: 4000,
-    }),
-    livereload({
-      watch: 'dist',
-    }),
+    // serve({
+    //   open: false,
+    //   contentBase: 'dist',
+    //   port: 4000,
+    // }),
+    // livereload({
+    //   watch: 'dist',
+    // }),
   ],
 };

@@ -76,14 +76,14 @@ export function createComponent<
   adoptedCallback,
   disconnectedCallback,
   handlers,
-}: ICreateComponentArgs<AttributeNames, Model, Handlers, Render>) {
+}: ICreateComponentArgs<AttributeNames, Model, Handlers, Render>): { new (): HTMLElement } {
   type Attributes = Record<AttributeNames[number], string>;
 
   class Component extends HTMLElement implements FunctronElement<Model> {
     public model: Model;
     public container: HTMLElement;
     #shadowRoot: ShadowRoot;
-    private vdom: VNode | null = null;
+    public vdom: VNode | null = null;
 
     static get observedAttributes() {
       return attributes;
@@ -164,5 +164,5 @@ export function createComponent<
     ) as Attributes;
   }
 
-  return Component;
+  return Component as unknown as { new (): HTMLElement };
 }
