@@ -4,7 +4,7 @@ import { patchDom } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
 
-type AnyUIEvent = any extends UIEvent ? any : never;
+type AnyUIEvent = unknown extends UIEvent ? unknown : never;
 
 export type EventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => Model;
 
@@ -133,7 +133,7 @@ export function createComponent<
         return Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,
-            ((event: any) => {
+            ((event: AnyUIEvent) => {
               this.setModel(handler(event, this.model));
               this.render(this.model);
               return this.model;
