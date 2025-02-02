@@ -5,6 +5,7 @@
   "license": "MIT",
   "description": "functional web components",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "nodemon --watch src --ext html --exec 'rollup -c -w'",
     "build": "rollup -c",

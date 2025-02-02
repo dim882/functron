@@ -2582,6 +2582,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"functron@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "functron@workspace:."
+  dependencies:
+    "@babel/core": "npm:^7.24.5"
+    "@babel/plugin-transform-react-jsx": "npm:^7.23.4"
+    "@babel/preset-env": "npm:^7.24.5"
+    "@babel/preset-typescript": "npm:^7.24.1"
+    "@rollup/plugin-babel": "npm:^6.0.4"
+    "@rollup/plugin-node-resolve": "npm:^15.2.3"
+    "@rollup/plugin-typescript": "npm:^11.1.6"
+    nodemon: "npm:^3.1.0"
+    postcss: "npm:^8.4.38"
+    postcss-modules: "npm:^6.0.0"
+    rollup: "npm:^4.17.2"
+    rollup-plugin-copy: "npm:^3.5.0"
+    rollup-plugin-delete: "npm:^2.0.0"
+    rollup-plugin-livereload: "npm:^2.0.5"
+    rollup-plugin-postcss: "npm:^4.0.2"
+    rollup-plugin-serve: "npm:^1.1.1"
+    snabbdom: "npm:^3.6.2"
+    tslib: "npm:^2.6.2"
+    typescript: "npm:^5.4.4"
+  languageName: unknown
+  linkType: soft
+
 "generic-names@npm:^4.0.0":
   version: 4.0.0
   resolution: "generic-names@npm:4.0.0"
@@ -4639,32 +4665,6 @@ __metadata:
   checksum: 10c0/41a5bdd214df2f6c3ecf8622745e4a366c4adced864bc3c833739791aeeeb1838119af7daed4ba36428114b5c67dcda034a79c882e97e43c03e66a4dd7389942
   languageName: node
   linkType: hard
-
-"web-components@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "web-components@workspace:."
-  dependencies:
-    "@babel/core": "npm:^7.24.5"
-    "@babel/plugin-transform-react-jsx": "npm:^7.23.4"
-    "@babel/preset-env": "npm:^7.24.5"
-    "@babel/preset-typescript": "npm:^7.24.1"
-    "@rollup/plugin-babel": "npm:^6.0.4"
-    "@rollup/plugin-node-resolve": "npm:^15.2.3"
-    "@rollup/plugin-typescript": "npm:^11.1.6"
-    nodemon: "npm:^3.1.0"
-    postcss: "npm:^8.4.38"
-    postcss-modules: "npm:^6.0.0"
-    rollup: "npm:^4.17.2"
-    rollup-plugin-copy: "npm:^3.5.0"
-    rollup-plugin-delete: "npm:^2.0.0"
-    rollup-plugin-livereload: "npm:^2.0.5"
-    rollup-plugin-postcss: "npm:^4.0.2"
-    rollup-plugin-serve: "npm:^1.1.1"
-    snabbdom: "npm:^3.6.2"
-    tslib: "npm:^2.6.2"
-    typescript: "npm:^5.4.4"
-  languageName: unknown
-  linkType: soft
 
 "which@npm:^2.0.1":
   version: 2.0.2
