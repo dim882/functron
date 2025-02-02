@@ -11,12 +11,12 @@
     "build": "rollup -c --config-tsconfig tsconfig.build.json",
     "clean": "rm -rf dist/*"
   },
-  "main": "dist/main.mjs",
-  "module": "dist/main.mjs",
-  "types": "dist/main.d.ts",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
+  "types": "dist/index.d.ts",
   "exports": {
-    "import": "./dist/main.mjs",
-    "default": "./dist/main.mjs"
+    "import": "./dist/main.js",
+    "default": "./dist/main.js"
   },
   "files": [
     "dist"
