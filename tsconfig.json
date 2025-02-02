@@ -15,7 +15,8 @@
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/demo/demo.tsx"],
+  // "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/demo/demo.tsx"],
+  "include": ["./src/index.ts"],
   "exclude": ["node_modules"],
   "paths": {
     "preact": ["./node_modules/preact"]

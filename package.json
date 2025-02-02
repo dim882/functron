@@ -1,22 +1,21 @@
 {
-  "name": "web-components",
+  "name": "functron",
   "version": "0.1.0",
   "author": "Daniel Imal <mrdanimal@gmail.com>",
   "license": "MIT",
   "description": "functional web components",
-  "private": true,
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch src --ext html --exec 'rollup -c -w'",
     "build": "rollup -c",
     "clean": "rm -rf dist/*"
   },
-  "main": "dist/main.mjs",   
-  "module": "dist/main.mjs", 
-  "types": "dist/main.d.ts", 
+  "main": "dist/main.mjs",
+  "module": "dist/main.mjs",
+  "types": "dist/main.d.ts",
   "exports": {
-    "import": "./dist/main.mjs", 
-    "default": "./dist/main.mjs" 
+    "import": "./dist/main.mjs",
+    "default": "./dist/main.mjs"
   },
   "files": [
     "dist"

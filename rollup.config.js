@@ -13,6 +13,7 @@ export default {
     format: 'esm',
     sourcemap: true,
   },
+  external: ['snabbdom'],
   plugins: [
     nodeResolve(),
     typescript({
