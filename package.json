@@ -1,7 +1,6 @@
 {
   "name": "web-components",
   "version": "0.1.0",
-  "main": "index.js",
   "author": "Daniel Imal <mrdanimal@gmail.com>",
   "license": "MIT",
   "description": "functional web components",
@@ -12,6 +11,16 @@
     "build": "rollup -c",
     "clean": "rm -rf dist/*"
   },
+  "main": "dist/main.mjs",   
+  "module": "dist/main.mjs", 
+  "types": "dist/main.d.ts", 
+  "exports": {
+    "import": "./dist/main.mjs", 
+    "default": "./dist/main.mjs" 
+  },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@rollup/plugin-node-resolve": "^15.2.3",
