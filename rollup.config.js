@@ -7,7 +7,7 @@ import { babel } from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 
 export default {
-  input: './src/demo/demo.tsx',
+  input: './src/index.ts',
   output: {
     file: 'dist/main.js',
     format: 'esm',

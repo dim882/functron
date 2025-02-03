@@ -15,8 +15,10 @@
   "module": "dist/main.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "import": "./dist/main.js",
-    "default": "./dist/main.js"
+    ".": {
+      "import": "./dist/main.js",
+      "types": "./dist/index.d.ts"
+    }
   },
   "files": [
     "dist"
