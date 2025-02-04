@@ -24,7 +24,7 @@ export default {
       tsconfig: './tsconfig.json',
     }),
     babel({
-      extensions: ['.js', '.jsx', '.ts'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
       babelHelpers: 'bundled',
       include: ['src/**/*.ts'],
       exclude: 'node_modules/**',
@@ -41,13 +41,13 @@ export default {
         { src: 'src/**/*.css', dest: 'dist' },
       ],
     }),
-    // serve({
-    //   open: false,
-    //   contentBase: 'dist',
-    //   port: 4000,
-    // }),
-    // livereload({
-    //   watch: 'dist',
-    // }),
+    serve({
+      open: false,
+      contentBase: 'dist',
+      port: 4000,
+    }),
+    livereload({
+      watch: 'dist',
+    }),
   ],
 };

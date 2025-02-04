@@ -10,6 +10,11 @@ declare global {
     interface IntrinsicElements {
       div: any;
       button: any;
+      form: any;
+      slot: any;
+      span: any;
+      label: any;
+      input: any;
     }
   }
 }
