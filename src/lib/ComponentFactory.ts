@@ -1,6 +1,8 @@
+/** @jsx jsx */
+/** @jsxFactory jsx */
 import type { VNode } from 'snabbdom';
 import { applyCss } from './CssUtils';
-import { patchDom } from './VirtualDom';
+import { patchDom, jsx } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
 

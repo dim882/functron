@@ -1,2 +1,2 @@
-export { createComponent } from './lib/ComponentFactory';
-export type { EventHandler, EventHandlerMap, FunctronElement } from './lib/ComponentFactory';
+export { createComponent, jsx } from './lib/ComponentFactory';
+export type { EventHandler, EventHandlerMap, FunctronElement, RenderFunc } from './lib/ComponentFactory';
