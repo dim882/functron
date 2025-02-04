@@ -1,10 +1,16 @@
 /** @jsx jsx */
 /** @jsxFactory jsx */
 import type { VNode } from 'snabbdom';
+import html from 'snabby';
 import { applyCss } from './CssUtils';
 import { patchDom, jsx } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
+
+console.log(html);
+
+const foo = html`<div></div>`;
+console.log({ foo });
 
 type AnyUIEvent = unknown extends UIEvent ? unknown : never;
 
