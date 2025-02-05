@@ -1,4 +1,4 @@
-import { VNode } from 'snabbdom';
+import { VNode, VNodeData } from 'snabbdom';
 
 declare module '*.module.css' {
   const classes: { [key: string]: string };
@@ -8,13 +8,13 @@ declare module '*.module.css' {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      div: any;
-      button: any;
-      form: any;
-      slot: any;
-      span: any;
-      label: any;
-      input: any;
+      div: VNodeData;
+      button: VNodeData;
+      form: VNodeData;
+      slot: VNodeData;
+      span: VNodeData;
+      label: VNodeData;
+      input: VNodeData;
     }
   }
 }
