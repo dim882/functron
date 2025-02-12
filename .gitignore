@@ -1,5 +1,6 @@
 node_modules
 tarballs
 dist
+dev
 .yarn
 package.tgz

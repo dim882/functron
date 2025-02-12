@@ -8,20 +8,20 @@ import { babel } from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 
 export default {
-  input: './src/index.ts',
+  input: './src/dev/main.tsx',
   output: {
-    file: 'dist/main.js',
+    file: 'dev/main.js',
     format: 'esm',
     sourcemap: true,
   },
-  external: ['snabbdom'],
+  // external: ['snabbdom'],
   plugins: [
     commonjs({
       include: 'node_modules/**',
     }),
     nodeResolve(),
     typescript({
-      tsconfig: './tsconfig.json',
+      tsconfig: './tsconfig.dev.json',
     }),
     babel({
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -37,7 +37,7 @@ export default {
     }),
     copy({
       targets: [
-        { src: 'src/demo/index.html', dest: 'dist' },
+        { src: 'src/dev/index.html', dest: 'dist' },
         { src: 'src/**/*.css', dest: 'dist' },
       ],
     }),

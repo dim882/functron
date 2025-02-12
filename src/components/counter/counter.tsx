@@ -4,8 +4,6 @@ interface ICounterModel {
   count: number;
 }
 
-console.log('hi??');
-
 const initialModel: ICounterModel = { count: 0 };
 
 const incrementCounter: EventHandler<ICounterModel, MouseEvent> = (event, model) => ({
@@ -19,7 +17,7 @@ const handlers = {
 
 const render: RenderFunc<ICounterModel, typeof handlers> = ({ count }, { incrementCounter }) => (
   <div>
-    <button on={{ click: incrementCounter }}>Add 1!</button>
+    <button on={{ click: incrementCounter }}>Add 1</button>
     <div>{count}</div>
   </div>
 );
