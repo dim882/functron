@@ -1,9 +1,17 @@
 {
   "name": "functron",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Daniel Imal <mrdanimal@gmail.com>",
   "license": "MIT",
   "description": "Functional web components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dim882/functron.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dim882/functron/issues"
+  },
+  "homepage": "https://github.com/dim882/functron#readme",
   "type": "module",
   "private": false,
   "scripts": {
