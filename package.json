@@ -12,9 +12,6 @@
     "clean": "rm -rf dist/* dev/*",
     "tar": "yarn pack -o ./tarballs/package.tgz"
   },
-  "main": "dist/main.js",
-  "module": "dist/main.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/main.js",
