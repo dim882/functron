@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "author": "Daniel Imal <mrdanimal@gmail.com>",
   "license": "MIT",
-  "description": "functional web components",
+  "description": "Functional web components",
   "type": "module",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "nodemon --watch src --ext html --exec 'rollup -c rollup.dev.config.js -w'",
     "dist": "rollup -c rollup.dist.config.js",
