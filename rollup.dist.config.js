@@ -1,11 +1,7 @@
 import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import copy from 'rollup-plugin-copy';
-import serve from 'rollup-plugin-serve';
-import livereload from 'rollup-plugin-livereload';
 import { babel } from '@rollup/plugin-babel';
-import postcss from 'rollup-plugin-postcss';
 
 export default {
   input: './src/index.ts',
@@ -21,7 +17,7 @@ export default {
     }),
     nodeResolve(),
     typescript({
-      tsconfig: './tsconfig.json',
+      tsconfig: './tsconfig.dist.json',
     }),
     babel({
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
