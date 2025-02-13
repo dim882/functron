@@ -19,7 +19,7 @@
   "exports": {
     ".": {
       "import": "./dist/main.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/main.d.ts"
     }
   },
   "files": [
