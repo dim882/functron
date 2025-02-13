@@ -14,10 +14,11 @@ export default {
     format: 'esm',
     sourcemap: true,
   },
-  // external: ['snabbdom'],
   plugins: [
     commonjs({
       include: 'node_modules/**',
+      browser: true,
+      preferBuiltins: false,
     }),
     nodeResolve(),
     typescript({
@@ -37,17 +38,17 @@ export default {
     }),
     copy({
       targets: [
-        { src: 'src/dev/index.html', dest: 'dist' },
-        { src: 'src/**/*.css', dest: 'dist' },
+        { src: 'src/dev/index.html', dest: 'dev' },
+        { src: 'src/**/*.css', dest: 'dev' },
       ],
     }),
     serve({
       open: false,
-      contentBase: 'dist',
+      contentBase: 'dev',
       port: 4000,
     }),
     livereload({
-      watch: 'dist',
+      watch: 'dev',
     }),
   ],
 };

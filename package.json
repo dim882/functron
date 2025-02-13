@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nodemon --watch src --ext html --exec 'rollup -c rollup.dev.config.js -w'",
     "build": "rollup -c --config-tsconfig tsconfig.build.json",
-    "clean": "rm -rf dist/*",
+    "clean": "rm -rf dist/* dev/*",
     "tar": "yarn pack -o ./tarballs/package.tgz"
   },
   "main": "dist/main.js",

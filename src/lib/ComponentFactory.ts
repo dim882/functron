@@ -2,7 +2,7 @@
 /** @jsxFactory jsx */
 import type { VNode } from 'snabbdom';
 // import html from 'snabby';
-import { applyCss } from './CssUtils';
+import * as CssUtils from './CssUtils';
 import { patchDom, jsx } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
@@ -110,7 +110,7 @@ export function createComponent<
     async connectedCallback() {
       // console.log(this.tagName, '--- connectedCallback');
       this.render(this.model);
-      await applyCss(this.#shadowRoot, cssPath, css);
+      await CssUtils.applyCss(this.#shadowRoot, cssPath, css);
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
