@@ -1,19 +1,36 @@
 {
-  "name": "web-components",
-  "version": "0.1.0",
-  "main": "index.js",
+  "name": "functron",
+  "version": "0.1.2",
   "author": "Daniel Imal <mrdanimal@gmail.com>",
   "license": "MIT",
-  "description": "functional web components",
-  "private": true,
+  "description": "Functional web components",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dim882/functron.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dim882/functron/issues"
+  },
+  "homepage": "https://github.com/dim882/functron#readme",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --watch src --ext html --exec 'rollup -c -w'",
-    "build": "rollup -c",
-    "clean": "rm -rf dist/*"
+    "dev": "nodemon --watch src --ext html --exec 'rollup -c rollup.dev.config.js -w'",
+    "dist": "rollup -c rollup.dist.config.js",
+    "clean": "rm -rf dist/* dev/*",
+    "tar": "yarn pack -o ./tarballs/package.tgz"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/main.js",
+      "types": "./dist/main.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@babel/core": "^7.24.5",
+    "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
     "nodemon": "^3.1.0",

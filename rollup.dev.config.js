@@ -1,5 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import copy from 'rollup-plugin-copy';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
@@ -7,19 +8,24 @@ import { babel } from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 
 export default {
-  input: './src/demo/demo.tsx',
+  input: './src/dev/main.tsx',
   output: {
-    file: 'dist/bundle.js',
+    file: 'dev/main.js',
     format: 'esm',
     sourcemap: true,
   },
   plugins: [
+    commonjs({
+      include: 'node_modules/**',
+      browser: true,
+      preferBuiltins: false,
+    }),
     nodeResolve(),
     typescript({
-      tsconfig: './tsconfig.json',
+      tsconfig: './tsconfig.dev.json',
     }),
     babel({
-      extensions: ['.js', '.jsx', '.ts'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
       babelHelpers: 'bundled',
       include: ['src/**/*.ts'],
       exclude: 'node_modules/**',
@@ -32,17 +38,17 @@ export default {
     }),
     copy({
       targets: [
-        { src: 'src/demo/index.html', dest: 'dist' },
-        { src: 'src/**/*.css', dest: 'dist' },
+        { src: 'src/dev/index.html', dest: 'dev' },
+        { src: 'src/**/*.css', dest: 'dev' },
       ],
     }),
     serve({
       open: false,
-      contentBase: 'dist',
+      contentBase: 'dev',
       port: 4000,
     }),
     livereload({
-      watch: 'dist',
+      watch: 'dev',
     }),
   ],
 };

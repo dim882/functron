@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outDir": "./dev/public"
+  },
+  "extends": "./tsconfig.json",
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "src/dev/main.tsx"],
+  "exclude": ["node_modules"]
+}

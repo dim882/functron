@@ -1,5 +1,5 @@
 import type { VNode } from 'snabbdom';
-import { applyCss } from './CssUtils';
+import * as CssUtils from './CssUtils';
 import { patchDom } from './VirtualDom';
 
 export { jsx } from './VirtualDom';
@@ -76,14 +76,14 @@ export function createComponent<
   adoptedCallback,
   disconnectedCallback,
   handlers,
-}: ICreateComponentArgs<AttributeNames, Model, Handlers, Render>) {
+}: ICreateComponentArgs<AttributeNames, Model, Handlers, Render>): { new (): HTMLElement } {
   type Attributes = Record<AttributeNames[number], string>;
 
   class Component extends HTMLElement implements FunctronElement<Model> {
     public model: Model;
     public container: HTMLElement;
     #shadowRoot: ShadowRoot;
-    private vdom: VNode | null = null;
+    public vdom: VNode | null = null;
 
     static get observedAttributes() {
       return attributes;
@@ -101,7 +101,7 @@ export function createComponent<
     async connectedCallback() {
       // console.log(this.tagName, '--- connectedCallback');
       this.render(this.model);
-      await applyCss(this.#shadowRoot, cssPath, css);
+      await CssUtils.applyCss(this.#shadowRoot, cssPath, css);
     }
 
     attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
@@ -164,5 +164,5 @@ export function createComponent<
     ) as Attributes;
   }
 
-  return Component;
+  return Component as unknown as { new (): HTMLElement };
 }
