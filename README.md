@@ -4,25 +4,64 @@ A lightweight functional interface for building Web Components with a clean, pre
 
 Still very experimental and not ready for real-world use!
 
-## Install
-
-```
-$ npm install functron
-```
-
 ## Features
 
 - Functional approach to Web Components
 - Simple state management with immutable updates
 - TypeScript support out of the box
-- Virtual DOM powered by Snabbdom
 - Declarative event handling
+- Virtual DOM powered by Snabbdom
+
+## Install and Setup
+
+```
+$ npm install functron
+```
+
+Functron requires babel to compile .tsx files. This is currently only tested in Rollup. To set this up, you'll
+need to install the Babel plugin and add some things to your `rollup.config.js`.
+
+```
+npm install @rollup/plugin-babel
+```
+
+### Modify your `rollup.config.js`
+
+Add these lines:
+
+```
+import { babel } from '@rollup/plugin-babel';
+
+export default {
+  ...
+  plugins: [
+    babel({
+      presets: ['@babel/preset-typescript', ['@babel/preset-react', { pragma: 'jsx', pragmaFrag: 'Fragment' }]],
+      extensions: ['.ts', '.tsx'],
+      babelHelpers: 'bundled',
+    }),
+  ],
+};
+```
+
+### JSX Pragma
+
+The JSX pragma is also required at the top of component files:
+
+```
+/** @jsx jsx */
+
+// ... your component
+```
+
+
 
 ## Quick Example
 
 Here's a simple counter component:
 
 ```typescript
+/** @jsx jsx */
 import { createComponent, EventHandler, RenderFunc } from 'functron';
 
 // Define the model interface
