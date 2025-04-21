@@ -11,16 +11,23 @@ const incrementCounter: EventHandlerFactory<ICounterModel, number, MouseEvent> =
   count: model.count + amount,
 });
 
+const resetCounter: EventHandler<ICounterModel, MouseEvent> = (event, model) => ({
+  ...model,
+  count: 0,
+});
+
 const handlers = {
   incrementCounter,
+  resetCounter,
 };
 
-const render: RenderFunc<ICounterModel, number, typeof handlers> = ({ count }, { incrementCounter }) => (
+const render: RenderFunc<ICounterModel, number, typeof handlers> = ({ count }, { incrementCounter, resetCounter }) => (
   <div>
     <button on={{ click: incrementCounter(1) }}>Add 1</button>
     <button on={{ click: incrementCounter(5) }}>Add 5</button>
     <button on={{ click: incrementCounter(10) }}>Add 10</button>
-    <div>{count}</div>
+    <button on={{ click: resetCounter }}>Reset</button>
+    <div>Count: {count}</div>
   </div>
 );
 
