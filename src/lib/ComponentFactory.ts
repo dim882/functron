@@ -6,15 +6,16 @@ export { jsx } from './VirtualDom';
 
 type AnyUIEvent = unknown extends UIEvent ? unknown : never;
 
-export type EventHandler<Model, Param, Event extends UIEvent = AnyUIEvent> = (
+export type EventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => Model;
+
+export type EventHandlerFactory<Model, Param, Event extends UIEvent = AnyUIEvent> = (
   param: Param
-) => (event: Event, model: Model) => Model;
+) => EventHandler<Model, Event>;
 
 export type EventHandlerMap<Model, Param> = {
-  [key: string]: EventHandler<Model, Param, AnyUIEvent>;
+  [key: string]: EventHandlerFactory<Model, Param, AnyUIEvent>;
 };
 
-// This is for when we bind the handlers to call setModel() and return void
 export type BoundEventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => void;
 
 export type RenderFunc<TModel, TParam, THandlers extends EventHandlerMap<TModel, TParam>> = (

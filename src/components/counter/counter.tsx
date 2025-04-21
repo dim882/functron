@@ -1,4 +1,4 @@
-import { createComponent, EventHandler, jsx, RenderFunc } from '../../lib/ComponentFactory';
+import { createComponent, EventHandler, EventHandlerFactory, jsx, RenderFunc } from '../../lib/ComponentFactory';
 
 interface ICounterModel {
   count: number;
@@ -6,8 +6,7 @@ interface ICounterModel {
 
 const initialModel: ICounterModel = { count: 0 };
 
-// Modified to accept a parameter
-const incrementCounter: EventHandler<ICounterModel, number, MouseEvent> = (amount) => (event, model) => ({
+const incrementCounter: EventHandlerFactory<ICounterModel, number, MouseEvent> = (amount) => (event, model) => ({
   ...model,
   count: model.count + amount,
 });
@@ -16,7 +15,6 @@ const handlers = {
   incrementCounter,
 };
 
-// The render function now receives handler factories that need to be called with a parameter
 const render: RenderFunc<ICounterModel, number, typeof handlers> = ({ count }, { incrementCounter }) => (
   <div>
     <button on={{ click: incrementCounter(1) }}>Add 1</button>
