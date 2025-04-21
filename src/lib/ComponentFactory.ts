@@ -188,6 +188,7 @@ export function createComponent<
           // Ensure it's an own property before processing
           if (Object.prototype.hasOwnProperty.call(handlers, key)) {
             const originalHandler = handlers[key];
+
             // Assert key type for indexing into boundHandlers and Handlers
             const k = key as keyof Handlers;
 
@@ -195,13 +196,16 @@ export function createComponent<
             if (typeof originalHandler === 'function' && originalHandler.length === 1) {
               // Assume it's an EventHandlerFactory
               const factory = originalHandler as EventHandlerFactory<Model, Param, AnyUIEvent>;
+
               // Create the function that takes 'param' and returns the final listener.
               // Assert that this assignment matches the expected type for this specific key 'k'.
               boundHandlers[k] = ((param: Param) => {
                 const eventHandler = factory(param);
+
                 // The final event listener function
                 return (event: AnyUIEvent) => {
                   const newModel = eventHandler(event, this.model);
+
                   if (newModel !== this.model) {
                     this.setModel(newModel);
                     this.render(this.model);
@@ -212,21 +216,23 @@ export function createComponent<
             } else if (typeof originalHandler === 'function') {
               // Assume it's a direct EventHandler
               const directHandler = originalHandler as EventHandler<Model, AnyUIEvent>;
+
               // Create the final event listener directly.
               // Assert that this assignment matches the expected type for this specific key 'k'.
               boundHandlers[k] = ((event: AnyUIEvent) => {
                 const newModel = directHandler(event, this.model);
+
                 if (newModel !== this.model) {
                   this.setModel(newModel);
                   this.render(this.model);
                 }
                 // Cast this function to the specific type expected for this key k
-              }) as BoundHandlerMapForRender[typeof k]; // <-- Assertion added/corrected
+              }) as BoundHandlerMapForRender[typeof k];
             }
-            // Non-function handlers are ignored
           }
         }
       }
+
       // Cast the final potentially partial object to the complete type.
       // This assumes all valid handlers defined in Handlers were processed.
       return boundHandlers as BoundHandlerMapForRender;
