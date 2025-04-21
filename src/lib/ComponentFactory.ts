@@ -148,19 +148,58 @@ export function createComponent<
       }
     }
 
+    /**
+     * Creates and binds event handlers defined in the component configuration.
+     *
+     * This method iterates through the `handlers` object provided to `createComponent`.
+     * For each handler, it determines if it's an `EventHandlerFactory` (which takes a `param`
+     * and returns the actual event handler) or a direct `EventHandler`.
+     *
+     * It then creates a "bound" version of the handler function. This bound function, when
+     * eventually called (typically by a DOM event):
+     * 1. Executes the original handler logic (either the direct handler or the one returned by the factory).
+     * 2. Takes the new model returned by the original handler.
+     * 3. Updates the component's state using `this.setModel()` if the model has changed.
+     * 4. Triggers a component re-render using `this.render()` if the model has changed.
+     *
+     * The method returns an object (`BoundHandlerMapForRender`) where:
+     * - Keys are the original handler names.
+     * - Values are the functions that should be used within the `render` function:
+     *   - If the original handler was a factory, the value is a function that takes the `param`
+     *     and returns the final `BoundEventHandler` (the function to attach to the event listener).
+     *   - If the original handler was a direct handler, the value *is* the final `BoundEventHandler`.
+     *
+     * This mechanism decouples the pure handler logic from the component's state management
+     * and rendering side effects, providing a clean interface for the `render` function.
+     *
+     * Note: It uses the function's `length` property as a runtime heuristic to differentiate
+     * between factories (expected length 1) and direct handlers (expected length > 1 or 0).
+     * Type assertions (`as`) are used during assignment because TypeScript cannot fully infer
+     * the complex conditional types within the loop's control flow based on this heuristic.
+     *
+     * @returns {BoundHandlerMapForRender} An object mapping handler names to the functions usable in the render method.
+     */
     bindHanders(): BoundHandlerMapForRender {
+      // Start with Partial as the object is built incrementally
       const boundHandlers: Partial<BoundHandlerMapForRender> = {};
 
       if (handlers) {
         for (const key in handlers) {
+          // Ensure it's an own property before processing
           if (Object.prototype.hasOwnProperty.call(handlers, key)) {
             const originalHandler = handlers[key];
+            // Assert key type for indexing into boundHandlers and Handlers
             const k = key as keyof Handlers;
 
+            // Heuristic: Check function arity (length)
             if (typeof originalHandler === 'function' && originalHandler.length === 1) {
+              // Assume it's an EventHandlerFactory
               const factory = originalHandler as EventHandlerFactory<Model, Param, AnyUIEvent>;
+              // Create the function that takes 'param' and returns the final listener.
+              // Assert that this assignment matches the expected type for this specific key 'k'.
               boundHandlers[k] = ((param: Param) => {
                 const eventHandler = factory(param);
+                // The final event listener function
                 return (event: AnyUIEvent) => {
                   const newModel = eventHandler(event, this.model);
                   if (newModel !== this.model) {
@@ -168,20 +207,28 @@ export function createComponent<
                     this.render(this.model);
                   }
                 };
-              }) as BoundHandlerMapForRender[typeof k];
+                // Cast the outer function to the specific type expected for this key k
+              }) as BoundHandlerMapForRender[typeof k]; // <-- Assertion added/corrected
             } else if (typeof originalHandler === 'function') {
+              // Assume it's a direct EventHandler
               const directHandler = originalHandler as EventHandler<Model, AnyUIEvent>;
+              // Create the final event listener directly.
+              // Assert that this assignment matches the expected type for this specific key 'k'.
               boundHandlers[k] = ((event: AnyUIEvent) => {
                 const newModel = directHandler(event, this.model);
                 if (newModel !== this.model) {
                   this.setModel(newModel);
                   this.render(this.model);
                 }
-              }) as BoundHandlerMapForRender[typeof k];
+                // Cast this function to the specific type expected for this key k
+              }) as BoundHandlerMapForRender[typeof k]; // <-- Assertion added/corrected
             }
+            // Non-function handlers are ignored
           }
         }
       }
+      // Cast the final potentially partial object to the complete type.
+      // This assumes all valid handlers defined in Handlers were processed.
       return boundHandlers as BoundHandlerMapForRender;
     }
     render(model: Model) {
