@@ -14,11 +14,8 @@ export type EventHandlerMap<Model, Param> = {
   [key: string]: EventHandler<Model, Param, AnyUIEvent>;
 };
 
+// This is for when we bind the handlers to call setModel() and return void
 export type BoundEventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => void;
-
-export type BoundEventHandlerMap<Model> = {
-  [key: string]: BoundEventHandler<Model, AnyUIEvent>;
-};
 
 export type RenderFunc<TModel, TParam, THandlers extends EventHandlerMap<TModel, TParam>> = (
   model: TModel,
@@ -83,6 +80,10 @@ export function createComponent<
 }: ICreateComponentArgs<AttributeNames, Model, Param, Handlers, Render>): { new (): HTMLElement } {
   type Attributes = Record<AttributeNames[number], string>;
 
+  type BoundEventHandlerMap = {
+    [K in keyof Handlers]: (param: Param) => BoundEventHandler<Model, AnyUIEvent>;
+  };
+
   class Component extends HTMLElement implements FunctronElement<Model> {
     public model: Model;
     public container: HTMLElement;
@@ -145,14 +146,10 @@ export function createComponent<
               }) as BoundEventHandler<Model>;
             },
           ])
-        ) as {
-          [K in keyof Handlers]: (param: Param) => BoundEventHandler<Model, AnyUIEvent>;
-        };
+        ) as BoundEventHandlerMap;
       }
 
-      return {} as {
-        [K in keyof Handlers]: (param: Param) => BoundEventHandler<Model, AnyUIEvent>;
-      };
+      return {} as BoundEventHandlerMap;
     }
 
     render(model: Model) {
