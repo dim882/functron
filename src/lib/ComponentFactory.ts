@@ -14,18 +14,16 @@ export type EventHandlerMap<Model, Param> = {
   [key: string]: EventHandler<Model, Param, AnyUIEvent>;
 };
 
-// This is for when we bind the handlers to call setModel() and return void
-export type InternalEventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => void;
+export type BoundEventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => void;
 
-export type EventHandlerInternalMap<Model> = {
-  // The value can be an InternalEventHandler with any event type that extends UIEvent
-  [key: string]: InternalEventHandler<Model, AnyUIEvent>;
+export type BoundEventHandlerMap<Model> = {
+  [key: string]: BoundEventHandler<Model, AnyUIEvent>;
 };
 
 export type RenderFunc<TModel, TParam, THandlers extends EventHandlerMap<TModel, TParam>> = (
   model: TModel,
   handlers: {
-    [K in keyof THandlers]: (param: TParam) => InternalEventHandler<TModel, AnyUIEvent>;
+    [K in keyof THandlers]: (param: TParam) => BoundEventHandler<TModel, AnyUIEvent>;
   }
 ) => VNode;
 
@@ -144,16 +142,16 @@ export function createComponent<
                 this.setModel(handler(param)(event, this.model));
                 this.render(this.model);
                 return this.model;
-              }) as InternalEventHandler<Model>;
+              }) as BoundEventHandler<Model>;
             },
           ])
         ) as {
-          [K in keyof Handlers]: (param: Param) => InternalEventHandler<Model, AnyUIEvent>;
+          [K in keyof Handlers]: (param: Param) => BoundEventHandler<Model, AnyUIEvent>;
         };
       }
 
       return {} as {
-        [K in keyof Handlers]: (param: Param) => InternalEventHandler<Model, AnyUIEvent>;
+        [K in keyof Handlers]: (param: Param) => BoundEventHandler<Model, AnyUIEvent>;
       };
     }
 
