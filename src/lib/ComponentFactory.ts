@@ -159,7 +159,7 @@ export function createComponent<
 
             if (typeof originalHandler === 'function' && originalHandler.length === 1) {
               const factory = originalHandler as EventHandlerFactory<Model, Param, AnyUIEvent>;
-              boundHandlers[k] = (param: Param) => {
+              boundHandlers[k] = ((param: Param) => {
                 const eventHandler = factory(param);
                 return (event: AnyUIEvent) => {
                   const newModel = eventHandler(event, this.model);
@@ -168,23 +168,22 @@ export function createComponent<
                     this.render(this.model);
                   }
                 };
-              };
+              }) as BoundHandlerMapForRender[typeof k];
             } else if (typeof originalHandler === 'function') {
               const directHandler = originalHandler as EventHandler<Model, AnyUIEvent>;
-              boundHandlers[k] = (event: AnyUIEvent) => {
+              boundHandlers[k] = ((event: AnyUIEvent) => {
                 const newModel = directHandler(event, this.model);
                 if (newModel !== this.model) {
                   this.setModel(newModel);
                   this.render(this.model);
                 }
-              };
+              }) as BoundHandlerMapForRender[typeof k];
             }
           }
         }
       }
       return boundHandlers as BoundHandlerMapForRender;
     }
-
     render(model: Model) {
       const boundHandlers = this.bindHanders();
       const vdom = render(model, boundHandlers);
