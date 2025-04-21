@@ -6,10 +6,12 @@ export { jsx } from './VirtualDom';
 
 type AnyUIEvent = unknown extends UIEvent ? unknown : never;
 
-export type EventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => Model;
+export type EventHandler<Model, Param, Event extends UIEvent = AnyUIEvent> = (
+  param: Param
+) => (event: Event, model: Model) => Model;
 
-export type EventHandlerMap<Model> = {
-  [key: string]: EventHandler<Model>;
+export type EventHandlerMap<Model, Param> = {
+  [key: string]: EventHandler<Model, Param, AnyUIEvent>;
 };
 
 // This is for when we bind the handlers to call setModel() and return void
@@ -20,9 +22,11 @@ export type EventHandlerInternalMap<Model> = {
   [key: string]: InternalEventHandler<Model, AnyUIEvent>;
 };
 
-export type RenderFunc<TModel, THandlers extends EventHandlerInternalMap<TModel> = EventHandlerInternalMap<TModel>> = (
+export type RenderFunc<TModel, TParam, THandlers extends EventHandlerMap<TModel, TParam>> = (
   model: TModel,
-  handlers: THandlers
+  handlers: {
+    [K in keyof THandlers]: (param: TParam) => InternalEventHandler<TModel, AnyUIEvent>;
+  }
 ) => VNode;
 
 export type StandardComponentArgs<AttributeNames, Model> = {
@@ -42,8 +46,9 @@ export type StandardComponentArgs<AttributeNames, Model> = {
 export interface ICreateComponentArgs<
   AttributeNames extends string[],
   Model,
-  Handlers extends EventHandlerMap<Model>,
-  Render extends RenderFunc<Model, Handlers>
+  Param,
+  Handlers extends EventHandlerMap<Model, Param>,
+  Render extends RenderFunc<Model, Param, Handlers>
 > extends StandardComponentArgs<AttributeNames, Model> {
   attributes?: AttributeNames;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
@@ -63,8 +68,9 @@ export interface FunctronElement<Model> extends HTMLElement {
 export function createComponent<
   AttributeNames extends string[],
   Model,
-  Handlers extends EventHandlerMap<Model>,
-  Render extends RenderFunc<Model, Handlers>
+  Param,
+  Handlers extends EventHandlerMap<Model, Param>,
+  Render extends RenderFunc<Model, Param, Handlers>
 >({
   attributes,
   shadowDomSettings = { mode: 'closed' },
@@ -76,7 +82,7 @@ export function createComponent<
   adoptedCallback,
   disconnectedCallback,
   handlers,
-}: ICreateComponentArgs<AttributeNames, Model, Handlers, Render>): { new (): HTMLElement } {
+}: ICreateComponentArgs<AttributeNames, Model, Param, Handlers, Render>): { new (): HTMLElement } {
   type Attributes = Record<AttributeNames[number], string>;
 
   class Component extends HTMLElement implements FunctronElement<Model> {
@@ -128,21 +134,27 @@ export function createComponent<
       };
     }
 
-    bindHanders(): Handlers {
+    bindHanders() {
       if (handlers) {
         return Object.fromEntries(
           Object.entries(handlers).map(([key, handler]) => [
             key,
-            ((event: AnyUIEvent) => {
-              this.setModel(handler(event, this.model));
-              this.render(this.model);
-              return this.model;
-            }) as EventHandler<Model>,
+            (param: Param) => {
+              return ((event: AnyUIEvent) => {
+                this.setModel(handler(param)(event, this.model));
+                this.render(this.model);
+                return this.model;
+              }) as InternalEventHandler<Model>;
+            },
           ])
-        ) as Handlers;
+        ) as {
+          [K in keyof Handlers]: (param: Param) => InternalEventHandler<Model, AnyUIEvent>;
+        };
       }
 
-      return {} as Handlers;
+      return {} as {
+        [K in keyof Handlers]: (param: Param) => InternalEventHandler<Model, AnyUIEvent>;
+      };
     }
 
     render(model: Model) {
