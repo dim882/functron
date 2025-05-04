@@ -12,12 +12,12 @@ export type EventHandlerFactory<Model, Param, Event extends UIEvent = AnyUIEvent
   param: Param
 ) => EventHandler<Model, Event>;
 
-export type AnyEventHandler<Model, Param, Event extends UIEvent = AnyUIEvent> =
+export type EventHandlerOrFactory<Model, Param, Event extends UIEvent = AnyUIEvent> =
   | EventHandler<Model, Event>
   | EventHandlerFactory<Model, Param, Event>;
 
 export type EventHandlerMap<Model, Param> = {
-  [key: string]: AnyEventHandler<Model, Param, AnyUIEvent>;
+  [key: string]: EventHandlerOrFactory<Model, Param, AnyUIEvent>;
 };
 
 export type BoundEventHandler<Event extends UIEvent = AnyUIEvent> = (event: Event) => void;
