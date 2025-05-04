@@ -8,21 +8,32 @@ type AnyUIEvent = unknown extends UIEvent ? unknown : never;
 
 export type EventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => Model;
 
-export type EventHandlerMap<Model> = {
-  [key: string]: EventHandler<Model>;
+export type EventHandlerFactory<Model, Param, Event extends UIEvent = AnyUIEvent> = (
+  param: Param
+) => EventHandler<Model, Event>;
+
+export type EventHandlerOrFactory<Model, Param, Event extends UIEvent = AnyUIEvent> =
+  | EventHandler<Model, Event>
+  | EventHandlerFactory<Model, Param, Event>;
+
+export type EventHandlerMap<Model, Param> = {
+  [key: string]: EventHandlerOrFactory<Model, Param, AnyUIEvent>;
 };
 
-// This is for when we bind the handlers to call setModel() and return void
-export type InternalEventHandler<Model, Event extends UIEvent = AnyUIEvent> = (event: Event, model: Model) => void;
+export type BoundEventHandler<Event extends UIEvent = AnyUIEvent> = (event: Event) => void;
 
-export type EventHandlerInternalMap<Model> = {
-  // The value can be an InternalEventHandler with any event type that extends UIEvent
-  [key: string]: InternalEventHandler<Model, AnyUIEvent>;
+// Conditional type for dealing with possible EventHandler or EventHandlerFactory
+export type BoundHandlerMap<Handlers extends EventHandlerMap<Model, Param>, Model, Param> = {
+  [Key in keyof Handlers]: Handlers[Key] extends EventHandlerFactory<Model, Param, infer Event>
+    ? (param: Param) => BoundEventHandler<Event extends UIEvent ? Event : AnyUIEvent>
+    : Handlers[Key] extends EventHandler<Model, infer Event>
+    ? BoundEventHandler<Event extends UIEvent ? Event : AnyUIEvent>
+    : never;
 };
 
-export type RenderFunc<TModel, THandlers extends EventHandlerInternalMap<TModel> = EventHandlerInternalMap<TModel>> = (
+export type RenderFunc<TModel, TParam, THandlers extends EventHandlerMap<TModel, TParam>> = (
   model: TModel,
-  handlers: THandlers
+  handlers: BoundHandlerMap<THandlers, TModel, TParam>
 ) => VNode;
 
 export type StandardComponentArgs<AttributeNames, Model> = {
@@ -42,8 +53,9 @@ export type StandardComponentArgs<AttributeNames, Model> = {
 export interface ICreateComponentArgs<
   AttributeNames extends string[],
   Model,
-  Handlers extends EventHandlerMap<Model>,
-  Render extends RenderFunc<Model, Handlers>
+  Param,
+  Handlers extends EventHandlerMap<Model, Param>,
+  Render extends RenderFunc<Model, Param, Handlers>
 > extends StandardComponentArgs<AttributeNames, Model> {
   attributes?: AttributeNames;
   mapAttributesToModel?: (attributes: Record<AttributeNames[number], string>, model: Model) => Model;
@@ -63,8 +75,9 @@ export interface FunctronElement<Model> extends HTMLElement {
 export function createComponent<
   AttributeNames extends string[],
   Model,
-  Handlers extends EventHandlerMap<Model>,
-  Render extends RenderFunc<Model, Handlers>
+  Param,
+  Handlers extends EventHandlerMap<Model, Param>,
+  Render extends RenderFunc<Model, Param, Handlers>
 >({
   attributes,
   shadowDomSettings = { mode: 'closed' },
@@ -76,8 +89,10 @@ export function createComponent<
   adoptedCallback,
   disconnectedCallback,
   handlers,
-}: ICreateComponentArgs<AttributeNames, Model, Handlers, Render>): { new (): HTMLElement } {
+}: ICreateComponentArgs<AttributeNames, Model, Param, Handlers, Render>): { new (): HTMLElement } {
   type Attributes = Record<AttributeNames[number], string>;
+
+  type BoundHandlerMapForRender = BoundHandlerMap<Handlers, Model, Param>;
 
   class Component extends HTMLElement implements FunctronElement<Model> {
     public model: Model;
@@ -99,7 +114,6 @@ export function createComponent<
     }
 
     async connectedCallback() {
-      // console.log(this.tagName, '--- connectedCallback');
       this.render(this.model);
       await CssUtils.applyCss(this.#shadowRoot, cssPath, css);
     }
@@ -108,8 +122,10 @@ export function createComponent<
       if (mapAttributesToModel) {
         const newModel = mapAttributesToModel(getAttributes(this), this.model);
 
-        this.setModel(newModel);
-        this.render(this.model);
+        if (newModel !== this.model) {
+          this.setModel(newModel);
+          this.render(this.model);
+        }
       }
     }
 
@@ -121,32 +137,68 @@ export function createComponent<
       adoptedCallback?.(this);
     }
 
-    setModel(patch: Model) {
-      this.model = {
-        ...this.model,
-        ...patch,
-      };
+    setModel(newModel: Model) {
+      if (typeof newModel === 'object' && newModel !== null && typeof this.model === 'object' && this.model !== null) {
+        this.model = { ...this.model, ...newModel };
+      } else {
+        this.model = newModel;
+      }
     }
 
-    bindHanders(): Handlers {
+    /**
+     * For each handler, it determines if it's an `EventHandlerFactory` (which takes a `param`
+     * and returns the actual event handler) or a direct `EventHandler`.
+     *
+     * It then creates a "bound" version of the handler function. This bound function, when
+     * eventually called (typically by a DOM event):
+     */
+    bindHanders(): BoundHandlerMapForRender {
+      const boundHandlers: Partial<BoundHandlerMapForRender> = {};
+
       if (handlers) {
-        return Object.fromEntries(
-          Object.entries(handlers).map(([key, handler]) => [
-            key,
-            ((event: AnyUIEvent) => {
-              this.setModel(handler(event, this.model));
-              this.render(this.model);
-              return this.model;
-            }) as EventHandler<Model>,
-          ])
-        ) as Handlers;
+        for (const key in handlers) {
+          if (Object.prototype.hasOwnProperty.call(handlers, key)) {
+            const originalHandler = handlers[key];
+            const k = key as keyof Handlers;
+
+            // If arity is 1, assume it's an EventHandlerFactory
+            if (typeof originalHandler === 'function' && originalHandler.length === 1) {
+              const factory = originalHandler as EventHandlerFactory<Model, Param, AnyUIEvent>;
+
+              boundHandlers[k] = ((param: Param) => {
+                const eventHandler = factory(param);
+
+                return (event: AnyUIEvent) => {
+                  const newModel = eventHandler(event, this.model);
+
+                  if (newModel !== this.model) {
+                    this.setModel(newModel);
+                    this.render(this.model);
+                  }
+                };
+              }) as BoundHandlerMapForRender[typeof k];
+            } else {
+              // It's a plain EventHandler
+              const directHandler = originalHandler as EventHandler<Model, AnyUIEvent>;
+
+              boundHandlers[k] = ((event: AnyUIEvent) => {
+                const newModel = directHandler(event, this.model);
+
+                if (newModel !== this.model) {
+                  this.setModel(newModel);
+                  this.render(this.model);
+                }
+              }) as BoundHandlerMapForRender[typeof k];
+            }
+          }
+        }
       }
 
-      return {} as Handlers;
+      return boundHandlers as BoundHandlerMapForRender;
     }
-
     render(model: Model) {
-      const vdom = render(model, this.bindHanders());
+      const boundHandlers = this.bindHanders();
+      const vdom = render(model, boundHandlers);
 
       if (!this.vdom) {
         patchDom(this.container, vdom);
