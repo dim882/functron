@@ -89,6 +89,7 @@ export function createComponent<
 }: ICreateComponentArgs<AttributeNames, Model, Param, Handlers, Render>): { new (): HTMLElement } {
   type Attributes = Record<AttributeNames[number], string>;
 
+  // Conditional type for dealing with possible EventHandler or EventHandlerFactory
   type BoundHandlerMapForRender = {
     [K in keyof Handlers]: Handlers[K] extends EventHandlerFactory<Model, Param, infer E>
       ? (param: Param) => BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
@@ -180,25 +181,19 @@ export function createComponent<
      * @returns {BoundHandlerMapForRender} An object mapping handler names to the functions usable in the render method.
      */
     bindHanders(): BoundHandlerMapForRender {
-      // Start with Partial as the object is built incrementally
       const boundHandlers: Partial<BoundHandlerMapForRender> = {};
 
       if (handlers) {
         for (const key in handlers) {
-          // Ensure it's an own property before processing
           if (Object.prototype.hasOwnProperty.call(handlers, key)) {
             const originalHandler = handlers[key];
-
-            // Assert key type for indexing into boundHandlers and Handlers
             const k = key as keyof Handlers;
 
-            // Heuristic: Check function arity (length)
+            // If arity is 1, assume it's an EventHandlerFactory
             if (typeof originalHandler === 'function' && originalHandler.length === 1) {
-              // Assume it's an EventHandlerFactory
               const factory = originalHandler as EventHandlerFactory<Model, Param, AnyUIEvent>;
 
               // Create the function that takes 'param' and returns the final listener.
-              // Assert that this assignment matches the expected type for this specific key 'k'.
               boundHandlers[k] = ((param: Param) => {
                 const eventHandler = factory(param);
 
@@ -211,14 +206,12 @@ export function createComponent<
                     this.render(this.model);
                   }
                 };
-                // Cast the outer function to the specific type expected for this key k
-              }) as BoundHandlerMapForRender[typeof k]; // <-- Assertion added/corrected
+              }) as BoundHandlerMapForRender[typeof k];
             } else if (typeof originalHandler === 'function') {
-              // Assume it's a direct EventHandler
+              // It's a plain EventHandler
               const directHandler = originalHandler as EventHandler<Model, AnyUIEvent>;
 
               // Create the final event listener directly.
-              // Assert that this assignment matches the expected type for this specific key 'k'.
               boundHandlers[k] = ((event: AnyUIEvent) => {
                 const newModel = directHandler(event, this.model);
 
@@ -226,15 +219,12 @@ export function createComponent<
                   this.setModel(newModel);
                   this.render(this.model);
                 }
-                // Cast this function to the specific type expected for this key k
               }) as BoundHandlerMapForRender[typeof k];
             }
           }
         }
       }
 
-      // Cast the final potentially partial object to the complete type.
-      // This assumes all valid handlers defined in Handlers were processed.
       return boundHandlers as BoundHandlerMapForRender;
     }
     render(model: Model) {
