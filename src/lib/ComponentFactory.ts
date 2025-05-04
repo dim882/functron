@@ -165,11 +165,9 @@ export function createComponent<
             if (typeof originalHandler === 'function' && originalHandler.length === 1) {
               const factory = originalHandler as EventHandlerFactory<Model, Param, AnyUIEvent>;
 
-              // Create the function that takes 'param' and returns the final listener.
               boundHandlers[k] = ((param: Param) => {
                 const eventHandler = factory(param);
 
-                // The final event listener function
                 return (event: AnyUIEvent) => {
                   const newModel = eventHandler(event, this.model);
 
@@ -183,7 +181,6 @@ export function createComponent<
               // It's a plain EventHandler
               const directHandler = originalHandler as EventHandler<Model, AnyUIEvent>;
 
-              // Create the final event listener directly.
               boundHandlers[k] = ((event: AnyUIEvent) => {
                 const newModel = directHandler(event, this.model);
 
