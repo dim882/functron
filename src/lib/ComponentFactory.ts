@@ -22,15 +22,18 @@ export type EventHandlerMap<Model, Param> = {
 
 export type BoundEventHandler<Event extends UIEvent = AnyUIEvent> = (event: Event) => void;
 
+// Conditional type for dealing with possible EventHandler or EventHandlerFactory
+export type BoundHandlerMap<H extends EventHandlerMap<M, P>, M, P> = {
+  [K in keyof H]: H[K] extends EventHandlerFactory<M, P, infer E>
+    ? (param: P) => BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
+    : H[K] extends EventHandler<M, infer E>
+    ? BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
+    : never;
+};
+
 export type RenderFunc<TModel, TParam, THandlers extends EventHandlerMap<TModel, TParam>> = (
   model: TModel,
-  handlers: {
-    [K in keyof THandlers]: THandlers[K] extends EventHandlerFactory<TModel, TParam, infer E>
-      ? (param: TParam) => BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
-      : THandlers[K] extends EventHandler<TModel, infer E>
-      ? BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
-      : never;
-  }
+  handlers: BoundHandlerMap<THandlers, TModel, TParam>
 ) => VNode;
 
 export type StandardComponentArgs<AttributeNames, Model> = {
@@ -89,14 +92,7 @@ export function createComponent<
 }: ICreateComponentArgs<AttributeNames, Model, Param, Handlers, Render>): { new (): HTMLElement } {
   type Attributes = Record<AttributeNames[number], string>;
 
-  // Conditional type for dealing with possible EventHandler or EventHandlerFactory
-  type BoundHandlerMapForRender = {
-    [K in keyof Handlers]: Handlers[K] extends EventHandlerFactory<Model, Param, infer E>
-      ? (param: Param) => BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
-      : Handlers[K] extends EventHandler<Model, infer E>
-      ? BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
-      : never;
-  };
+  type BoundHandlerMapForRender = BoundHandlerMap<Handlers, Model, Param>;
 
   class Component extends HTMLElement implements FunctronElement<Model> {
     public model: Model;
