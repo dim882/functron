@@ -23,11 +23,11 @@ export type EventHandlerMap<Model, Param> = {
 export type BoundEventHandler<Event extends UIEvent = AnyUIEvent> = (event: Event) => void;
 
 // Conditional type for dealing with possible EventHandler or EventHandlerFactory
-export type BoundHandlerMap<H extends EventHandlerMap<M, P>, M, P> = {
-  [K in keyof H]: H[K] extends EventHandlerFactory<M, P, infer E>
-    ? (param: P) => BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
-    : H[K] extends EventHandler<M, infer E>
-    ? BoundEventHandler<E extends UIEvent ? E : AnyUIEvent>
+export type BoundHandlerMap<Handlers extends EventHandlerMap<Model, Param>, Model, Param> = {
+  [Key in keyof Handlers]: Handlers[Key] extends EventHandlerFactory<Model, Param, infer Event>
+    ? (param: Param) => BoundEventHandler<Event extends UIEvent ? Event : AnyUIEvent>
+    : Handlers[Key] extends EventHandler<Model, infer Event>
+    ? BoundEventHandler<Event extends UIEvent ? Event : AnyUIEvent>
     : never;
 };
 
