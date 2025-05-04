@@ -150,35 +150,11 @@ export function createComponent<
     }
 
     /**
-     * Creates and binds event handlers defined in the component configuration.
-     *
-     * This method iterates through the `handlers` object provided to `createComponent`.
      * For each handler, it determines if it's an `EventHandlerFactory` (which takes a `param`
      * and returns the actual event handler) or a direct `EventHandler`.
      *
      * It then creates a "bound" version of the handler function. This bound function, when
      * eventually called (typically by a DOM event):
-     * 1. Executes the original handler logic (either the direct handler or the one returned by the factory).
-     * 2. Takes the new model returned by the original handler.
-     * 3. Updates the component's state using `this.setModel()` if the model has changed.
-     * 4. Triggers a component re-render using `this.render()` if the model has changed.
-     *
-     * The method returns an object (`BoundHandlerMapForRender`) where:
-     * - Keys are the original handler names.
-     * - Values are the functions that should be used within the `render` function:
-     *   - If the original handler was a factory, the value is a function that takes the `param`
-     *     and returns the final `BoundEventHandler` (the function to attach to the event listener).
-     *   - If the original handler was a direct handler, the value *is* the final `BoundEventHandler`.
-     *
-     * This mechanism decouples the pure handler logic from the component's state management
-     * and rendering side effects, providing a clean interface for the `render` function.
-     *
-     * Note: It uses the function's `length` property as a runtime heuristic to differentiate
-     * between factories (expected length 1) and direct handlers (expected length > 1 or 0).
-     * Type assertions (`as`) are used during assignment because TypeScript cannot fully infer
-     * the complex conditional types within the loop's control flow based on this heuristic.
-     *
-     * @returns {BoundHandlerMapForRender} An object mapping handler names to the functions usable in the render method.
      */
     bindHanders(): BoundHandlerMapForRender {
       const boundHandlers: Partial<BoundHandlerMapForRender> = {};
