@@ -177,7 +177,7 @@ export function createComponent<
                   }
                 };
               }) as BoundHandlerMapForRender[typeof k];
-            } else if (typeof originalHandler === 'function') {
+            } else {
               // It's a plain EventHandler
               const directHandler = originalHandler as EventHandler<Model, AnyUIEvent>;
 
