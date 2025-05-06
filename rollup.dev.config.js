@@ -45,7 +45,7 @@ export default {
     serve({
       open: false,
       contentBase: 'dev',
-      port: 4000,
+      port: 882,
     }),
     livereload({
       watch: 'dev',
