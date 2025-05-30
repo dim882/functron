@@ -58,7 +58,7 @@ export default {
       targets: [{ src: 'src/**/*.css', dest: 'dev' }],
     }),
     serve({
-      open: true,
+      open: false,
       contentBase: 'dev',
       port: 882,
     }),
