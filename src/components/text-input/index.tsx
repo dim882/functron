@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '../../lib/ComponentFactory';
 import './text-input';
 
 const app = document.getElementById('app');

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '../../lib/ComponentFactory';
 import './counter';
 
 const app = document.getElementById('app');
