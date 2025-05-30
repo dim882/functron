@@ -6,11 +6,29 @@ import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import { babel } from '@rollup/plugin-babel';
 import postcss from 'rollup-plugin-postcss';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Get all component directories
+const componentsDir = path.join(__dirname, 'src/components');
+const components = fs
+  .readdirSync(componentsDir, { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
+  .map((dirent) => dirent.name);
+
+// Create input configuration for each component
+const input = components.reduce((acc, component) => {
+  acc[component] = `src/components/${component}/index.tsx`;
+  return acc;
+}, {});
 
 export default {
-  input: './src/dev/main.tsx',
+  input,
   output: {
-    file: 'dev/main.js',
+    dir: 'dev',
     format: 'esm',
     sourcemap: true,
   },
@@ -27,7 +45,7 @@ export default {
     babel({
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       babelHelpers: 'bundled',
-      include: ['src/**/*.ts'],
+      include: ['src/**/*.ts', 'src/**/*.tsx'],
       exclude: 'node_modules/**',
     }),
     postcss({
@@ -37,13 +55,10 @@ export default {
       sourceMap: true,
     }),
     copy({
-      targets: [
-        { src: 'src/dev/index.html', dest: 'dev' },
-        { src: 'src/**/*.css', dest: 'dev' },
-      ],
+      targets: [{ src: 'src/**/*.css', dest: 'dev' }],
     }),
     serve({
-      open: false,
+      open: true,
       contentBase: 'dev',
       port: 882,
     }),

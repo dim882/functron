@@ -14,7 +14,7 @@
   "homepage": "https://github.com/dim882/functron#readme",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --watch src --ext html --exec 'rollup -c rollup.dev.config.js -w'",
+    "dev": "node scripts/generate-component-pages.js && nodemon --watch src --ext html,ts,tsx --exec 'rollup -c rollup.dev.config.js -w'",
     "dist": "rollup -c rollup.dist.config.js",
     "clean": "rm -rf dist/* dev/*",
     "tar": "yarn pack -o ./tarballs/package.tgz"
