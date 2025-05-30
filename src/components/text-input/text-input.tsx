@@ -1,11 +1,11 @@
-import { createComponent, jsx } from '../../lib/ComponentFactory';
+import { createComponent, jsx, RenderFunc } from '../../lib/ComponentFactory';
 
 interface ITextInputModel {
   name: string;
   value: string;
 };
 
-const MyComponent = createComponent<['fieldname', 'value'], ITextInputModel>({
+const MyComponent = createComponent<['fieldname', 'value'], ITextInputModel, Event, {}, RenderFunc<ITextInputModel, Event, {}>>({
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
   initialModel: { name: '', value: '' },
