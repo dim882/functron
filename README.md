@@ -104,3 +104,45 @@ createComponent({
 1. Register your component with createComponent
 
 The component will automatically re-render when the model changes, keeping your UI in sync with your data.
+
+## Event Handler Factories
+
+Functron supports two ways to create event handlers:
+
+1. **Direct Event Handlers**: Simple functions that take an event and the current model:
+
+```typescript
+const handlers = {
+  incrementCounter: (event: MouseEvent, model: ICounterModel) => ({
+    ...model,
+    count: model.count + 1,
+  }),
+};
+```
+
+2. **Event Handler Factories**: Functions that take a parameter and return an event handler. This is useful when you need to pass additional data to your handlers:
+
+```typescript
+const handlers = {
+  // Factory that takes an increment amount and returns an event handler
+  incrementCounter: (amount: number) => (event: MouseEvent, model: ICounterModel) => ({
+    ...model,
+    count: model.count + amount,
+  }),
+};
+
+// In your render function, you can use it like this:
+const render: RenderFunc<ICounterModel> = ({ count }, { incrementCounter }) => (
+  <div>
+    <button on={{ click: incrementCounter(1) }}>Add 1</button>
+    <button on={{ click: incrementCounter(5) }}>Add 5</button>
+    <div>{count}</div>
+  </div>
+);
+```
+
+The factory pattern is particularly useful when you need to:
+- Pass dynamic values to event handlers
+- Create multiple similar handlers with different parameters
+- Share logic between handlers while customizing their behavior
+
