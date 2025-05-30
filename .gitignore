@@ -1,5 +1,5 @@
 node_modules
 tarballs
 dist
-dev
+/dev
 .yarn

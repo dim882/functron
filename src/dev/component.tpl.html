@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Functron Component: {{componentName}}</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .component-container {
+        border: 1px solid #eee;
+        padding: 2rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+      }
+      .component-header {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+      .component-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      .component-header p {
+        margin: 0.5rem 0 0;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="component-container">
+      <div class="component-header">
+        <h1>{{componentName}}</h1>
+        <p>Functron Component Demo</p>
+      </div>
+      <div id="app"></div>
+    </div>
+    <script type="module" src="{{componentName}}.js"></script>
+  </body>
+</html>
