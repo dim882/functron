@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
 
 // Read the template
-const template = fs.readFileSync(path.join(rootDir, 'src/dev/template.html'), 'utf-8');
+const template = fs.readFileSync(path.join(rootDir, 'src/dev/component.tpl.html'), 'utf-8');
 
 // Get all component directories
 const componentsDir = path.join(rootDir, 'src/components');
