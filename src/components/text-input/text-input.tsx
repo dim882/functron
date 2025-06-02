@@ -1,4 +1,4 @@
-import { createComponent, jsx, RenderFunc } from '../../lib/ComponentFactory';
+import { createComponent, jsx, RenderFunc } from '../../main';
 
 interface ITextInputModel {
   name: string;
@@ -7,7 +7,7 @@ interface ITextInputModel {
 
 const initialModel: ITextInputModel = { name: '', value: '' };
 
-const render: RenderFunc<ITextInputModel, Event, {}> = (model) => {
+const render: RenderFunc<ITextInputModel, {}> = (model) => {
   return (
     <span class={{ outer: true }}>
       <div>
@@ -21,7 +21,7 @@ const render: RenderFunc<ITextInputModel, Event, {}> = (model) => {
   );
 };
 
-const MyComponent = createComponent<['fieldname', 'value'], ITextInputModel, Event, {}, typeof render>({
+const MyComponent = createComponent<ITextInputModel, {}, typeof render, ['fieldname', 'value']>({
   cssPath: './text-input.css',
   attributes: ['fieldname', 'value'],
   initialModel,
