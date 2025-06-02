@@ -15,6 +15,7 @@ declare global {
       span: VNodeData;
       label: VNodeData;
       input: VNodeData;
+      a: VNodeData;
     }
   }
 }

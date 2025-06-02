@@ -1,2 +1,4 @@
 Use 2 spaces per tab
 
+TypeScript:
+- Avoid the use of any. Maintain type safety at all times. If use of any is required, call it out loudly. Add a code comment and tell the user specifically about it.

@@ -1,4 +1,5 @@
-import { createComponent, EventHandler, EventHandlerFactory, jsx, RenderFunc } from '../../lib/ComponentFactory';
+import { createComponent, jsx } from '../../lib/ComponentFactory';
+import type { EventHandler, EventHandlerFactory, RenderFunc } from '../../lib/ComponentFactory.types';
 
 interface ICounterModel {
   count: number;
@@ -21,7 +22,7 @@ const handlers = {
   resetCounter,
 };
 
-const render: RenderFunc<ICounterModel, number, typeof handlers> = ({ count }, { incrementCounter, resetCounter }) => (
+const render: RenderFunc<ICounterModel, typeof handlers> = ({ count }, { incrementCounter, resetCounter }) => (
   <div>
     <button on={{ click: incrementCounter(1) }}>Add 1</button>
     <button on={{ click: incrementCounter(5) }}>Add 5</button>
@@ -31,7 +32,7 @@ const render: RenderFunc<ICounterModel, number, typeof handlers> = ({ count }, {
   </div>
 );
 
-const MyComponent = createComponent<[], ICounterModel, number, typeof handlers, typeof render>({
+const MyComponent = createComponent<ICounterModel, typeof handlers>({
   initialModel,
   handlers,
   render,
