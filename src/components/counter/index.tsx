@@ -1,6 +1,8 @@
-import './counter';
+import { createComponent } from '../../lib/ComponentFactory';
+import { counterConfig } from './counter';
 
 const app = document.getElementById('app');
 if (app) {
-  app.innerHTML = '<ui-counter></ui-counter>';
-} 
+  const counter = createComponent(counterConfig);
+  counter.mount(app);
+}

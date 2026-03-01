@@ -1,4 +1,6 @@
-import { createComponent, jsx, RenderFunc } from '../../main';
+/** @jsx jsx */
+import { jsx, createWebComponent } from '../../lib/ComponentFactory';
+import type { RenderFunc } from '../../lib/ComponentFactory.types';
 
 interface ITextInputModel {
   name: string;
@@ -7,13 +9,13 @@ interface ITextInputModel {
 
 const initialModel: ITextInputModel = { name: '', value: '' };
 
-const render: RenderFunc<ITextInputModel, {}> = (model) => {
+const render: RenderFunc<ITextInputModel> = (model) => {
   return (
     <span class={{ outer: true }}>
       <div>
         <label>{model.name}</label>
-        <input 
-          type="text" 
+        <input
+          type="text"
           attrs={{ name: model.name, value: model.value }}
         ></input>
       </div>
@@ -21,8 +23,7 @@ const render: RenderFunc<ITextInputModel, {}> = (model) => {
   );
 };
 
-const MyComponent = createComponent<ITextInputModel, {}, typeof render, ['fieldname', 'value']>({
-  cssPath: './text-input.css',
+const TextInputComponent = createWebComponent<ITextInputModel, {}, ['fieldname', 'value']>({
   attributes: ['fieldname', 'value'],
   initialModel,
   mapAttributesToModel(attributes, model) {
@@ -35,4 +36,4 @@ const MyComponent = createComponent<ITextInputModel, {}, typeof render, ['fieldn
   render,
 });
 
-customElements.define('ui-text-input', MyComponent);
+customElements.define('ui-text-input', TextInputComponent);

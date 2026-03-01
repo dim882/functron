@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { createComponent, jsx } from '../../lib/ComponentFactory';
+import { jsx, createWebComponent } from '../../lib/ComponentFactory';
 import type { RenderFunc } from '../../lib/ComponentFactory.types';
 
 interface IRouteModel {
@@ -19,7 +19,7 @@ const render: RenderFunc<IRouteModel, {}> = ({ path, isActive }) => {
     </div>
   )};
 
-const RouteComponent = createComponent<IRouteModel, {}, typeof render, ['path', 'active']>({
+const RouteComponent = createWebComponent<IRouteModel, {}, ['path', 'active']>({
   initialModel,
   render,
   attributes: ['path', 'active'],
@@ -32,4 +32,4 @@ const RouteComponent = createComponent<IRouteModel, {}, typeof render, ['path', 
   },
 });
 
-customElements.define('ui-route', RouteComponent); 
+customElements.define('ui-route', RouteComponent);

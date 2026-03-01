@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { createComponent, jsx } from '../../lib/ComponentFactory';
-import type { EventHandler, RenderFunc } from '../../lib/ComponentFactory.types';
+import { jsx, createWebComponent } from '../../lib/ComponentFactory';
+import type { Handler, RenderFunc } from '../../lib/ComponentFactory.types';
 import { EVENT_ROUTE_CHANGE } from './router';
 
 interface ILinkModel {
@@ -19,12 +19,11 @@ function createRouteChangeEvent(to: string) {
   });
 }
 
-const navigate: EventHandler<ILinkModel, MouseEvent> = (event, model) => {
+const navigate: Handler<ILinkModel, [], MouseEvent> = () => (event, model) => {
   event.preventDefault();
-  
+
   if (event.currentTarget instanceof HTMLElement) {
     const routeChangeEvent = createRouteChangeEvent(model.to);
-
     event.currentTarget.dispatchEvent(routeChangeEvent);
   }
 
@@ -36,12 +35,12 @@ const handlers = {
 } as const;
 
 const render: RenderFunc<ILinkModel, typeof handlers> = ({ to }, { navigate }) => (
-  <a href={to} on={{ click: navigate }}>
-    <slot/> 
+  <a href={to} on={{ click: navigate() }}>
+    <slot/>
   </a>
 );
 
-const LinkComponent = createComponent<ILinkModel, typeof handlers, typeof render, ['to']>({
+const LinkComponent = createWebComponent<ILinkModel, typeof handlers, ['to']>({
   initialModel,
   handlers,
   render,
@@ -52,5 +51,4 @@ const LinkComponent = createComponent<ILinkModel, typeof handlers, typeof render
   })
 });
 
-customElements.define('ui-link', LinkComponent); 
-
+customElements.define('ui-link', LinkComponent);
